@@ -1,4 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Description
+
+This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn Platform.
+
+## TO DO
+
+- [x] initialize repo and push to github
+- [x] create Neon Database and connect App to it
+- [x] add CodeRabbit as a reviewer
+- [] review UI design
+- [] create db schemas
+
+### AUTH
+
+- [] implement basic registration/login
+- [] implement forgot password functionality
+- [] implement change password functionality
+- [] implement email verification functionality
+- [] implement registration/login with google account (Oauth ?)
+- [] implememt authorization
+- [] implement RBAC
+- []
+- []
+- []
+- []
+- []
+- []
+
+### CORE FUNCTIONALITIES
+
+- []
+- []
+- []
+- []
+- []
 
 ## Getting Started
 
