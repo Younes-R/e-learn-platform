@@ -8,7 +8,8 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 - [x] create Neon Database and connect App to it
 - [x] add CodeRabbit as a reviewer
 - [ ] review UI design
-- [ ] create db schemas
+- [x] create db schemas
+- [ ] add BackBlaze B2 as object storage
 
 ### Auth
 
