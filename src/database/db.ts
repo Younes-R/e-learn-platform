@@ -39,8 +39,8 @@ export async function createUser(userType: "student" | "teacher" | "moderator", 
 async function createStudent(user: Student) {
   try {
     const result =
-      await sql`INSERT INTO users (first_name, last_name, type, birth_date, phone_number, profile_pic, pwd, refresh_token, bio, address, cv, diploma) VALUES (
-      ${user.firstName}, ${user.lastName}, 'student', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, ${user.bio}, NULL, NULL, NULL 
+      await sql`INSERT INTO users (first_name, last_name, email, type, birth_date, phone_number, profile_pic, pwd, refresh_token, bio, address, cv, diploma) VALUES (
+      ${user.firstName}, ${user.lastName}, ${user.email}, 'student', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, ${user.bio}, NULL, NULL, NULL 
       ) returning *`;
     return result;
   } catch (error) {
