@@ -3,6 +3,16 @@ import { Moderator, Student, Teacher } from "./definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+/**
+ * Creates a new user in the database as a student, teacher, or moderator based on the specified type and user object.
+ *
+ * Delegates to the appropriate creation function depending on the user type and the presence of distinguishing properties in the user object.
+ *
+ * @param userType - The type of user to create: "student", "teacher", or "moderator"
+ * @param user - The user data object, whose structure must match the specified user type
+ * @returns The newly created user record
+ * @throws If the user type or user object does not match the expected structure for any supported user type
+ */
 export async function createUser(userType: "student" | "teacher" | "moderator", user: Student | Teacher | Moderator) {
   if (userType == "student" && "bio" in user && !("cv" in user)) {
     return await createStudent(user);
@@ -19,6 +29,13 @@ export async function createUser(userType: "student" | "teacher" | "moderator", 
   throw new Error("Invalid user type or user object!");
 }
 
+/**
+ * Inserts a new student record into the users table.
+ *
+ * @param user - The student data to be inserted
+ * @returns The result of the insert operation containing the created user record
+ * @throws If the database operation fails, throws a generic database error
+ */
 async function createStudent(user: Student) {
   try {
     const result =
@@ -32,6 +49,13 @@ async function createStudent(user: Student) {
   }
 }
 
+/**
+ * Inserts a new teacher record into the users table.
+ *
+ * @param user - The teacher object containing personal and credential information to be stored.
+ * @returns The result of the insert operation, including the newly created teacher record.
+ * @throws If the database operation fails, throws a generic database error.
+ */
 async function createTeacher(user: Teacher) {
   try {
     const result =
@@ -45,6 +69,12 @@ async function createTeacher(user: Teacher) {
   }
 }
 
+/**
+ * Creates a new moderator user record in the database.
+ *
+ * Inserts a moderator into the `users` table with required fields, setting optional profile fields to null.
+ * @returns The result of the database insertion containing the created user record.
+ */
 async function createModerator(user: Moderator) {
   try {
     const result =
@@ -58,11 +88,19 @@ async function createModerator(user: Moderator) {
   }
 }
 
+/**
+ * Retrieves and logs the current PostgreSQL server version.
+ */
 export async function getPostgresVersion() {
   const res = await sql`SELECT version();`;
   console.log(res);
 }
 
+/**
+ * Initializes the database schema by creating required types and tables if they do not exist.
+ *
+ * This includes user roles, users, courses, chapters, documents, sessions, payments, attendance, and reports, along with their associated enum types and constraints.
+ */
 export async function initializeDatabase() {
   const [res1, res2] = await sql.transaction([
     sql`CREATE TYPE IF NOT EXISTS user_type AS ENUM ('student', 'teacher', 'moderator', 'admin')`,
