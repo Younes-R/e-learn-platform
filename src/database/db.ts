@@ -134,6 +134,7 @@ export async function initializeDatabase() {
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     first_name VARCHAR(30),
     last_name VARCHAR(30),
+    email VARCHAR(100) UNIQUE NOT NULL,
     type user_type,
     birth_date DATE,
     phone_number VARCHAR(20),
@@ -145,6 +146,11 @@ export async function initializeDatabase() {
     cv VARCHAR,
     diploma VARCHAR
     )`,
+    // ...other statements
+  ]);
+
+  // ...rest of initialization
+}
     sql`CREATE TABLE IF NOT EXISTS courses(
     cid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(30),
