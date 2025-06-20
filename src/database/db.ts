@@ -149,4 +149,6 @@ export async function initializeDatabase() {
     action action_type
     )`,
   ]);
+
+  console.log(res1, res2);
 }

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import fs from "fs/promises";
 import crypto from "crypto";
 import { Buffer } from "buffer";
 import { Readable } from "stream";
-
-const { finished } = require("stream/promises");
+import { finished } from "stream/promises";
 
 const getSHA1HashSum = async (fileBuffer: any) => {
   const hashSum = crypto.createHash("sha1");
