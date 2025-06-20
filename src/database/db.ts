@@ -59,8 +59,8 @@ async function createStudent(user: Student) {
 async function createTeacher(user: Teacher) {
   try {
     const result =
-      await sql`INSERT INTO users (first_name, last_name, type, birth_date, phone_number, profile_pic, pwd, refresh_token, bio, address, cv, diploma) VALUES (
-        ${user.firstName}, ${user.lastName}, 'teacher', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, ${user.bio}, ${user.address}, ${user.cv}, ${user.diploma}
+      await sql`INSERT INTO users (first_name, last_name, email, type, birth_date, phone_number, profile_pic, pwd, refresh_token, bio, address, cv, diploma) VALUES (
+        ${user.firstName}, ${user.lastName}, ${user.email}, 'teacher', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, ${user.bio}, ${user.address}, ${user.cv}, ${user.diploma}
         ) returning *`;
     return result;
   } catch (error) {
