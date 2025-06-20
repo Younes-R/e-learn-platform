@@ -216,7 +216,9 @@ export async function initializeDatabase() {
     date DATE,
     PRIMARY KEY (reporter_id, reported_id, date),
     reason INT,
-    action action_type
+    action action_type,
+    FOREIGN KEY (reporter_id) REFERENCES users(id),
+    FOREIGN KEY (reported_id) REFERENCES users(id)
     )`,
   ]);
 
