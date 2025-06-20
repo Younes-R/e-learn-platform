@@ -2,37 +2,54 @@
 
 This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn Platform.
 
-## TO DO
+## Todo
 
 - [x] initialize repo and push to github
 - [x] create Neon Database and connect App to it
 - [x] add CodeRabbit as a reviewer
-- [] review UI design
-- [] create db schemas
+- [ ] review UI design
+- [x] create db schemas
+- [ ] add BackBlaze B2 as object storage
 
-### AUTH
+### Auth
 
-- [] implement basic registration/login
-- [] implement forgot password functionality
-- [] implement change password functionality
-- [] implement email verification functionality
-- [] implement registration/login with google account (Oauth ?)
-- [] implememt authorization
-- [] implement RBAC
-- []
-- []
-- []
-- []
-- []
-- []
+- [ ] implement basic registration/login
+- [ ] implement forgot password functionality
+- [ ] implement change password functionality
+- [ ] implement email verification functionality
+- [ ] implement registration/login with google account (Oauth ?)
+- [ ] implememt authorization
+- [ ] implement RBAC
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
 
-### CORE FUNCTIONALITIES
+### Core Functionalities
 
-- []
-- []
-- []
-- []
-- []
+#### Teacher
+
+- [ ] create Courses, which contains Chapters, which contains Docs.
+- [ ] create Sessions
+
+##### Student
+
+-
+
+1. [ ] enroll in Courses and/or Sessions, by buying them
+2. [ ] implement payment system
+
+#### Both
+
+- [ ] report other users (teachers/students), by creating reports
+
+#### Moderator
+
+- [ ] react to reports, by: doing an alert, ban or deleting the reported account.
+- [ ] implement a notification system, for alerts
+- [ ] implement a 'history' for alerts or bans, to use to decide to delete the account or not
 
 ## Getting Started
 
