@@ -143,4 +143,4 @@ const downloadFile = async (file_id: string) => {
   return { body, name };
 };
 
-module.exports = { uploadFile, downloadFile, download_file };
+export { uploadFile, downloadFile, download_file };
