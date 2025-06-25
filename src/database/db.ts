@@ -3,8 +3,30 @@ import { Moderator, Student, Teacher } from "./definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function isUserExistsWith(email: string) {
+  try {
+    const result = await sql`SELECT type FROM users WHERE email = ${email}`;
+    return result.length > 0;
+  } catch (err: any) {
+    console.error(err.message);
+    throw new Error("Could not search for user.");
+  }
+}
+
+export async function getUserByEmail(email: string) {
+  try {
+    const result =
+      await sql`SELECT first_name, last_name, type, birth_date, phone_number, profile_pic, pwd, bio, address, cv, diploma, email FROM users WHERE email = ${email} `;
+    return result[0];
+  } catch (err: any) {
+    console.error(err.message);
+    throw new Error("Could not search for user.");
+  }
+}
+
 export async function createUser(userType: "student" | "teacher" | "moderator", user: Student | Teacher | Moderator) {
-  if (userType == "student" && "bio" in user && !("cv" in user)) {
+  if (userType == "student" && "bio" in user) {
+    //&& !("cv" in user)
     return await createStudent(user);
   }
 
