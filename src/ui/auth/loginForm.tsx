@@ -13,7 +13,6 @@ export default function LoginForm() {
           type="email"
           name="email"
           id="email"
-          required
         />
       </div>
       <div>
@@ -22,7 +21,6 @@ export default function LoginForm() {
           type="password"
           name="password"
           id="password"
-          required
         />
       </div>
       <div>

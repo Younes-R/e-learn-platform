@@ -181,7 +181,7 @@ export async function login(previousState: any, formData: FormData) {
     return "No users with this email.";
   }
 
-  const isPasswordCorrect = await bcrypt.compare(user.password, userInDb.password);
+  const isPasswordCorrect = await bcrypt.compare(user.password, userInDb.pwd);
   if (!isPasswordCorrect) {
     console.error("Password incorrect.");
     return "Password incorrect.";
@@ -190,7 +190,7 @@ export async function login(previousState: any, formData: FormData) {
   const refreshToken = jwt.sign(
     {
       email: userInDb.email,
-      role: userInDb.user_type,
+      role: userInDb.type,
     },
     process.env.REFRESH_TOKEN_SECRET!,
     { expiresIn: "1m" }
@@ -205,7 +205,7 @@ export async function login(previousState: any, formData: FormData) {
   console.log(userInDb);
   console.log("Server Aciton run and finished!");
 
-  redirect(`/${userInDb.user_type}`);
+  redirect(`/${userInDb.type}`);
 }
 
 export async function signOut() {

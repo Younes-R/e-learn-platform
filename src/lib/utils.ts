@@ -34,6 +34,7 @@ export async function verifyRoles(roles: Array<"student" | "teacher" | "moderato
   console.log("PAYLOAD ROLE:", payload.role);
   if (!roles.includes(payload.role)) {
     console.error("User has not access to this page.");
+    console.log(payload);
     redirect(`/${payload.role}`);
   }
 }
