@@ -1,5 +1,12 @@
 import Link from "next/link";
 import styles from "./principalBar.module.css";
+import ExploreIcon from "../icons/exploreIcon";
+import CoursesIcon from "../icons/coursesIcon";
+import ScheduleIcon from "../icons/scheduleIcon";
+import TeachersIcon from "../icons/teachersIcon";
+import PaymentsIcon from "../icons/paymentsIcon";
+import SupportIcon from "../icons/supportIcon";
+import SettingsIcon from "../icons/settingsIcon";
 
 export default function PrincipalBar() {
   return (
@@ -8,25 +15,46 @@ export default function PrincipalBar() {
       <nav className={styles.nav}>
         <ul className={styles.ul}>
           <li>
-            <Link href="common/explore">Explore</Link>
+            <Link href="common/explore">
+              <ExploreIcon />
+              Explore
+            </Link>
           </li>
           <li>
-            <Link href="student/courses">Courses</Link>
+            <Link href="student/courses">
+              <CoursesIcon />
+              Courses
+            </Link>
           </li>
           <li>
-            <Link href="student/schedule">Schedule</Link>
+            <Link href="student/schedule">
+              <ScheduleIcon />
+              Schedule
+            </Link>
           </li>
           <li>
-            <Link href="student/teachers">Teachers</Link>
+            <Link href="student/teachers">
+              <TeachersIcon />
+              Teachers
+            </Link>
           </li>
           <li>
-            <Link href="student/payments">Payments</Link>
+            <Link href="student/payments">
+              <PaymentsIcon />
+              Payments
+            </Link>
           </li>
           <li>
-            <Link href="student/support">Support</Link>
+            <Link href="student/support">
+              <SupportIcon />
+              Support
+            </Link>
           </li>
           <li>
-            <Link href="student/settings">Settings</Link>
+            <Link href="student/settings">
+              <SettingsIcon />
+              Settings
+            </Link>
           </li>
         </ul>
       </nav>

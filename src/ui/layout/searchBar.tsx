@@ -1,5 +1,6 @@
 import styles from "./searchBar.module.css";
 import Link from "next/link";
+import NotificationsIcon from "../icons/notificationsIcon";
 
 export default function SearchBar() {
   return (
@@ -18,7 +19,9 @@ export default function SearchBar() {
           className={styles["header__account-link"]}
           href="/account"
         ></Link>
-        <button className={styles["header__notifications-button"]}></button>
+        <button className={styles["header__notifications-button"]}>
+          <NotificationsIcon />
+        </button>
       </div>
     </header>
   );
