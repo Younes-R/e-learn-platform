@@ -1,3 +1,7 @@
 export default function Home() {
-  return <h1>Hello, World !</h1>;
+  return (
+    <main style={{ border: "2px solid red" }}>
+      <h2>Hello World !</h2>
+    </main>
+  );
 }

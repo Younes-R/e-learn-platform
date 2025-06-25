@@ -1,3 +1,5 @@
+/* BEM: class__element--modifier */
+
 * {
   padding: 0;
   margin: 0;
@@ -5,7 +7,38 @@
 }
 
 body {
+  background-color: whitesmoke;
+  padding: 1.2em 1.4em;
+  display: grid;
+  gap: 2em 1.4em;
+  grid-template-columns: 10em 1fr;
+  grid-template-rows: 2.5em 1fr;
+  grid-template-areas:
+    "principalBar searchBar "
+    "principalBar main ";
+  height: 100vh;
+  color: black;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-  background-color: #444;
-  color: silver;
+}
+
+main {
+  grid-area: main;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  transition: 150ms;
+}
+
+a:hover {
+  color: rgba(0, 0, 0, 0.311);
+}
+
+a:active {
+  color: rgba(0, 0, 0, 0.187);
+}
+
+ul {
+  list-style: none;
 }
