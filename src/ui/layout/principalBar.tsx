@@ -15,43 +15,43 @@ export default function PrincipalBar() {
       <nav className={styles.nav}>
         <ul className={styles.ul}>
           <li>
-            <Link href="common/explore">
+            <Link href="/common/explore">
               <ExploreIcon />
               Explore
             </Link>
           </li>
           <li>
-            <Link href="student/courses">
+            <Link href="/student/courses">
               <CoursesIcon />
               Courses
             </Link>
           </li>
           <li>
-            <Link href="student/schedule">
+            <Link href="/student/schedule">
               <ScheduleIcon />
               Schedule
             </Link>
           </li>
           <li>
-            <Link href="student/teachers">
+            <Link href="/student/teachers">
               <TeachersIcon />
               Teachers
             </Link>
           </li>
           <li>
-            <Link href="student/payments">
+            <Link href="/student/payments">
               <PaymentsIcon />
               Payments
             </Link>
           </li>
           <li>
-            <Link href="student/support">
+            <Link href="/common/support">
               <SupportIcon />
               Support
             </Link>
           </li>
           <li>
-            <Link href="student/settings">
+            <Link href="/common/settings">
               <SettingsIcon />
               Settings
             </Link>

@@ -1,0 +1,26 @@
+.coursesList {
+  /* border: 2px solid salmon; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.coursesList li {
+  padding: 1.4em 1.6em;
+  border: 2px solid #999;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background-color: whitesmoke;
+}
+
+.coursesList li p {
+  color: #222;
+  padding: 0 0 0 0.4em;
+}
+
+.coursesList li a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8em;
+}

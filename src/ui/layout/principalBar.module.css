@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  box-shadow: 4 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   background-color: black;
   color: whitesmoke;
   justify-content: flex-start;

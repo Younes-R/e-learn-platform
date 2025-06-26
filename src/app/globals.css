@@ -23,6 +23,7 @@ body {
 
 main {
   grid-area: main;
+  padding: 0.2em;
 }
 
 a {
