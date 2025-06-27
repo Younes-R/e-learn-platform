@@ -23,7 +23,6 @@
 }
 
 .first-section__div p {
-  color: #222;
   padding: 0 0 0 1em;
 }
 
@@ -33,6 +32,7 @@
   justify-content: flex-start;
   gap: 2.8em;
   padding: 0 0 0 4em;
+  color: #777;
 }
 
 .second-section ul {
