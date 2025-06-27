@@ -8,7 +8,7 @@ export default function CoursesList(props: {
     // this ul should be a LIST, so if it is long, it should become scrollable.inside itself not on the whole web page.. and I guess it would be better to hide the scroll bar
     <ul className={styles.coursesList}>
       <li>
-        <Link href={``}>
+        <Link href={`courses/dasdas`}>
           <h3>Course Title</h3>
           <p>This course is for Electronics 02.</p>
         </Link>
