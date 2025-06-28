@@ -22,6 +22,7 @@ export default function Calendar() {
     "December",
   ];
   const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(date.getDate());
   const monthsDaysCount = [
     31,
     (date.getFullYear() - 2016) % 4 == 0 ? 29 : 28,
@@ -103,8 +104,10 @@ export default function Calendar() {
               <Day
                 num={idx + 1}
                 monthIndex={date.getMonth()}
+                yearIndex={date.getFullYear()}
                 todayIndex={today.getDate()}
                 todayMonthIndex={today.getMonth()}
+                todayYearIndex={today.getFullYear()}
               />
             ))}
             {blanks2.map((_, idx) => (
