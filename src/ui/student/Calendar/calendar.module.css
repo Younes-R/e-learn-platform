@@ -1,0 +1,110 @@
+.calendar {
+  display: grid;
+  /* border: 1px solid red; */
+  grid-template-columns: 6fr 4fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "first-section second-section";
+  gap: 1.4em;
+}
+
+.calendar__first-section {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  grid-area: "first-section";
+}
+
+.calendar__second-section {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  /* justify-content: flex-start; */
+  align-items: flex-start;
+  grid-area: "second-section";
+}
+
+.calendar__second-section button {
+  font-family: inherit;
+  font-weight: bold;
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1em 2em;
+  background-color: whitesmoke;
+}
+
+.calendar__day-info {
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1em 2em;
+}
+
+.calendar__current-day {
+  background-color: black;
+  color: whitesmoke;
+  padding: 1.4em 2.4em;
+  /* border: 2px solid #999; */
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.calendar__month {
+  /* border: 1px solid red; */
+}
+
+.calendar__month__current-month {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2em;
+  padding: 1.2em 2.4em;
+  background-color: black;
+  color: whitesmoke;
+  border-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.calendar__month__current-month button {
+  background-color: transparent;
+  /* border: 2px solid red; */
+  border: none;
+  cursor: pointer;
+}
+
+.calendar__month__days-row {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-around; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar__month__days-grid__day-title {
+  /* border-left: 1px solid red; */
+  /* flex-grow: 1; */
+  border-bottom: 2px solid #999;
+  text-align: center;
+  padding: 1.4em;
+  font-weight: bold;
+}
+
+.calendar__month__days-row div:first-child {
+  border-left: 2px solid #999;
+}
+
+.calendar__month__days-row div:last-child {
+  border-right: 2px solid #999;
+}
+
+.calendar__month__days-grid {
+  border: 2px solid #999;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
