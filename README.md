@@ -7,25 +7,19 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 - [x] initialize repo and push to github
 - [x] create Neon Database and connect App to it
 - [x] add CodeRabbit as a reviewer
-- [ ] review UI design
+- [x] review UI design
 - [x] create db schemas
-- [ ] add BackBlaze B2 as object storage
+- [x] add BackBlaze B2 as object storage
 
 ### Auth
 
-- [ ] implement basic registration/login
+- [x] implement basic registration/login
+- [x] implememt authorization
+- [x] implement RBAC
 - [ ] implement forgot password functionality
 - [ ] implement change password functionality
 - [ ] implement email verification functionality
 - [ ] implement registration/login with google account (Oauth ?)
-- [ ] implememt authorization
-- [ ] implement RBAC
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
 
 ### Core Functionalities
 
@@ -85,3 +79,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Implementation
+
+### Fetching Sessions Data on Calendar.tsx
+
+our idea is to:
+
+1. fetch sessions data of the current month and store it `currSessions` or something similar
+2. if blank1.length, fetch sessions data of the previous month and store it `prevSessions`, else continue
+3. if blank2.length, fetch sessions data of the next month and store it in `nextSessions`, else continue.
+
+sessions data should be of type `Array<DayData>` .
+
+fetching and caching (async state management) is handeled by tanStackQuery.
+
+`Day` Component has a dayData attribute, which should be set like this: if there is data corresponding to the day date, assign it to the component, else return null. we propose creating a function to handle this: `assignSession` that has two args: one argument called date of type `Date`, used to extract the year, month and day values from it. this argument is provided by the other props values of `Day`, and another argument sessions of type `Array<DayData>` which could be `currSessions`, `prevSessions` or `nextSessions`. the function searches for a an element in sessions with the same date values provided in the first argument. if found return this element, else return null.
+
+`Day` should handle the null value returned by `AssignSession`.
+
+from this, I suggest to change the type `DayData` to include also the exact date of the day (ie year, month, day) and remove day attribute from `SessionDataSegment`.

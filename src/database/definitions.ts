@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export interface Student {
   firstName: string;
   lastName: string;
@@ -35,3 +37,13 @@ export interface Moderator {
   pwd: string;
   refreshToken: string;
 }
+
+export interface SessionDataSegment {
+  seid: string;
+  module: string;
+  day: Date;
+  startTime: string;
+  endTime: string;
+}
+
+export type DayData = Array<SessionDataSegment>;

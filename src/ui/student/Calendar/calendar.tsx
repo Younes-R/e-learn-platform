@@ -4,6 +4,8 @@ import RightArrow from "@/ui/icons/rightArrow";
 import LeftArrow from "@/ui/icons/leftArrow";
 import Day from "./day";
 import { useState } from "react";
+import { DayData } from "@/database/definitions";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Calendar() {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -62,6 +64,14 @@ export default function Calendar() {
       }
     }
   };
+  const fetchSessions = (year: number, month: number): Promise<Array<DayData>> => {
+    return fetch(`/api/sessions?year=${year}&month=${month}`).then((res) => res.json());
+  };
+
+  // const { data: currSessions } = useQuery({
+  //   queryKey: [date.getFullYear(), date.getMonth()],
+  //   queryFn: () => fetchSessions(date.getFullYear(), date.getMonth()),
+  // });
 
   return (
     <section className={styles["calendar"]}>
@@ -129,13 +139,10 @@ export default function Calendar() {
           </div>
 
           <div className={styles["calendar__month__days-grid"]}>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Sun</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Mon</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Tue</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Wed</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Thu</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Fri</div>
-            <div className={styles["calendar__month__days-grid__day-title"]}>Sat</div>
+            {days.map((day) => (
+              <div className={styles["calendar__month__days-grid__day-title"]}>{day.substring(0, 3)}</div>
+            ))}
+
             {blanks1.map((_, idx) => (
               <Day
                 num={monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)}

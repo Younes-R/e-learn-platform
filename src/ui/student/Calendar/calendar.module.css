@@ -50,10 +50,10 @@
   border-radius: 20px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
-
+/* 
 .calendar__month {
-  /* border: 1px solid red; */
-}
+  border: 1px solid red;
+} */
 
 .calendar__month__current-month {
   display: flex;

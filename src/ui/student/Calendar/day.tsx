@@ -1,3 +1,4 @@
+import { DayData } from "@/database/definitions";
 import styles from "./day.module.css";
 
 export default function Day(props: {
@@ -9,6 +10,7 @@ export default function Day(props: {
   todayYearIndex?: number;
   selectedDate?: { day: number; month: number } | null;
   onClick?: Function;
+  dayData?: DayData;
 }) {
   return (
     <div
