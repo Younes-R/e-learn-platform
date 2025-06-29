@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import PrincipalBar from "@/ui/layout/principalBar";
 import SearchBar from "@/ui/layout/searchBar";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "E-Learn Platform",
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body>
         <PrincipalBar />
         <SearchBar />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
