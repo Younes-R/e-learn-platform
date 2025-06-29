@@ -118,7 +118,7 @@ export default function Calendar() {
                 <input
                   type="number"
                   name="year"
-                  value={date.getFullYear()}
+                  defaultValue={date.getFullYear()}
                   min="1900"
                   max="2100"
                   style={{ width: 70 }}
@@ -140,7 +140,12 @@ export default function Calendar() {
 
           <div className={styles["calendar__month__days-grid"]}>
             {days.map((day) => (
-              <div className={styles["calendar__month__days-grid__day-title"]}>{day.substring(0, 3)}</div>
+              <div
+                className={styles["calendar__month__days-grid__day-title"]}
+                key={day}
+              >
+                {day.substring(0, 3)}
+              </div>
             ))}
 
             {blanks1.map((_, idx) => (
@@ -153,6 +158,9 @@ export default function Calendar() {
                 todayYearIndex={today.getFullYear()}
                 selectedDate={selectedDate}
                 onClick={handleDaySelection}
+                key={`${date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}-${
+                  date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1
+                }-${monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)}`}
               />
             ))}
             {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
@@ -165,6 +173,7 @@ export default function Calendar() {
                 todayYearIndex={today.getFullYear()}
                 selectedDate={selectedDate}
                 onClick={handleDaySelection}
+                key={`${date.getFullYear()}-${date.getMonth()}-${idx + 1}`}
               />
             ))}
             {blanks2.map((_, idx) => (
@@ -177,6 +186,9 @@ export default function Calendar() {
                 todayYearIndex={today.getFullYear()}
                 selectedDate={selectedDate}
                 onClick={handleDaySelection}
+                key={`${date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}-${
+                  date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1
+                }-${idx + 1}`}
               />
             ))}
           </div>

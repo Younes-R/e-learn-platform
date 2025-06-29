@@ -15,9 +15,11 @@
 }
 
 .selected-day {
-  /* border: 2px solid #26a5ea; */
   outline: 3px solid #26a5ea;
+  border-radius: 2px;
   outline-offset: -1px;
+  z-index: 1;
+  /* box-shadow: 0 6px 12px skyblue; */
 }
 
 .day:nth-child(36) {
