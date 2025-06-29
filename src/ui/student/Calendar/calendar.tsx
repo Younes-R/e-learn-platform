@@ -22,7 +22,10 @@ export default function Calendar() {
     "December",
   ];
   const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(date.getDate());
+  const [selectedDate, setSelectedDate] = useState<{ day: number; month: number } | null>({
+    day: date.getDate(),
+    month: date.getMonth(),
+  });
   const monthsDaysCount = [
     31,
     (date.getFullYear() - 2016) % 4 == 0 ? 29 : 28,
@@ -44,6 +47,21 @@ export default function Calendar() {
   const lastDay = new Date(Date.UTC(date.getFullYear(), date.getMonth(), monthsDaysCount[date.getMonth()]));
   const blanks1 = Array.from({ length: firstDay.getDay() });
   const blanks2 = Array.from({ length: 7 - lastDay.getDay() - 1 });
+
+  const handleDaySelection = ({ day, month, year }: { day: number; month: number; year: number }) => {
+    if (selectedDate?.day === day && selectedDate?.month === month) {
+      setSelectedDate(null);
+    } else {
+      setSelectedDate({ day, month });
+    }
+    if (month !== date.getMonth()) {
+      if ((month < date.getMonth() && year === date.getFullYear()) || year < date.getFullYear()) {
+        setDate(new Date(date.getFullYear(), date.getMonth() - 1));
+      } else {
+        setDate(new Date(date.getFullYear(), date.getMonth() + 1));
+      }
+    }
+  };
 
   return (
     <section className={styles["calendar"]}>
@@ -77,7 +95,30 @@ export default function Calendar() {
             >
               <LeftArrow />
             </button>
-            <p>{`${months[date.getMonth()]} ${date.getFullYear()}`}</p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const year = Number(formData.get("year"));
+                setDate(new Date(year, date.getMonth()));
+              }}
+            >
+              <p>
+                {`${months[date.getMonth()]} `}
+                <input
+                  type="number"
+                  name="year"
+                  value={date.getFullYear()}
+                  min="1900"
+                  max="2100"
+                  style={{ width: 70 }}
+                />
+                <button
+                  type="submit"
+                  style={{ display: "none" }}
+                />
+              </p>
+            </form>
             <button
               onClick={() => {
                 setDate(new Date(date.getFullYear(), date.getMonth() + 1));
@@ -98,6 +139,13 @@ export default function Calendar() {
             {blanks1.map((_, idx) => (
               <Day
                 num={monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)}
+                monthIndex={date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1}
+                yearIndex={date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}
+                todayIndex={today.getDate()}
+                todayMonthIndex={today.getMonth()}
+                todayYearIndex={today.getFullYear()}
+                selectedDate={selectedDate}
+                onClick={handleDaySelection}
               />
             ))}
             {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
@@ -108,17 +156,28 @@ export default function Calendar() {
                 todayIndex={today.getDate()}
                 todayMonthIndex={today.getMonth()}
                 todayYearIndex={today.getFullYear()}
+                selectedDate={selectedDate}
+                onClick={handleDaySelection}
               />
             ))}
             {blanks2.map((_, idx) => (
-              <Day num={idx + 1} />
+              <Day
+                num={idx + 1}
+                monthIndex={date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1}
+                yearIndex={date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}
+                todayIndex={today.getDate()}
+                todayMonthIndex={today.getMonth()}
+                todayYearIndex={today.getFullYear()}
+                selectedDate={selectedDate}
+                onClick={handleDaySelection}
+              />
             ))}
           </div>
         </div>
       </div>
       <div className={styles["calendar__second-section"]}>
         <button>Add Session</button>
-        <div className={styles["calendar__day-info"]}>There is two (2) sessions on this day.</div>
+        {selectedDate ? <div className={styles["calendar__day-info"]}>{selectedDate.day}</div> : null}
       </div>
     </section>
   );

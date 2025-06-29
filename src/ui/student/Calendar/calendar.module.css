@@ -76,6 +76,14 @@
   cursor: pointer;
 }
 
+.calendar__month__current-month input {
+  font-family: inherit;
+  color: whitesmoke;
+  background-color: black;
+  border: none;
+  width: 3em;
+}
+
 .calendar__month__days-row {
   /* display: flex;
   flex-direction: row;

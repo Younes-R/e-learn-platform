@@ -14,6 +14,12 @@
   background-color: black;
 }
 
+.selected-day {
+  /* border: 2px solid #26a5ea; */
+  outline: 3px solid #26a5ea;
+  outline-offset: -1px;
+}
+
 .day:nth-child(36) {
   /* background-color: blueviolet; */
   border-bottom-left-radius: 20px;

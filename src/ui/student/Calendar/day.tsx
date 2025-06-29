@@ -7,18 +7,35 @@ export default function Day(props: {
   yearIndex?: number;
   todayMonthIndex?: number;
   todayYearIndex?: number;
+  selectedDate?: { day: number; month: number } | null;
+  onClick?: Function;
 }) {
   return (
     <div
-      className={`${styles["day"]} ${
-        props.num === props.todayIndex &&
-        props.monthIndex === props.todayMonthIndex &&
-        props.yearIndex === props.todayYearIndex
-          ? styles["today"]
-          : ""
-      } `}
+      onClick={() => {
+        if (props.onClick) {
+          props.onClick({ day: props.num, month: props.monthIndex, year: props.yearIndex });
+        }
+      }}
+      className={`
+        ${styles["day"]}
+        ${
+          props.num === props.todayIndex &&
+          props.monthIndex === props.todayMonthIndex &&
+          props.yearIndex === props.todayYearIndex
+            ? styles["today"]
+            : ""
+        }
+        ${
+          props.num === props.selectedDate?.day && props.monthIndex === props.selectedDate.month
+            ? styles["selected-day"]
+            : ""
+        }
+        
+        `}
     >
       {props.num}
+      {/* /{props.monthIndex}/{props.yearIndex} */}
     </div>
   );
 }
