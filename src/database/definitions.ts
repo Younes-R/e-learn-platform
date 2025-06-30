@@ -1,5 +1,3 @@
-import { UUID } from "crypto";
-
 export interface Student {
   firstName: string;
   lastName: string;
@@ -47,3 +45,10 @@ export interface SessionDataSegment {
 }
 
 export type DayData = Array<SessionDataSegment>;
+
+export type CoursesDataSegments = Array<{
+  cid: string;
+  title: string;
+  description: string;
+  enrolledStudentsNumber: number;
+}>;
