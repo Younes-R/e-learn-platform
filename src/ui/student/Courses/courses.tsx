@@ -5,9 +5,19 @@ import styles from "./courses.module.css";
 import CoursesList from "./coursesList";
 import ActionPanel from "./actionPanel";
 import CreatePanel from "./createPanel";
-import { CoursesDataSegments } from "@/database/definitions";
+import EditPanel from "./editPanel";
+import { CourseDataSegment, CoursesDataSegments } from "@/database/definitions";
 
-export default function Courses(props: { coursesDataSegments: CoursesDataSegments }) {
+export default function Courses(props: {
+  coursesDataSegments: Array<
+    CourseDataSegment & {
+      price?: number;
+      module?: string;
+      level?: string;
+      documents?: Array<{ title: string; uri: string }>; // we should fix types later
+    }
+  >;
+}) {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [isForm, setIsForm] = useState<"create" | "edit" | "delete" | null>(null);
   return (
@@ -35,7 +45,7 @@ export default function Courses(props: { coursesDataSegments: CoursesDataSegment
               </span>
             </div>
             <div className={styles["second-row__course-info__actions"]}>
-              <button>Edit</button>
+              <button onClick={() => setIsForm("edit")}>Edit</button>
               <button onClick={() => setIsForm("delete")}>Delete</button>
             </div>
           </div>
@@ -48,6 +58,12 @@ export default function Courses(props: { coursesDataSegments: CoursesDataSegment
         />
       ) : null}
       {isForm === "create" ? <CreatePanel setIsForm={setIsForm} /> : null}
+      {isForm === "edit" ? (
+        <EditPanel
+          setIsForm={setIsForm}
+          selectedCourseData={props.coursesDataSegments.find((course) => course.cid === selectedCourse)!}
+        />
+      ) : null}
     </div>
   );
 }

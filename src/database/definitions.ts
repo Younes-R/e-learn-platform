@@ -36,6 +36,13 @@ export interface Moderator {
   refreshToken: string;
 }
 
+export interface CoursePlus extends CourseDataSegment {
+  price: number;
+  module: string;
+  level: string;
+  documents: Array<string>;
+}
+
 export interface SessionDataSegment {
   seid: string;
   module: string;
@@ -43,12 +50,15 @@ export interface SessionDataSegment {
   startTime: string;
   endTime: string;
 }
-
-export type DayData = Array<SessionDataSegment>;
-
-export type CoursesDataSegments = Array<{
+export interface CourseDataSegment {
   cid: string;
   title: string;
   description: string;
   enrolledStudentsNumber: number;
-}>;
+}
+
+export type DayData = Array<SessionDataSegment>;
+
+export type CoursesDataSegments = Array<CourseDataSegment>;
+
+export type CoursesPlusData = Array<CoursePlus>;
