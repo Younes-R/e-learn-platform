@@ -1,0 +1,39 @@
+.card {
+  border: 2px solid #999;
+  border-radius: 20px;
+  padding: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card__figure {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__figure img {
+  /* border: 1px solid red; */
+}
+
+.card__figure figcaption {
+  font-weight: bold;
+  /* border: 1px solid red; */
+}
+
+.card button {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.8em 1.4em;
+  background-color: whitesmoke;
+  border: 2px solid #999;
+  border-radius: 20px;
+  /* color: #333; */
+  text-wrap: nowrap;
+}
