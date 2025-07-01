@@ -35,7 +35,7 @@ export default function CoursesList(props: {
               </div>
             ) : null}
           </div>
-          <p>{course.description}</p>
+          <p>{course.description.length < 100 ? course.description : `${course.description.substring(0, 100)}...`}</p>
         </li>
       ))}
     </ul>

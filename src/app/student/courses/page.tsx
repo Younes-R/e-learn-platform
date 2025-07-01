@@ -1,4 +1,4 @@
-import Courses from "@/ui/student/courses";
+import Courses from "@/ui/student/Courses/courses";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -16,8 +16,9 @@ export default function Page() {
           },
           {
             cid: "234kjnffdsf",
-            title: "Course Title",
-            description: "This course is for Electronics 02.",
+            title: "Electronics 2",
+            description:
+              "This Course is for Electronics 2. It is about transistors and their types, behaviors and evolutions through the industry.",
             enrolledStudentsNumber: 12,
           },
           {
