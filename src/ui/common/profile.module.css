@@ -1,0 +1,201 @@
+.profile {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "first-section second-section";
+  gap: 1.4em;
+}
+
+.first-section {
+  grid-area: "first-section";
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.second-section {
+  grid-area: "second-section";
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.4em;
+}
+
+.intro {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.intro__header {
+}
+
+.intro__body {
+  border: 2px solid #999;
+  border-radius: 20px;
+  padding: 1em 1.8em 1.2em 1.8em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.intro__body__figure {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro__body__figure img {
+  /* border: 1px solid red; */
+}
+
+.intro__body__main {
+  /* border: 1px solid red; */
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.intro__body__main__list {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: bold;
+  gap: 1em;
+  width: 100%;
+  text-wrap: nowrap;
+}
+
+.courses {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.courses__header {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.courses__header a {
+  color: #26a5ea;
+}
+
+.courses__header a:hover {
+  color: #26a5ea93;
+}
+
+.courses__header a:active {
+  color: #26a5ea66;
+}
+
+.courses__list {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.8em;
+}
+
+.card {
+  border: 2px solid #999;
+  border-radius: 25px;
+  padding: 2em;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  width: 15em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.4em;
+}
+
+.card__header {
+  /* border: 1px solid red; */
+  width: 100%;
+}
+
+.card__body {
+  /* border: 1px solid red; */
+  padding: 0em 0em 0em 0.2em;
+}
+
+.card__list {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1.2em;
+  text-wrap: nowrap;
+}
+
+.card__list li {
+  font-weight: bold;
+}
+
+.card__list span {
+  color: #23db23;
+}
+
+.card button {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 1em 3em;
+  background-color: whitesmoke;
+  border: 2px solid #999;
+  border-radius: 20px;
+  color: #333;
+}
+
+.academic-info {
+  border: 2px solid #999;
+  border-radius: 20px;
+  padding: 1.2em 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.contacts-info {
+  border: 2px solid #999;
+  border-radius: 20px;
+  padding: 1.2em 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.report-button {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 1em 1.4em;
+  border: 2px solid #999;
+  border-radius: 20px;
+  border-color: #999;
+  /* background-color: #d01010; */
+  color: #d01010;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}

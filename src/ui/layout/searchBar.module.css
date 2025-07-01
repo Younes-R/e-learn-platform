@@ -38,6 +38,9 @@
   border-radius: 200px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .header__notifications-button {
   width: 35px;
