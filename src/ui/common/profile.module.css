@@ -115,57 +115,6 @@
   gap: 1.8em;
 }
 
-.card {
-  border: 2px solid #999;
-  border-radius: 25px;
-  padding: 2em;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  width: 15em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.4em;
-}
-
-.card__header {
-  /* border: 1px solid red; */
-  width: 100%;
-}
-
-.card__body {
-  /* border: 1px solid red; */
-  padding: 0em 0em 0em 0.2em;
-}
-
-.card__list {
-  /* border: 1px solid red; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  gap: 1.2em;
-  text-wrap: nowrap;
-}
-
-.card__list li {
-  font-weight: bold;
-}
-
-.card__list span {
-  color: #23db23;
-}
-
-.card button {
-  font-family: inherit;
-  font-weight: bold;
-  padding: 1em 3em;
-  background-color: whitesmoke;
-  border: 2px solid #999;
-  border-radius: 20px;
-  color: #333;
-}
-
 .academic-info {
   border: 2px solid #999;
   border-radius: 20px;

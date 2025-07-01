@@ -99,3 +99,14 @@ fetching and caching (async state management) is handeled by tanStackQuery.
 `Day` should handle the null value returned by `AssignSession`.
 
 from this, I suggest to change the type `DayData` to include also the exact date of the day (ie year, month, day) and remove day attribute from `SessionDataSegment`.
+
+### About the Scroll Bahavior on Main Components and Lists (Maybe It Would Be Better If They Are Carousels.. ?)
+
+in `Explore` component, there is an idea with:
+
+```css
+overflow-y: scroll
+max-height: 75vh
+/* this can be a useful way to precise the length of our components */
+
+```
