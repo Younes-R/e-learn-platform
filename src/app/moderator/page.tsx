@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import Reports from "@/ui/moderator.tsx/reports";
+import Reports from "@/ui/moderator/reports";
 
 export default function Page() {
   return (

@@ -6,7 +6,7 @@ export default function Avatar() {
   return (
     <Link
       className={styles.link}
-      href=""
+      href="/common/profile/dsadsa"
     ></Link>
   );
 }

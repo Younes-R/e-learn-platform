@@ -1,0 +1,112 @@
+.users {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "first-section second-section";
+  gap: 1.4em;
+}
+
+.first-section {
+  /* border: 1px solid red; */
+  grid-area: "first-section";
+}
+
+.first-section__user-list {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.first-section__user-list__item {
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1em 1.4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.second-section {
+  grid-area: "second-section";
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.main-action {
+  font-family: inherit;
+  background-color: whitesmoke;
+  font-weight: bold;
+  padding: 1em 2em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4em;
+  text-wrap: nowrap;
+  width: fit-content;
+}
+
+.user-info {
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  width: fit-content;
+}
+
+.user-info__header {
+}
+
+.user-info__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+.user-info__actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.user-info__actions__delete {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.8em 1em;
+  border: 2px solid #999;
+  border-radius: 20px;
+  border-color: #777;
+  background-color: #d01010;
+  color: #ffffffdf;
+}
+
+.user-info__actions__edit {
+  font-family: inherit;
+  background-color: whitesmoke;
+  font-weight: bold;
+  padding: 0.8em 1.6em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  text-wrap: nowrap;
+}
+
+.appear {
+  border-color: #26a5ea;
+}
