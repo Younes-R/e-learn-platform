@@ -6,6 +6,7 @@ import CoursesList from "./coursesList";
 import ActionPanel from "./actionPanel";
 import CreatePanel from "./createPanel";
 import EditPanel from "./editPanel";
+import CreateIcon from "@/ui/icons/createIcon";
 import { CourseDataSegment, CoursesDataSegments } from "@/database/definitions";
 
 export default function Courses(props: {
@@ -32,7 +33,8 @@ export default function Courses(props: {
           onClick={() => setIsForm("create")}
           className={styles["second-row__main-action"]}
         >
-          Add Course
+          <CreateIcon />
+          <span>Add Course</span>
         </button>
         {selectedCourse ? (
           <div className={styles["second-row__course-info"]}>

@@ -11,49 +11,51 @@ import SettingsIcon from "../icons/settingsIcon";
 export default function PrincipalBar() {
   return (
     <aside className={styles.aside}>
-      <h2>Logo</h2>
+      <h2>
+        <span>Logo</span>
+      </h2>
       <nav className={styles.nav}>
         <ul className={styles.ul}>
           <li>
             <Link href="/common/explore">
               <ExploreIcon />
-              Explore
+              <span>Explore</span>
             </Link>
           </li>
           <li>
             <Link href="/student/courses">
               <CoursesIcon />
-              Courses
+              <span>Courses</span>
             </Link>
           </li>
           <li>
             <Link href="/student/schedule">
               <ScheduleIcon />
-              Schedule
+              <span>Schedule</span>
             </Link>
           </li>
           <li>
             <Link href="/student/teachers">
               <TeachersIcon />
-              Teachers
+              <span>Teachers</span>
             </Link>
           </li>
           <li>
             <Link href="/student/payments">
               <PaymentsIcon />
-              Payments
+              <span>Payments</span>
             </Link>
           </li>
           <li>
             <Link href="/common/support">
               <SupportIcon />
-              Support
+              <span>Support</span>
             </Link>
           </li>
           <li>
             <Link href="/common/settings">
               <SettingsIcon />
-              Settings
+              <span>Settings</span>
             </Link>
           </li>
         </ul>

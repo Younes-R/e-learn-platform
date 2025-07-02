@@ -43,3 +43,9 @@ a:active {
 ul {
   list-style: none;
 }
+
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 5em 22fr;
+  }
+}

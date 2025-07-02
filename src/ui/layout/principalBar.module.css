@@ -7,16 +7,18 @@
   background-color: black;
   color: whitesmoke;
   justify-content: flex-start;
+  align-items: center;
   gap: 2em;
   height: 100%;
   /* width: 10em; */
   grid-area: principalBar;
+  transition: padding 0.3s;
 }
 
 .aside a {
   color: rgba(245, 245, 245, 0.89);
   display: flex;
-  /* border: 2px solid red; */
+  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -45,4 +47,30 @@
 
 .ul li:nth-child(6) {
   margin-top: auto;
+}
+
+.ul span {
+  display: inline-block; /* or block, as needed */
+  opacity: 1;
+  /* max-width: 200px; or whatever fits your text */
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.3s, max-width 0.3s;
+}
+
+@media (max-width: 768px) {
+  .aside {
+    padding: 1em 1em 2em 1em;
+  }
+  .aside h2 span {
+    display: none;
+  }
+
+  .ul span {
+    /* display: none; */
+    opacity: 0;
+    max-width: 0;
+    pointer-events: none;
+    position: absolute;
+  }
 }
