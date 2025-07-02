@@ -36,6 +36,15 @@ export interface Moderator {
   refreshToken: string;
 }
 
+export interface Report {
+  reporterId: string;
+  reportedId: string;
+  reporterName: string;
+  reportedName: string;
+  date: Date;
+  reason: string;
+}
+
 export interface CoursePlus extends CourseDataSegment {
   price: number;
   module: string;
