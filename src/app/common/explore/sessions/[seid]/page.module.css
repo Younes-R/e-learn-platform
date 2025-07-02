@@ -1,0 +1,104 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.sessions {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "first-section second-section";
+  gap: 1.4em;
+}
+
+.session {
+  grid-area: "first-section";
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+  gap: 1em;
+}
+
+.session__header {
+}
+
+.session__body {
+  border: 2px solid #999;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1.4em 1.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8em;
+}
+
+.session__body__header {
+}
+
+.session__body__time-info-list {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  padding: 0em 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.session__body__info-list {
+  /* border: 1px solid red; */
+  padding: 0em 1em 0em 0em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  gap: 2em;
+  text-wrap: nowrap;
+}
+
+.session__body__info-list span {
+  color: #23db23;
+}
+
+.session__body__address {
+  border: 2px solid #999;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1.4em;
+}
+
+.second-section {
+  grid-area: "second-section";
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.8em;
+}
+
+.second-section__join {
+  font-family: inherit;
+  background-color: whitesmoke;
+  font-weight: bold;
+  padding: 1em 2em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-wrap: nowrap;
+}
+
+.second-section__undo {
+  font-family: inherit;
+  background-color: #999;
+  color: whitesmoke;
+  font-weight: bold;
+  padding: 1em 2em;
+  border: 2px solid #777;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-wrap: nowrap;
+}

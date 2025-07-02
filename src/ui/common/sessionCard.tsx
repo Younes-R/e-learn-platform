@@ -19,7 +19,7 @@ export default function SessionCard() {
         </li>
       </ul>
       <button>
-        <Link href={"/sessions"}>View Session</Link>
+        <Link href={"explore/sessions/dsads"}>View Session</Link>
       </button>
     </li>
   );
