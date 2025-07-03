@@ -65,9 +65,9 @@
   gap: 1em;
   width: fit-content;
 }
-
+/* 
 .user-info__header {
-}
+} */
 
 .user-info__list {
   display: flex;

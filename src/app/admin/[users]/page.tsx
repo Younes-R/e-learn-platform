@@ -1,11 +1,12 @@
 import styles from "./page.module.css";
-import Moderators from "@/ui/admin/moderators";
+import Users from "@/ui/admin/users";
 
-export default function Page() {
+export default async function Page({ params }: { params: Promise<{ users: string }> }) {
+  const { users } = await params;
   return (
     <main className={styles.main}>
-      <h2>Moderators</h2>
-      <Moderators
+      <h2>{users.charAt(0).toUpperCase() + users.slice(1)}</h2>
+      <Users
         users={[
           {
             firstName: "Ali",

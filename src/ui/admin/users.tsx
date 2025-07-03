@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./moderators.module.css";
+import styles from "./users.module.css";
 import Avatar from "../avatar";
 import { useState } from "react";
 
@@ -55,7 +55,7 @@ export default function Users(props: {
               props.users.find((user) => user.email === selectedUser)?.firstName[0]
             }. ${props.users.find((user) => user.email === selectedUser)?.lastName}`}</h3>
             <ul className={styles["user-info__list"]}>
-              <li>{`Moderator since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li>
+              <li>{`User since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li>
               <li>{`Phone Number: ${props.users.find((user) => user.email === selectedUser)?.phoneNumber}`}</li>
               <li>{`Email: ${props.users.find((user) => user.email === selectedUser)?.email}`}</li>
             </ul>
