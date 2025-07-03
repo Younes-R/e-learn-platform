@@ -45,6 +45,19 @@ export interface Report {
   reason: string;
 }
 
+export interface SessionData {
+  seid: string;
+  module: string;
+  year: string;
+  price: number;
+  type: "online" | "offline";
+  addressLink: string;
+  day: Date;
+  startTime: string;
+  endTime: string;
+  teacher: string;
+}
+
 export interface CoursePlus extends CourseDataSegment {
   price: number;
   module: string;
