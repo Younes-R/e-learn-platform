@@ -147,4 +147,21 @@
   /* background-color: #d01010; */
   color: #d01010;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-wrap: nowrap;
+}
+
+.edit-button {
+  font-family: inherit;
+  background-color: whitesmoke;
+  font-weight: bold;
+  padding: 1em 2em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4em;
+  text-wrap: nowrap;
 }

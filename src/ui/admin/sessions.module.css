@@ -39,11 +39,11 @@
   padding: 0.5em;
 }
 
-.sessions-list__item__header {
-}
+/* .sessions-list__item__header {
+} */
 
-.sessions-list__item__teacher {
-}
+/* .sessions-list__item__teacher {
+} */
 
 .sessions-list__item__price {
   margin-left: auto;
@@ -68,8 +68,8 @@
   width: fit-content;
 }
 
-.session-info__header {
-}
+/* .session-info__header {
+} */
 
 .session-info__time-info-list {
   display: flex;

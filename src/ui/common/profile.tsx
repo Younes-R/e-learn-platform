@@ -1,9 +1,15 @@
+"use client";
+
 import styles from "./profile.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import CourseCard from "./courseCard";
+import ReportPanel from "./reportPanel";
+import { useState } from "react";
 
 export default function Profile() {
+  const [isAction, setIsAction] = useState<"edit" | "report" | null>(null);
+
   return (
     <div className={styles.profile}>
       <div className={styles["first-section"]}>
@@ -57,8 +63,20 @@ export default function Profile() {
             <li>Email:</li>
           </ul>
         </div>
-        <button className={styles["report-button"]}>Report Account</button>
+        <button
+          onClick={() => setIsAction("report")}
+          className={styles["report-button"]}
+        >
+          Report Account
+        </button>
+        <button className={styles["edit-button"]}>Edit Profile</button>
       </div>
+      {isAction === "report" ? (
+        <ReportPanel
+          profileEmail="sdads"
+          setIsAction={setIsAction}
+        />
+      ) : null}
     </div>
   );
 }
