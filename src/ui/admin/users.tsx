@@ -3,6 +3,8 @@
 import styles from "./users.module.css";
 import Avatar from "../avatar";
 import { useState } from "react";
+import EditUserPanel from "./editUserPanel";
+import DeletePanel from "../student/Courses/deletePanel";
 
 // profile picture should be what exactly ? I suggest to download them on the server to send them later to the component
 export default function Users(props: {
@@ -16,6 +18,7 @@ export default function Users(props: {
   }>;
 }) {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [isAction, setIsAction] = useState<"create" | "edit" | "delete" | null>(null);
   const handleClick = (userEmail: string) => {
     if (!selectedUser) {
       setSelectedUser(userEmail);
@@ -48,7 +51,12 @@ export default function Users(props: {
       </section>
 
       <section className={styles["second-section"]}>
-        <button className={styles["main-action"]}>Create a User</button>
+        <button
+          onClick={() => setIsAction("create")}
+          className={styles["main-action"]}
+        >
+          Create a User
+        </button>
         {selectedUser ? (
           <div className={styles["user-info"]}>
             <h3 className={styles["user-info__header"]}>{`${
@@ -60,12 +68,31 @@ export default function Users(props: {
               <li>{`Email: ${props.users.find((user) => user.email === selectedUser)?.email}`}</li>
             </ul>
             <div className={styles["user-info__actions"]}>
-              <button className={styles["user-info__actions__delete"]}>Delete</button>
-              <button className={styles["user-info__actions__edit"]}>Edit</button>
+              <button
+                onClick={() => setIsAction("delete")}
+                className={styles["user-info__actions__delete"]}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setIsAction("edit")}
+                className={styles["user-info__actions__edit"]}
+              >
+                Edit
+              </button>
             </div>
           </div>
         ) : null}
       </section>
+      {isAction === "delete" ? (
+        <DeletePanel
+          resourceType="User"
+          resourceName={`${props.users.find((user) => user.email === selectedUser)?.firstName[0]}. ${
+            props.users.find((user) => user.email === selectedUser)?.lastName
+          }`}
+          setIsForm={setIsAction}
+        />
+      ) : null}
     </div>
   );
 }

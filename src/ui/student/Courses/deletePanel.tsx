@@ -1,11 +1,17 @@
-import styles from "./actionPanel.module.css";
+import styles from "./deletePanel.module.css";
 
-export default function ActionPanel(props: { courseName: string; setIsForm: Function }) {
+export default function DeletePanel(props: {
+  resourceType: "User" | "Course" | "Session";
+  resourceName: string;
+  setIsForm: Function;
+}) {
   return (
     <section className={styles["action-panel"]}>
       <div className={styles["action-panel__modal"]}>
-        <h3>Delete This Course?</h3>
-        <p>Are you sure you want to delete this course '{props.courseName}' ?</p>
+        <h3>Delete This {props.resourceType}?</h3>
+        <p>
+          Are you sure you want to delete this {props.resourceType.toLowerCase()} '{props.resourceName}' ?
+        </p>
         <div className={styles["action-panel__modal__actions"]}>
           <button
             onClick={() => props.setIsForm(null)}

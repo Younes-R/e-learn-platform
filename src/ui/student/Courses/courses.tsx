@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./courses.module.css";
 import CoursesList from "./coursesList";
-import ActionPanel from "./actionPanel";
+import DeletePanel from "./deletePanel";
 import CreatePanel from "./createPanel";
 import EditPanel from "./editPanel";
 import CreateIcon from "@/ui/icons/createIcon";
@@ -54,8 +54,9 @@ export default function Courses(props: {
         ) : null}
       </section>
       {isForm === "delete" ? (
-        <ActionPanel
-          courseName={props.coursesDataSegments.find((course) => course.cid === selectedCourse)?.title!}
+        <DeletePanel
+          resourceType="Course"
+          resourceName={props.coursesDataSegments.find((course) => course.cid === selectedCourse)?.title!}
           setIsForm={setIsForm}
         />
       ) : null}
