@@ -1,5 +1,4 @@
 import styles from "./course.module.css";
-import Carousel from "./carousel";
 import Avatar from "../avatar";
 
 export default function Course() {
