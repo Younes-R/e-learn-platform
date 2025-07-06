@@ -34,6 +34,7 @@ export interface Moderator {
   profilePic: string;
   pwd: string;
   refreshToken: string;
+  bio: string;
 }
 
 export interface Report {

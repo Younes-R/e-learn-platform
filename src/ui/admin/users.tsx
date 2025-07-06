@@ -3,18 +3,35 @@
 import styles from "./users.module.css";
 import Avatar from "../avatar";
 import { useState } from "react";
-import EditUserPanel from "./editUserPanel";
+import ActionUserPanel from "./actionUserPanel";
 import DeletePanel from "../student/Courses/deletePanel";
+import { Moderator, Student, Teacher } from "@/database/definitions";
 
 // profile picture should be what exactly ? I suggest to download them on the server to send them later to the component
+
+// {
+//   firstName: string;
+//   lastName: string;
+//   phoneNumber: string;
+//   email: string;
+//   profilePicture: string;
+//   createdAtYear: number;
+// }
+
 export default function Users(props: {
+  usersType: "students" | "teachers" | "moderators";
   users: Array<{
     firstName: string;
     lastName: string;
+    birthDate: Date;
     phoneNumber: string;
     email: string;
-    profilePicture: string;
+    profilePic: string;
+    bio: string;
     createdAtYear: number;
+    address?: string;
+    cv?: string;
+    diploma?: string;
   }>;
 }) {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
@@ -91,6 +108,22 @@ export default function Users(props: {
             props.users.find((user) => user.email === selectedUser)?.lastName
           }`}
           setIsForm={setIsAction}
+        />
+      ) : null}
+      {isAction === "create" ? (
+        <ActionUserPanel
+          usersType={props.usersType}
+          actionType="Create"
+          setIsAction={setIsAction}
+          userData={props.users.find((user) => user.email === selectedUser)!}
+        />
+      ) : null}
+      {isAction === "edit" ? (
+        <ActionUserPanel
+          usersType={props.usersType}
+          actionType="Edit"
+          setIsAction={setIsAction}
+          userData={props.users.find((user) => user.email === selectedUser)!}
         />
       ) : null}
     </div>
