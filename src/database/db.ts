@@ -34,7 +34,7 @@ export async function createUser(userType: "student" | "teacher" | "moderator", 
     return await createTeacher(user);
   }
 
-  if (userType == "moderator" && !("address" in user) && !("bio" in user)) {
+  if (userType == "moderator" && !("address" in user)) {
     return await createModerator(user);
   }
 
