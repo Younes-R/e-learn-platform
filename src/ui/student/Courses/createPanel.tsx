@@ -72,7 +72,10 @@ export default function CreatePanel(props: { setIsForm: Function }) {
               multiple
               onChange={(e) => {
                 if (e.target.files) {
-                  setFiles([...files, ...e.target.files]);
+                  const newFiles = Array.from(e.target.files).filter(
+                    (file) => !files.some((existingFile) => existingFile.name === file.name)
+                  );
+                  setFiles([...files, ...newFiles]);
                 }
               }}
             />
