@@ -1,7 +1,7 @@
 import styles from "./deletePanel.module.css";
 
 export default function DeletePanel(props: {
-  resourceType: "User" | "Course" | "Session";
+  resourceType: "Student" | "Teacher" | "Moderator" | "Course" | "Session";
   resourceName: string;
   setIsForm: Function;
 }) {

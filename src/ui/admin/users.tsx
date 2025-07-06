@@ -103,7 +103,14 @@ export default function Users(props: {
       </section>
       {isAction === "delete" ? (
         <DeletePanel
-          resourceType="User"
+          resourceType={
+            (props.usersType.charAt(0).toUpperCase() + props.usersType.slice(1, props.usersType.length - 1)) as
+              | "Student"
+              | "Teacher"
+              | "Moderator"
+              | "Course"
+              | "Session"
+          }
           resourceName={`${props.users.find((user) => user.email === selectedUser)?.firstName[0]}. ${
             props.users.find((user) => user.email === selectedUser)?.lastName
           }`}

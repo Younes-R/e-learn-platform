@@ -79,6 +79,7 @@ export default function ActionUserPanel(props: {
             defaultValue={
               props.actionType === "Edit" ? new Date(props.userData.birthDate).toISOString().split("T")[0] : ""
             }
+            max={new Date().toISOString().split("T")[0]}
           />
         </div>
 
