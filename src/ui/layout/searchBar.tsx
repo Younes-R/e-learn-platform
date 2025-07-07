@@ -1,20 +1,13 @@
 import styles from "./searchBar.module.css";
 import Link from "next/link";
+import SearchForm from "./searchForm";
 import NotificationsIcon from "../icons/notificationsIcon";
 import Image from "next/image";
 
 export default function SearchBar() {
   return (
     <header className={styles.header}>
-      <form
-        className={styles["header__form"]}
-        action=""
-      >
-        <input
-          type="text"
-          placeholder="Search..."
-        />
-      </form>
+      <SearchForm />
       <div className={styles["header__div"]}>
         <Link
           className={styles["header__account-link"]}

@@ -1,0 +1,113 @@
+.search-form {
+  /* height: 80%; */
+  flex-grow: 1;
+  border: 1px solid blue;
+  /* position: relative; */
+  border: 2px solid #999;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  background-color: white;
+}
+
+.search-form .search-form__principal-search {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-form__principal-input {
+  font-family: inherit;
+  /* width: 100%; */
+  /* height: 100%; */
+  border: none;
+  /* border--radius: 20px; */
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 0.8em 1.4em;
+  flex-grow: 1;
+  /* border: 1px solid red; */
+}
+
+.search-form__toggle-button {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: white;
+  /* border: 1px solid red; */
+  border-left: 1px solid #999;
+  padding: 0em 0.8em 0em 0.4em;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.search-form__extended-part {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: flex-start; */
+  gap: 1em;
+}
+
+.search-form__extended-part__search-label {
+  border: 1px solid orange;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 0.2em; */
+}
+
+.search-form__extended-part__principal-label {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+}
+
+.search-form__extended-part__principal-label__teacher-label {
+  border: none;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #999;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 0.2em;
+}
+
+.search-form__extended-part__principal-label__course-label {
+  border: 1px solid #999;
+  padding: 0.2em;
+}
+
+.search-form__extended-part__principal-label__session-label {
+  padding: 0.2em;
+  border: none;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  border-right: 1px solid #999;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.search-form__extended-part input[type="checkbox"] {
+  display: none;
+}
+
+.search-form__extended-part input {
+  font-family: inherit;
+  /* border: none;
+  border-bottom: 1px solid #999; */
+}
+
+.search-form__extended-part div {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  /* align-items: baseline; */
+  gap: 1.5em;
+  flex-wrap: nowrap;
+}
