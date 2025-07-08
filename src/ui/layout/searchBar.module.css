@@ -4,7 +4,7 @@
   gap: 1em;
   justify-content: space-between;
   align-items: flex-start;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .header__div {
