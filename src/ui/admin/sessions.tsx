@@ -3,9 +3,11 @@
 import { SessionData } from "@/database/definitions";
 import styles from "./sessions.module.css";
 import { useState } from "react";
+import DeletePanel from "../student/Courses/deletePanel";
 
 export default function Sessions(props: { sessionsData: Array<SessionData> }) {
   const [selectedSession, setSelectedSession] = useState<string | null>(null);
+  const [isAction, setIsAction] = useState<"edit" | "delete" | null>(null);
 
   const handleClick = (seid: string) => {
     if (!selectedSession) {
@@ -73,12 +75,29 @@ export default function Sessions(props: { sessionsData: Array<SessionData> }) {
             <p>280 students enrolled in</p>
             <div className={styles["session-info__info"]}></div>
             <div className={styles["session-info__actions"]}>
-              <button className={styles["session-info__actions__edit"]}>Edit</button>
-              <button className={styles["session-info__actions__delete"]}>Delete</button>
+              <button
+                onClick={() => setIsAction("edit")}
+                className={styles["session-info__actions__edit"]}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => setIsAction("delete")}
+                className={styles["session-info__actions__delete"]}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ) : null}
       </section>
+      {isAction === "delete" ? (
+        <DeletePanel
+          resourceType="Session"
+          resourceName={props.sessionsData.find((session) => session.seid === selectedSession)?.module!}
+          setIsForm={setIsAction}
+        />
+      ) : null}
     </div>
   );
 }
