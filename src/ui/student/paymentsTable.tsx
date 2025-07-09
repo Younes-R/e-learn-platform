@@ -1,4 +1,3 @@
-import { table } from "console";
 import styles from "./paymentsTable.module.css";
 
 export default function PaymentsTable() {
