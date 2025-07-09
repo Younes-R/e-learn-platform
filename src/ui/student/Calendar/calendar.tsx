@@ -6,6 +6,8 @@ import Day from "./day";
 import { useState } from "react";
 import { DayData } from "@/database/definitions";
 import { useQuery } from "@tanstack/react-query";
+import ActionSessionPanel from "./actionSessionPanel";
+import DeletePanel from "../Courses/deletePanel";
 
 export default function Calendar() {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -23,6 +25,7 @@ export default function Calendar() {
     "November",
     "December",
   ];
+  const [isAction, setIsAction] = useState<"create" | "edit" | "delete" | null>(null);
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<{ day: number; month: number } | null>({
     day: date.getDate(),
@@ -74,131 +77,138 @@ export default function Calendar() {
   // });
 
   return (
-    <section className={styles["calendar"]}>
-      <div className={styles["calendar__first-section"]}>
-        <div className={styles["calendar__current-day"]}>
-          {`date: ${date}`} <br />
-          {`date.getMonth(): ${date.getMonth()}`} <br />
-          {`monthsDaysCount[date.getMonth() - 1]: ${
-            monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1]
-          }`}
-          <br />
-          {`monthsDaysCount[- 1]: ${monthsDaysCount[-1]}`}
-          {/* {`BLANKS1: ${blanks1[3]}`} */}
-          <br />
-          {`BLANKS1 LENGTH: ${blanks1.length}`}
-          <br />
-          {`FIRST DAY: ${firstDay}`}
-          <br />
-          {`LAST DAY: ${lastDay} \n ${lastDay.getDay()}`}
-          <br />
-          {`TODAY: ${today}`}
-          <br />
-          {`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getFullYear()} `}
-        </div>
-        <div className={styles["calendar__month"]}>
-          <div className={styles["calendar__month__current-month"]}>
-            <button
-              onClick={() => {
-                setDate(new Date(date.getFullYear(), date.getMonth() - 1));
-              }}
-            >
-              <LeftArrow />
-            </button>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.currentTarget);
-                const year = Number(formData.get("year"));
-                setDate(new Date(year, date.getMonth()));
-              }}
-            >
-              <p>
-                {`${months[date.getMonth()]} `}
-                <input
-                  type="number"
-                  name="year"
-                  defaultValue={date.getFullYear()}
-                  min="1900"
-                  max="2100"
-                  style={{ width: 70 }}
-                />
-                <button
-                  type="submit"
-                  style={{ display: "none" }}
-                />
-              </p>
-            </form>
-            <button
-              onClick={() => {
-                setDate(new Date(date.getFullYear(), date.getMonth() + 1));
-              }}
-            >
-              <RightArrow />
-            </button>
+    <>
+      <section className={styles["calendar"]}>
+        <div className={styles["calendar__first-section"]}>
+          <div className={styles["calendar__current-day"]}>
+            {`date: ${date}`} <br />
+            {`date.getMonth(): ${date.getMonth()}`} <br />
+            {`monthsDaysCount[date.getMonth() - 1]: ${
+              monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1]
+            }`}
+            <br />
+            {`monthsDaysCount[- 1]: ${monthsDaysCount[-1]}`}
+            {/* {`BLANKS1: ${blanks1[3]}`} */}
+            <br />
+            {`BLANKS1 LENGTH: ${blanks1.length}`}
+            <br />
+            {`FIRST DAY: ${firstDay}`}
+            <br />
+            {`LAST DAY: ${lastDay} \n ${lastDay.getDay()}`}
+            <br />
+            {`TODAY: ${today}`}
+            <br />
+            {`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getFullYear()} `}
           </div>
-
-          <div className={styles["calendar__month__days-grid"]}>
-            {days.map((day) => (
-              <div
-                className={styles["calendar__month__days-grid__day-title"]}
-                key={day}
+          <div className={styles["calendar__month"]}>
+            <div className={styles["calendar__month__current-month"]}>
+              <button
+                onClick={() => {
+                  setDate(new Date(date.getFullYear(), date.getMonth() - 1));
+                }}
               >
-                {day.substring(0, 3)}
-              </div>
-            ))}
+                <LeftArrow />
+              </button>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const year = Number(formData.get("year"));
+                  setDate(new Date(year, date.getMonth()));
+                }}
+              >
+                <p>
+                  {`${months[date.getMonth()]} `}
+                  <input
+                    type="number"
+                    name="year"
+                    defaultValue={date.getFullYear()}
+                    min="1900"
+                    max="2100"
+                    style={{ width: 70 }}
+                  />
+                  <button
+                    type="submit"
+                    style={{ display: "none" }}
+                  />
+                </p>
+              </form>
+              <button
+                onClick={() => {
+                  setDate(new Date(date.getFullYear(), date.getMonth() + 1));
+                }}
+              >
+                <RightArrow />
+              </button>
+            </div>
 
-            {blanks1.map((_, idx) => (
-              <Day
-                num={monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)}
-                monthIndex={date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1}
-                yearIndex={date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}
-                todayIndex={today.getDate()}
-                todayMonthIndex={today.getMonth()}
-                todayYearIndex={today.getFullYear()}
-                selectedDate={selectedDate}
-                onClick={handleDaySelection}
-                key={`${date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}-${
-                  date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1
-                }-${monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)}`}
-              />
-            ))}
-            {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
-              <Day
-                num={idx + 1}
-                monthIndex={date.getMonth()}
-                yearIndex={date.getFullYear()}
-                todayIndex={today.getDate()}
-                todayMonthIndex={today.getMonth()}
-                todayYearIndex={today.getFullYear()}
-                selectedDate={selectedDate}
-                onClick={handleDaySelection}
-                key={`${date.getFullYear()}-${date.getMonth()}-${idx + 1}`}
-              />
-            ))}
-            {blanks2.map((_, idx) => (
-              <Day
-                num={idx + 1}
-                monthIndex={date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1}
-                yearIndex={date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}
-                todayIndex={today.getDate()}
-                todayMonthIndex={today.getMonth()}
-                todayYearIndex={today.getFullYear()}
-                selectedDate={selectedDate}
-                onClick={handleDaySelection}
-                key={`${date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}-${
-                  date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1
-                }-${idx + 1}`}
-              />
-            ))}
+            <div className={styles["calendar__month__days-grid"]}>
+              {days.map((day) => (
+                <div
+                  className={styles["calendar__month__days-grid__day-title"]}
+                  key={day}
+                >
+                  {day.substring(0, 3)}
+                </div>
+              ))}
+
+              {blanks1.map((_, idx) => (
+                <Day
+                  num={
+                    monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)
+                  }
+                  monthIndex={date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1}
+                  yearIndex={date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}
+                  todayIndex={today.getDate()}
+                  todayMonthIndex={today.getMonth()}
+                  todayYearIndex={today.getFullYear()}
+                  selectedDate={selectedDate}
+                  onClick={handleDaySelection}
+                  key={`${date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}-${
+                    date.getMonth() - 1 == -1 ? 11 : date.getMonth() - 1
+                  }-${
+                    monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)
+                  }`}
+                />
+              ))}
+              {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
+                <Day
+                  num={idx + 1}
+                  monthIndex={date.getMonth()}
+                  yearIndex={date.getFullYear()}
+                  todayIndex={today.getDate()}
+                  todayMonthIndex={today.getMonth()}
+                  todayYearIndex={today.getFullYear()}
+                  selectedDate={selectedDate}
+                  onClick={handleDaySelection}
+                  key={`${date.getFullYear()}-${date.getMonth()}-${idx + 1}`}
+                />
+              ))}
+              {blanks2.map((_, idx) => (
+                <Day
+                  num={idx + 1}
+                  monthIndex={date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1}
+                  yearIndex={date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}
+                  todayIndex={today.getDate()}
+                  todayMonthIndex={today.getMonth()}
+                  todayYearIndex={today.getFullYear()}
+                  selectedDate={selectedDate}
+                  onClick={handleDaySelection}
+                  key={`${date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}-${
+                    date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1
+                  }-${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles["calendar__second-section"]}>
-        <button>Add Session</button>
-        {selectedDate ? <div className={styles["calendar__day-info"]}>{selectedDate.day}</div> : null}
-      </div>
-    </section>
+        <div className={styles["calendar__second-section"]}>
+          <button onClick={() => setIsAction("create")}>Add Session</button>
+          {selectedDate ? <div className={styles["calendar__day-info"]}>{selectedDate.day}</div> : null}
+        </div>
+      </section>
+      {isAction === "create" ? <ActionSessionPanel setIsAction={setIsAction} /> : null}
+    </>
   );
 }
 
