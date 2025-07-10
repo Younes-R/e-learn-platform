@@ -18,7 +18,7 @@
   outline: 3px solid #26a5ea;
   border-radius: 2px;
   outline-offset: -1px;
-  z-index: 1;
+  z-index: 0;
   /* box-shadow: 0 6px 12px skyblue; */
 }
 
