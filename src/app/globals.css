@@ -8,14 +8,6 @@
 
 body {
   background-color: whitesmoke;
-  padding: 1.2em 1.4em;
-  display: grid;
-  gap: 2em 1.4em;
-  grid-template-columns: 12em 1fr;
-  grid-template-rows: 2.5em 1fr;
-  grid-template-areas:
-    "principalBar searchBar "
-    "principalBar main ";
   height: 100vh;
   color: black;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
@@ -42,10 +34,4 @@ a:active {
 
 ul {
   list-style: none;
-}
-
-@media (max-width: 768px) {
-  body {
-    grid-template-columns: 5em 22fr;
-  }
 }

@@ -1,0 +1,17 @@
+.layout {
+  padding: 1.2em 1.4em;
+  display: grid;
+  gap: 2em 1.4em;
+  grid-template-columns: 12em 1fr;
+  grid-template-rows: 2.5em 1fr;
+  grid-template-areas:
+    "principalBar searchBar "
+    "principalBar main ";
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 5em 22fr;
+  }
+}
