@@ -10,7 +10,14 @@ export async function verifyRefreshToken() {
     redirect("/login");
   }
   try {
-    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!) as {
+      email: string;
+      role: string;
+      iat: number;
+      exp: number;
+    };
+    console.log("verifyRT:", payload);
+    return payload;
   } catch (error: any) {
     console.error(error.message);
     redirect("/login");
