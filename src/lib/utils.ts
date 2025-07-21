@@ -16,7 +16,7 @@ export async function verifyRefreshToken() {
       iat: number;
       exp: number;
     };
-    console.log("verifyRT:", payload);
+    // console.log("verifyRT:", payload);
     return payload;
   } catch (error: any) {
     console.error(error.message);

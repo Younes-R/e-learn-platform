@@ -110,3 +110,5 @@ max-height: 75vh
 /* this can be a useful way to precise the length of our components */
 
 ```
+
+### Error Handling for Neon Postgres Driver SQL function:

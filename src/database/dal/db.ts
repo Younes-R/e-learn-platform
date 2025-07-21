@@ -1,7 +1,25 @@
 import { neon } from "@neondatabase/serverless";
-import { Moderator, Student, Teacher } from "./definitions";
+import { Moderator, Student, Teacher } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
+
+export async function getUserId(email: string) {
+  try {
+    const res = await sql`SELECT id FROM users WHERE email = ${email}`;
+    if (res && res.length > 0) {
+      return res[0].id as unknown as string;
+    } else {
+      throw new Error("[getUserId]: No user ID found for this email.");
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[getUserId]: Failed to get user ID.", { cause: err });
+  }
+}
 
 export async function isUserExistsWith(email: string) {
   try {

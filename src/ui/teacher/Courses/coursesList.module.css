@@ -1,0 +1,68 @@
+.coursesList {
+  /* border: 2px solid salmon; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  grid-area: "first-section";
+}
+
+.coursesListItem {
+  padding: 1.4em 1.6em;
+  border: 2px solid #999;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4em;
+  transition: 200ms;
+}
+
+.coursesListItem p {
+  color: #222;
+  padding: 0 0 0 0.4em;
+}
+
+.appear {
+  border-color: #26a5ea;
+}
+
+.coursesListItem__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.coursesListItem__header a {
+  padding: 0.6em 0em;
+}
+
+.coursesListItem__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.coursesListItem__buttons__edit {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.6em 1.2em;
+  background-color: whitesmoke;
+  border: 2px solid #999;
+  border-radius: 20px;
+  color: #333;
+}
+
+.coursesListItem__buttons__delete {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.6em 1.2em;
+  border: 2px solid #999;
+  border-radius: 20px;
+  border-color: #777;
+  background-color: #d01010;
+  color: #ffffffdf;
+}

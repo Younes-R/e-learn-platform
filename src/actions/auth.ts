@@ -2,7 +2,7 @@
 import * as z from "zod/v4";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { createUser, getUserByEmail, isUserExistsWith } from "../database/db";
+import { createUser, getUserByEmail, isUserExistsWith } from "../database/dal/db";
 import { uploadFile } from "@/database/b2";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";

@@ -1,0 +1,90 @@
+.courses {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "first-section second-section";
+  gap: 1.4em;
+}
+
+.second-row {
+  grid-area: "second-section";
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.second-row__main-action {
+  font-family: inherit;
+  background-color: whitesmoke;
+  font-weight: bold;
+  padding: 1em 2em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4em;
+  text-wrap: nowrap;
+}
+
+.second-row__main-action span {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.second-row__course-info {
+  border: 2px solid #999;
+  border-radius: 25px;
+  padding: 1em 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.second-row__course-info h3 {
+  padding: 0em 0.4em;
+}
+
+.second-row__course-info__description {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.second-row__course-info__description span {
+  font-weight: bold;
+}
+
+.second-row__course-info__actions {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.second-row__course-info__actions button {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0.8em 1.2em;
+  background-color: whitesmoke;
+  border: 2px solid #999;
+  border-radius: 20px;
+}
+
+.second-row__course-info__actions button:first-child {
+  color: #333;
+}
+
+.second-row__course-info__actions button:last-child {
+  border-color: #777;
+  background-color: #d01010;
+  color: #ffffffdf;
+}
