@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import Courses from "@/ui/student/Courses/courses";
+import Courses from "@/ui/teacher/Courses/courses";
 
 export default function Page() {
   return (
