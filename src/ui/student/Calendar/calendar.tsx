@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import ActionSessionPanel from "./actionSessionPanel";
 import DeletePanel from "../Courses/deletePanel";
 
-export default function Calendar() {
+export default function Calendar(props: { userRole: string }) {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const months = [
     "January",
@@ -81,23 +81,23 @@ export default function Calendar() {
       <section className={styles["calendar"]}>
         <div className={styles["calendar__first-section"]}>
           <div className={styles["calendar__current-day"]}>
-            {`date: ${date}`} <br />
-            {`date.getMonth(): ${date.getMonth()}`} <br />
-            {`monthsDaysCount[date.getMonth() - 1]: ${
+            {/* {`date: ${date}`} <br /> */}
+            {/* {`date.getMonth(): ${date.getMonth()}`} <br /> */}
+            {/* {`monthsDaysCount[date.getMonth() - 1]: ${
               monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1]
-            }`}
-            <br />
-            {`monthsDaysCount[- 1]: ${monthsDaysCount[-1]}`}
+            }`} */}
+            {/* <br /> */}
+            {/* {`monthsDaysCount[- 1]: ${monthsDaysCount[-1]}`} */}
             {/* {`BLANKS1: ${blanks1[3]}`} */}
-            <br />
-            {`BLANKS1 LENGTH: ${blanks1.length}`}
-            <br />
-            {`FIRST DAY: ${firstDay}`}
-            <br />
-            {`LAST DAY: ${lastDay} \n ${lastDay.getDay()}`}
-            <br />
-            {`TODAY: ${today}`}
-            <br />
+            {/* <br /> */}
+            {/* {`BLANKS1 LENGTH: ${blanks1.length}`} */}
+            {/* <br /> */}
+            {/* {`FIRST DAY: ${firstDay}`} */}
+            {/* <br /> */}
+            {/* {`LAST DAY: ${lastDay} \n ${lastDay.getDay()}`} */}
+            {/* <br /> */}
+            {/* {`TODAY: ${today}`} */}
+            {/* <br /> */}
             {`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getFullYear()} `}
           </div>
           <div className={styles["calendar__month"]}>
@@ -203,7 +203,7 @@ export default function Calendar() {
           </div>
         </div>
         <div className={styles["calendar__second-section"]}>
-          <button onClick={() => setIsAction("create")}>Add Session</button>
+          {props.userRole === "teacher" ? <button onClick={() => setIsAction("create")}>Add Session</button> : null}
           {selectedDate ? <div className={styles["calendar__day-info"]}>{selectedDate.day}</div> : null}
         </div>
       </section>
