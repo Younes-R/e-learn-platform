@@ -112,3 +112,7 @@ max-height: 75vh
 ```
 
 ### Error Handling for Neon Postgres Driver SQL function:
+
+## Database Diagram
+
+![database tables diagram](e-learn-platform.drawio-database-diagram.svg)
