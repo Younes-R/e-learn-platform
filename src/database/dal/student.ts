@@ -49,6 +49,6 @@ export async function getStudentCourses(studentEmail: string) {
       routine: ${err.routine}
       hint: ${err.hint}
     `);
-    throw new Error("[getStudentsCourses]: Failed to get student courses", { cause: err.cause });
+    throw new Error("[getStudentsCourses]: Failed to get student courses", { cause: err });
   }
 }

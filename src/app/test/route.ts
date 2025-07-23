@@ -17,7 +17,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getStudentTeachers("");
+    const res = await getStudentCourses("librarian@gmail.com");
+    // const res = await getStudentTeachers("");
     // const res = await getUserbyEmail("librarian@gmail.com");
     if (res) {
       return Response.json(res);
@@ -26,6 +27,8 @@ export async function GET(request: Request) {
     }
   } catch (err: any) {
     console.error(err.message);
+    console.error("ERROR CAUSE:");
+    console.error(err.cause);
 
     return Response.json({ err_msg: "Something wrong happened. Try again later!", err_cause: err.cause });
   }
