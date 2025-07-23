@@ -1,4 +1,4 @@
-import { getStudentCourses } from "@/database/dal/student";
+import { getStudentCourses, getStudentTeachers } from "@/database/dal/student";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 
@@ -17,7 +17,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getUserbyEmail("librarian@gmail.com");
+    const res = await getStudentTeachers("");
+    // const res = await getUserbyEmail("librarian@gmail.com");
     if (res) {
       return Response.json(res);
     } else {
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
     }
   } catch (err: any) {
     console.error(err.message);
+
     return Response.json({ err_msg: "Something wrong happened. Try again later!", err_cause: err.cause });
   }
 }
