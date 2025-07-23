@@ -2,8 +2,13 @@
   display: inline-block;
   width: 35px;
   height: 35px;
-  border: 2px solid #999;
   border-radius: 200px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: whitesmoke;
+}
+
+.link img {
+  border: 2px solid #999;
+  /* border: 1px solid red; */
+  border-radius: 200px;
 }
