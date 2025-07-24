@@ -121,7 +121,13 @@ const download_file = async (auth_token: string, download_url: string, file_id: 
 
   const body = Readable.fromWeb(res3.body as any);
 
-  return { body, name: res3.headers.get("x-bz-file-name") };
+  return {
+    body,
+    details: {
+      name: res3.headers.get("x-bz-file-name"),
+      content_type: res3.headers.get("content-type"),
+    },
+  };
 };
 // ERROR HANDLING AND RETURN VALUES: true when success, false otherwise
 const uploadFile = async (file_buffer: any, file_name: string, file_size: string, file_mime_type: string) => {
@@ -138,9 +144,9 @@ const uploadFile = async (file_buffer: any, file_name: string, file_size: string
 // THIS FUNCTION SHOULD HAVE ALSO ERROR HANDLING
 const downloadFile = async (file_id: string) => {
   const { auth_token, download_url } = await b2_authorize_account();
-  const { body, name } = await download_file(auth_token, download_url, file_id);
+  const { body, details } = await download_file(auth_token, download_url, file_id);
 
-  return { body, name };
+  return { body, details };
 };
 
 export { uploadFile, downloadFile, download_file };
