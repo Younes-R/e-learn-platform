@@ -25,20 +25,20 @@
   color: #222;
 }
 
-.table__body__row:first-child span {
+.paid {
   padding: 0.2em 0.6em;
   color: #23db23;
   border: 1px solid #23db23;
   border-radius: 20px;
 }
-.table__body__row:nth-child(2) span {
+.pending {
   padding: 0.2em 0.6em;
   color: #ffad15;
   border: 1px solid #ffad15;
   border-radius: 20px;
 }
 
-.table__body__row:nth-child(3) span {
+.failed {
   padding: 0.2em 0.6em;
   color: tomato;
   border: 1px solid tomato;

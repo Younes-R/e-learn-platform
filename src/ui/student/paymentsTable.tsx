@@ -1,6 +1,8 @@
 import styles from "./paymentsTable.module.css";
 
-export default function PaymentsTable() {
+export default function PaymentsTable(props: {
+  paymentsData: Array<{ invoice: string; date: Date; status: string; course: string }>;
+}) {
   return (
     <table className={styles.table}>
       <thead className={styles["table__head"]}>
@@ -12,30 +14,34 @@ export default function PaymentsTable() {
         </tr>
       </thead>
       <tbody className={styles["table__body"]}>
-        <tr className={styles["table__body__row"]}>
-          <td>23423432</td>
-          <td>Apr, 24, 2024</td>
-          <td>
-            <span>Paid</span>
-          </td>
-          <td>Electronics</td>
-        </tr>
-        <tr className={styles["table__body__row"]}>
-          <td>23423432</td>
-          <td>Apr, 24, 2024</td>
-          <td>
-            <span>Pending</span>
-          </td>
-          <td>Algorithms</td>
-        </tr>
-        <tr className={styles["table__body__row"]}>
-          <td>234234</td>
-          <td>Mar, 23, 2024</td>
-          <td>
-            <span>Cancelled</span>
-          </td>
-          <td>Algebra 03</td>
-        </tr>
+        {props.paymentsData.map((record) => (
+          <tr
+            key={record.invoice}
+            className={styles["table__body__row"]}
+          >
+            <td>{record.invoice}</td>
+            <td>
+              {(() => {
+                const dateArr = record.date.toDateString().split(" ");
+                return `${dateArr[1]}, ${dateArr[2]}, ${dateArr[3]}`;
+              })()}
+            </td>
+            <td>
+              <span
+                className={`${
+                  record.status === "paid"
+                    ? styles["paid"]
+                    : record.status === "pending"
+                    ? styles["pending"]
+                    : styles["failed"]
+                } `}
+              >
+                {record.status}
+              </span>
+            </td>
+            <td>{record.course}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

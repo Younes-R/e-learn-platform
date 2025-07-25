@@ -1,4 +1,4 @@
-import { getStudentCourses, getStudentTeachers } from "@/database/dal/student";
+import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 
@@ -17,8 +17,10 @@ export async function GET(request: Request) {
   //   }
 
   try {
+    const res = await getStudentPayments("");
+
     // const res = await getStudentCourses("librarian@gmail.com");
-    const res = await getStudentTeachers("");
+    // const res = await getStudentTeachers("");
     // const res = await getUserbyEmail("librarian@gmail.com");
     if (res) {
       return Response.json(res);

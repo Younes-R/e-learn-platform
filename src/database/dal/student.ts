@@ -3,6 +3,26 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function getStudentPayments(studentEmail: string) {
+  try {
+    const res =
+      await sql`SELECT pid AS invoice, date, status, courses.title AS course FROM payments JOIN courses ON payments.cid = courses.cid
+      WHERE payments.id IN (SELECT id FROM users WHERE email = ${studentEmail})`;
+    if (res && res.length > 0) {
+      return res as Array<{ invoice: string; date: Date; status: string; course: string }>;
+    } else {
+      return null;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[getStudentPayments]: Failed to get student payments.", { cause: err });
+  }
+}
+
 export async function getStudentTeachers(studentEmail: string) {
   try {
     const res = await sql`SELECT first_name, last_name, email, profile_pic FROM users WHERE id IN (
