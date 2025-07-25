@@ -100,7 +100,7 @@ fetching and caching (async state management) is handeled by tanStackQuery.
 
 from this, I suggest to change the type `DayData` to include also the exact date of the day (ie year, month, day) and remove day attribute from `SessionDataSegment`.
 
-### About the Scroll Bahavior on Main Components and Lists (Maybe It Would Be Better If They Are Carousels.. ?)
+### About the Scroll Bahavior on Main Components and Lists (Maybe It Would Be Better If They Are Carousels.. ?):
 
 in `Explore` component, there is an idea with:
 
@@ -113,6 +113,24 @@ max-height: 75vh
 
 ### Error Handling for Neon Postgres Driver SQL function:
 
-## Database Diagram
+SQL function of the Neon driver may throw an error in case of:
+
+- connection problems (like: response.ok != true): bad connection, absence of it
+- database related problems: syntax errors in the SQL query, querying non-existing columns, breaking constraints on some columns...
+
+\*There may be some other cases we do not know about.
+
+The second type of problems is dev related, as we are not letting the user input explicitly dictate the columns or tables being queried.
+
+We settled on those rules:
+
+- each function should log the error that happened inside it
+- each function should tell the outer function using it that an error inside it happened, by throwing a new error to specify the location of the error from the prespective of the outer function
+
+## Database Diagram:
 
 ![database tables diagram](e-learn-platform.drawio-database-diagram.svg)
+
+## Needed fix on route /api/media/[id]:
+
+We need to check if the student has bought the course before letting him download its docs, or else if a student got the file-id of a non-bought course doc , he would be able to download it normally.

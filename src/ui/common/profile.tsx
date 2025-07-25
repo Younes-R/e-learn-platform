@@ -18,7 +18,7 @@ export default function Profile() {
           <div className={styles["intro__body"]}>
             <figure className={styles["intro__body__figure"]}>
               <Image
-                src={"/720px-Main-Forerunner.png"}
+                src={`/api/media/4_z96f6bfac163300a896490e1b_f105237b090aad1dd_d20250625_m145631_c003_v0312028_t0013_u01750863391954`}
                 alt="Profile Picture"
                 width={160}
                 height={160}

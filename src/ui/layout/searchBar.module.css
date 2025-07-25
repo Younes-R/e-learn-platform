@@ -20,14 +20,19 @@
 .header__account-link {
   width: 35px;
   height: 35px;
-  border: 2px solid #999;
   border-radius: 200px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.header__account-link img {
+  border: 2px solid #999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 200px;
+}
+
 .header__notifications-button {
   width: 35px;
   height: 35px;

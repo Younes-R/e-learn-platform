@@ -2,25 +2,19 @@ import styles from "./teachersList.module.css";
 import Avatar from "../avatar";
 
 export default function TeachersList(props: {
-  userData: Array<{ firstName: string; lastName: string; email: string; profilePicture: Object }>;
+  usersData: Array<{ first_name: string; last_name: string; email: string; profile_pic: string }>;
 }) {
   return (
-    <>
-      {props.userData && props.userData.length > 0 ? (
-        <ul className={styles.teachersList}>
-          {props.userData.map((user) => (
-            <li>
-              <Avatar
-                userEmail={user.email}
-                profilePicture={user.profilePicture}
-              />
-              {`${user.firstName} ${user.lastName}`}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No users found to display.</p>
-      )}
-    </>
+    <ul className={styles.teachersList}>
+      {props.usersData.map((user) => (
+        <li>
+          <Avatar
+            userEmail={user.email}
+            profilePictureId={user.profile_pic}
+          />
+          {`${user.first_name} ${user.last_name}`}
+        </li>
+      ))}
+    </ul>
   );
 }

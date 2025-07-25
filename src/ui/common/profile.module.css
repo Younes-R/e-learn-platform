@@ -54,6 +54,8 @@
 }
 
 .intro__body__figure img {
+  padding: 0.8em;
+  border-radius: 200px;
   /* border: 1px solid red; */
 }
 
