@@ -1,7 +1,19 @@
 import styles from "./sessionCard.module.css";
 import Link from "next/link";
 
-export default function SessionCard() {
+export default function SessionCard(props: {
+  sessionData: {
+    seid: string;
+    module: string;
+    day: Date;
+    startTime: string;
+    endTime: string;
+    type: string;
+    firstName: string;
+    lastName: string;
+    price: number;
+  };
+}) {
   return (
     <li className={styles["card"]}>
       <h4 className={styles["card__header"]}>Language Theory</h4>

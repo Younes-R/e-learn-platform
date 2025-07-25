@@ -38,15 +38,24 @@ export default function Course() {
           <h2>Students Enrolled In</h2>
           <ul className={styles["students__list"]}>
             <li className={styles["students__list__item"]}>
-              <Avatar />
+              <Avatar
+                userEmail={""}
+                profilePictureId={""}
+              />
               A. Djenadi
             </li>
             <li className={styles["students__list__item"]}>
-              <Avatar />
+              <Avatar
+                userEmail={""}
+                profilePictureId={""}
+              />
               S. Benslimane
             </li>
             <li className={styles["students__list__item"]}>
-              <Avatar />
+              <Avatar
+                userEmail={""}
+                profilePictureId={""}
+              />
               F. Azouaou
             </li>
           </ul>

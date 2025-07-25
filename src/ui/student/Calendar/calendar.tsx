@@ -67,14 +67,17 @@ export default function Calendar(props: { userRole: string }) {
       }
     }
   };
-  const fetchSessions = (year: number, month: number): Promise<Array<DayData>> => {
+  const fetchSessions = (
+    year: number,
+    month: number
+  ): Promise<Array<Array<{ seid: string; module: string; day: Date; startTime: string; endTime: string }>>> => {
     return fetch(`/api/sessions?year=${year}&month=${month}`).then((res) => res.json());
   };
 
-  // const { data: currSessions } = useQuery({
-  //   queryKey: [date.getFullYear(), date.getMonth()],
-  //   queryFn: () => fetchSessions(date.getFullYear(), date.getMonth()),
-  // });
+  const { data: currSessions } = useQuery({
+    queryKey: [date.getFullYear(), date.getMonth()],
+    queryFn: () => fetchSessions(date.getFullYear(), date.getMonth()),
+  });
 
   return (
     <>

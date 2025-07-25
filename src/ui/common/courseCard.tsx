@@ -1,7 +1,16 @@
 import styles from "./courseCard.module.css";
 import Link from "next/link";
 
-export default function CourseCard() {
+export default function CourseCard(props: {
+  courseData: {
+    cid: string;
+    title: string;
+    description: string;
+    price: number;
+    firstName: string;
+    lastName: string;
+  };
+}) {
   return (
     <li className={styles["card"]}>
       <h4 className={styles["card__header"]}>Electronics 02</h4>
