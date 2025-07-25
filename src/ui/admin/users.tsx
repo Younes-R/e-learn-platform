@@ -60,7 +60,10 @@ export default function Users(props: {
                 selectedUser === user.email ? styles["appear"] : ""
               }`}
             >
-              <Avatar />
+              <Avatar
+                userEmail={""}
+                profilePictureId={""}
+              />
               {`${user.firstName} ${user.lastName}`}
             </li>
           ))}
