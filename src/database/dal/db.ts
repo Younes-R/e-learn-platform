@@ -160,7 +160,7 @@ export async function initializeDatabase() {
     id UUID,
     FOREIGN KEY (id) REFERENCES users(id)
     )`,
-    sql`CREATE TYPE IF NOT EXISTS payment_type AS ENUM ('paid', 'not paid')`,
+    sql`CREATE TYPE IF NOT EXISTS payment_type AS ENUM ('pending', 'paid', 'failed')`,
     sql`CREATE TABLE IF NOT EXISTS payments(
     pid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     date DATE,
