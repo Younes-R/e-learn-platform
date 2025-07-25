@@ -97,19 +97,27 @@ export default function Calendar(props: { userRole: string }) {
             {/* {`LAST DAY: ${lastDay} \n ${lastDay.getDay()}`} */}
             {/* <br /> */}
             {/* {`TODAY: ${today}`} */}
-            {/* <br /> */}
-            {`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getFullYear()} `}
+            {`${
+              selectedDate
+                ? new Date(Date.UTC(date.getFullYear(), selectedDate.month, selectedDate.day)).toDateString()
+                : date.toDateString()
+            }`}
+            <br />
+            {/* {`BLANKS 2 LENGTH: ${blanks2.length}`} */}
+            {/* {`${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getFullYear()} `} */}
           </div>
           <div className={styles["calendar__month"]}>
             <div className={styles["calendar__month__current-month"]}>
               <button
                 onClick={() => {
                   setDate(new Date(date.getFullYear(), date.getMonth() - 1));
+                  setSelectedDate(null);
                 }}
               >
                 <LeftArrow />
               </button>
               <form
+                className={styles["calendar__month__current-month__form"]}
                 onSubmit={(e) => {
                   e.preventDefault();
                   const formData = new FormData(e.currentTarget);
@@ -122,7 +130,8 @@ export default function Calendar(props: { userRole: string }) {
                   <input
                     type="number"
                     name="year"
-                    defaultValue={date.getFullYear()}
+                    value={date.getFullYear()}
+                    readOnly={true}
                     min="1900"
                     max="2100"
                     style={{ width: 70 }}
@@ -136,6 +145,7 @@ export default function Calendar(props: { userRole: string }) {
               <button
                 onClick={() => {
                   setDate(new Date(date.getFullYear(), date.getMonth() + 1));
+                  setSelectedDate(null);
                 }}
               >
                 <RightArrow />
@@ -154,6 +164,8 @@ export default function Calendar(props: { userRole: string }) {
 
               {blanks1.map((_, idx) => (
                 <Day
+                  gridLength={0}
+                  gridPosition={idx}
                   num={
                     monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)
                   }
@@ -173,6 +185,8 @@ export default function Calendar(props: { userRole: string }) {
               ))}
               {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
                 <Day
+                  gridPosition={blanks1.length + idx}
+                  gridLength={blanks1.length + blanks2.length + monthsDaysCount[date.getMonth()]}
                   num={idx + 1}
                   monthIndex={date.getMonth()}
                   yearIndex={date.getFullYear()}
@@ -186,6 +200,8 @@ export default function Calendar(props: { userRole: string }) {
               ))}
               {blanks2.map((_, idx) => (
                 <Day
+                  gridPosition={blanks1.length + monthsDaysCount[date.getMonth()] + idx}
+                  gridLength={blanks1.length + blanks2.length + monthsDaysCount[date.getMonth()]}
                   num={idx + 1}
                   monthIndex={date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1}
                   yearIndex={date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}
