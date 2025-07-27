@@ -134,3 +134,8 @@ We settled on those rules:
 ## Needed fix on route /api/media/[id]:
 
 We need to check if the student has bought the course before letting him download its docs, or else if a student got the file-id of a non-bought course doc , he would be able to download it normally.
+
+## Bugs List:
+
+- There is a bug in register server action: uploading the cv may fail, but the server action continue working anyway and reigster an null value as cv in users table (from Vercel logs, when trying to read the cv id it shows: undefined)
+- ui: in CourseCard (appearing in the explore page), image borders are not rounded and the images are of rectangular shape, instead of a circular one

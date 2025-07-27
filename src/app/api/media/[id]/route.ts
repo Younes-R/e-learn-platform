@@ -4,7 +4,9 @@ import { Readable } from "stream";
 import { headers } from "next/headers";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-  await verifyRefreshToken();
+  const { email, role } = await verifyRefreshToken();
+  console.log(`[verifyRefreshToken]: EMAIL:`, email);
+  console.log(`[verifyRefreshToken]: ROLE:`, role);
   const { id } = await params;
   const media = await downloadFile(id);
   const mediaStream = Readable.toWeb(media.body) as ReadableStream;
