@@ -5,6 +5,9 @@ import * as jwt from "jsonwebtoken";
 export async function verifyRefreshToken() {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
+  console.log(`COOKIE STORE:`, cookieStore);
+  console.log(`REFRESH TOKEN COOKIE:`, refreshToken);
+
   if (!refreshToken) {
     console.error("No refreshToken found.");
     redirect("/login");
