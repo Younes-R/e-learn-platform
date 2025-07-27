@@ -16,22 +16,27 @@ export default function SessionCard(props: {
 }) {
   return (
     <li className={styles["card"]}>
-      <h4 className={styles["card__header"]}>Language Theory</h4>
+      <h4 className={styles["card__header"]}>{`${
+        props.sessionData.module[0].toUpperCase() + props.sessionData.module.substring(1)
+      }`}</h4>
       <ul className={styles["card__time-info-list"]}>
-        <li>Sun 04, Feb 2024</li>
-        <li>10:00 - 11:00</li>
+        <li>{`${props.sessionData.day.toDateString()}`}</li>
+        <li>{`${props.sessionData.startTime} - ${props.sessionData.endTime}`}</li>
         <li>
-          <span>Online</span>
+          {/* here we should style "online" with green while with black if it is not offline. check again the design  */}
+          <span>{`${props.sessionData.type}`}</span>
         </li>
       </ul>
       <ul className={styles["card__info-list"]}>
-        <li>By Dr. Zedek</li>
+        <li>{`By ${props.sessionData.firstName[0].toUpperCase()}. ${
+          props.sessionData.lastName[0].toUpperCase() + props.sessionData.lastName.substring(1)
+        }`}</li>
         <li>
-          <span>200DA</span>
+          <span>{`${props.sessionData.price}DA`}</span>
         </li>
       </ul>
       <button>
-        <Link href={"explore/sessions/dsads"}>View Session</Link>
+        <Link href={`explore/sessions/${props.sessionData.seid}`}>View Session</Link>
       </button>
     </li>
   );

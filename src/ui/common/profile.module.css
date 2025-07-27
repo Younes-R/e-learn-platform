@@ -36,11 +36,12 @@
 .intro__body {
   border: 2px solid #999;
   border-radius: 20px;
-  padding: 1em 1.8em 1.2em 1.8em;
+  padding: 1.2em 1.8em 1.2em 1.8em;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  gap: 2.5em;
 
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -51,12 +52,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5em;
 }
 
 .intro__body__figure img {
-  padding: 0.8em;
+  /* padding: 0.8em; */
   border-radius: 200px;
-  /* border: 1px solid red; */
+  border: 2px solid #999;
+  background-color: white;
 }
 
 .intro__body__main {
@@ -137,6 +140,12 @@
   gap: 1em;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   width: 100%;
+}
+
+.contacts-info ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
 }
 
 .report-button {

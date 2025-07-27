@@ -3,6 +3,71 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function getProfileInfo(userEmail: string) {
+  try {
+    const userDataRes =
+      await sql`SELECT first_name AS "firstName", last_name AS "lastName", bio, type, cv, diploma, phone_number  AS "phoneNumber", profile_pic AS "profilePicture" 
+      FROM users WHERE email = ${userEmail}`;
+    if (!(userDataRes && userDataRes.length > 0))
+      throw new Error("[getProfileInfo]: No users found with this email.", {
+        cause: { type: "noUsersFound", description: "SQL function returned an empty array" },
+      });
+    const userData = userDataRes[0] as {
+      firstName: string;
+      lastName: string;
+      bio: string;
+      type: string;
+      cv: string;
+      diploma: string;
+      phoneNumber: string;
+      profilePicture: string;
+    };
+
+    if (userData.type !== "teacher") {
+      return {
+        userData,
+        coursesData: null,
+        coursesCount: null,
+        sessionsCount: null,
+      };
+    }
+
+    const coursesDataRes = await sql`SELECT cid, title, description, price FROM courses WHERE id IN
+     (SELECT id FROM users WHERE email = ${userEmail}) LIMIT 5`;
+    let coursesData;
+    if (coursesDataRes && coursesDataRes.length > 0) {
+      coursesData = coursesDataRes as Array<{ cid: string; title: string; description: string; price: number }>;
+    } else {
+      coursesData = null;
+    }
+
+    const coursesCountRes =
+      await sql` SELECT COUNT(*) FROM courses WHERE id IN (SELECT id FROM users WHERE email =${userEmail})`;
+    const coursesCount = Number(coursesCountRes[0].count);
+
+    const sessionsCountRes =
+      await sql` SELECT COUNT(*) FROM sessions WHERE id IN (SELECT id FROM users WHERE email =${userEmail})`;
+    const sessionsCount = Number(sessionsCountRes[0].count);
+
+    return {
+      userData,
+      coursesData,
+      coursesCount,
+      sessionsCount,
+    };
+  } catch (err: any) {
+    if (err?.cause?.type === "noUsersFound") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[getProfileInfo]: Failed to get profile info.", { cause: err });
+  }
+}
+
 export async function getTeachers() {
   try {
     const res =
