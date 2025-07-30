@@ -1,5 +1,6 @@
 import { getProfileInfo } from "@/database/dal/common";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
+import { getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 
@@ -18,7 +19,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getProfileInfo("librarian@gmail.com");
+    const res = await getTeacherCourses("");
+    // const res = await getProfileInfo("librarian@gmail.com");
     console.log(res);
     // const res = await getStudentPayments("");
 
