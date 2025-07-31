@@ -1,38 +1,17 @@
 import styles from "./page.module.css";
 import Reports from "@/ui/moderator/reports";
+import { verifyRefreshToken, verifyRoles } from "@/lib/utils";
+import { getReports } from "@/database/dal/moderator";
 
-export default function Page() {
+export default async function Page() {
+  await verifyRefreshToken();
+  await verifyRoles(["teacher"]);
+  const reports = await getReports();
+
   return (
     <main className={styles.main}>
       <h2>Reports</h2>
-      <Reports
-        reports={[
-          {
-            reporterId: "s434dasds",
-            reportedId: "sdadsdasd",
-            reporterName: "Dr. Ali Djenadi",
-            reportedName: "a student",
-            date: new Date(2023, 4, 23),
-            reason: "spam",
-          },
-          {
-            reporterId: "sadsdasds",
-            reportedId: "sdadsdsdasdaddasd",
-            reporterName: "Dr. F. Azouaou",
-            reportedName: "a student",
-            date: new Date(2022, 2, 30),
-            reason: "scam",
-          },
-          {
-            reporterId: "sadsdasds",
-            reportedId: "sdad342342sdasd",
-            reporterName: "Dr. L. Chelouah",
-            reportedName: "a student",
-            date: new Date(2024, 4, 23),
-            reason: "I don't like it",
-          },
-        ]}
-      />
+      <Reports reports={reports} />
     </main>
   );
 }
