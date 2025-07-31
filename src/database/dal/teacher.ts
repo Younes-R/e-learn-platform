@@ -22,12 +22,12 @@ export async function getPaymentsInfo(teacherEmail: string) {
       }>;
 
     let coursesIncomeCount = 0;
-    if (coursesIncomeCountRes[0].count) {
+    if (coursesIncomeCountRes[0].sum) {
       coursesIncomeCount = Number(coursesIncomeCountRes[0].count);
     }
 
     let sessionsIncomeCount = 0;
-    if (sessionsIncomeCountRes[0].count) {
+    if (sessionsIncomeCountRes[0].sum) {
       sessionsIncomeCount = Number(sessionsIncomeCountRes[0].count);
     }
 
@@ -86,7 +86,7 @@ export async function getTeacherCourses(teacherEmail: string) {
       return {
         ...course,
         documents: documents,
-        enrolledStudentsNumber: enrolledStudentsNumber?.studentsCount as unknown as number,
+        enrolledStudentsNumber: Number(enrolledStudentsNumber?.studentsCount),
       };
     });
 
