@@ -35,18 +35,6 @@ export default function Page() {
               { title: "Diodes.pdf", uri: "asdasdadsds" },
             ],
           },
-          {
-            cid: "546809402woend",
-            title: "Course Title",
-            description: "This course is for Electronics 02.",
-            enrolledStudentsNumber: 14,
-          },
-          {
-            cid: "978mvsdvfv",
-            title: "Course Title",
-            description: "This course is for Electronics 02.",
-            enrolledStudentsNumber: 24,
-          },
         ]}
       />
     </main>
