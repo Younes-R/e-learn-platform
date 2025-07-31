@@ -1,4 +1,5 @@
 import { getProfileInfo } from "@/database/dal/common";
+import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
 import { getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
@@ -19,7 +20,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getPaymentsInfo("librarian@gmail.com");
+    const res = await getReports();
+    // const res = await getPaymentsInfo("librarian@gmail.com");
     // const res =
     //   await sql`SELECT SUM(sessions.price) FROM payments JOIN sessions ON payments.seid = sessions.seid WHERE status = 'paid' AND sessions.id IN (SELECT id FROM users WHERE email = 'ur-didact@gmail.com')`;
     // const res = await getTeacherCourses("");
