@@ -3,14 +3,53 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
-//  cid: string;
-//     title: string;
-//     description: string;
-//     enrolledStudentsNumber: number;
-//     price?: number;
-//     module?: string;
-//     level?: string;
-//     documents?: Array<{ title: string; uri: string }>; // we should fix types later
+export async function getPaymentsInfo(teacherEmail: string) {
+  try {
+    // const incomes =
+    //   await sql`SELECT SUM(courses.price) AS "coursesIncome", SUM(sessions.price) AS "sessionsIncome" FROM payments JOIN courses ON payments.cid = courses.cid JOIN sessions ON payments.seid = sessions.seid WHERE status = 'paid' AND courses.id IN (SELECT id FROM users WHERE email = ${teacherEmail}) AND sessions.id IN (SELECT id FROM users WHERE email = ${teacherEmail})`;
+    const coursesIncomeCountRes =
+      await sql`SELECT SUM(courses.price) FROM payments JOIN courses ON payments.cid = courses.cid WHERE status = 'paid' AND courses.id IN (SELECT id FROM users WHERE email = ${teacherEmail})`;
+    const sessionsIncomeCountRes =
+      await sql`SELECT SUM(sessions.price) FROM payments JOIN sessions ON payments.seid = sessions.seid WHERE status = 'paid' AND sessions.id IN (SELECT id FROM users WHERE email = ${teacherEmail})`;
+    const coursesIncomeRes =
+      (await sql`SELECT checkout_id AS "invoice", date, first_name AS "firstName", last_name AS "lastName", title AS "course", price FROM payments JOIN users ON payments.id = users.id JOIN courses ON payments.cid = courses.cid WHERE status = 'paid' AND courses.id IN (SELECT id FROM users WHERE email =${teacherEmail}) AND type = 'teacher'`) as Array<{
+        invoice: string;
+        date: Date;
+        firstName: string;
+        lastName: string;
+        course: string;
+        price: number;
+      }>;
+
+    let coursesIncomeCount = 0;
+    if (coursesIncomeCountRes[0].count) {
+      coursesIncomeCount = Number(coursesIncomeCountRes[0].count);
+    }
+
+    let sessionsIncomeCount = 0;
+    if (sessionsIncomeCountRes[0].count) {
+      sessionsIncomeCount = Number(sessionsIncomeCountRes[0].count);
+    }
+
+    let coursesIncome = null;
+    if (coursesIncomeRes && coursesIncomeRes.length > 0) {
+      coursesIncome = coursesIncomeRes;
+    }
+
+    return {
+      coursesIncomeCount,
+      sessionsIncomeCount,
+      coursesIncome,
+    };
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[getPaymentsInfo]: Failed to get payments info.", { cause: err });
+  }
+}
 
 export async function getTeacherCourses(teacherEmail: string) {
   try {

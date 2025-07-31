@@ -1,6 +1,15 @@
 import styles from "./incomeTable.module.css";
 
-export default function IncomeTable() {
+export default function IncomeTable(props: {
+  coursesIncome: Array<{
+    invoice: string;
+    date: Date;
+    firstName: string;
+    lastName: string;
+    course: string;
+    price: number;
+  }>;
+}) {
   return (
     <table className={styles.table}>
       <thead className={styles["table__head"]}>
@@ -13,27 +22,17 @@ export default function IncomeTable() {
         </tr>
       </thead>
       <tbody className={styles["table__body"]}>
-        <tr className={styles["table__body__row"]}>
-          <td>23423432</td>
-          <td>Apr, 24, 2024</td>
-          <td>A. Djenadi</td>
-          <td>Electronics</td>
-          <td>2000 DA</td>
-        </tr>
-        <tr className={styles["table__body__row"]}>
-          <td>23423432</td>
-          <td>Apr, 24, 2024</td>
-          <td>L. Chelouah</td>
-          <td>Algorithms</td>
-          <td>1500 DA</td>
-        </tr>
-        <tr className={styles["table__body__row"]}>
-          <td>234234</td>
-          <td>Mar, 23, 2024</td>
-          <td>F. Azouaou</td>
-          <td>Algebra 03</td>
-          <td>2500 DA</td>
-        </tr>
+        {props.coursesIncome.map((record) => (
+          <tr className={styles["table__body__row"]}>
+            <td>{record.invoice}</td>
+            <td>{record.date.toDateString()}</td>
+            <td>{`${record.firstName[0].toUpperCase()} ${
+              record.lastName[0].toUpperCase() + record.lastName.substring(1)
+            }`}</td>
+            <td>{record.course[0].toUpperCase() + record.course.substring(1)}</td>
+            <td>{`${record.price} DA`}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

@@ -1,6 +1,6 @@
 import { getProfileInfo } from "@/database/dal/common";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
-import { getTeacherCourses } from "@/database/dal/teacher";
+import { getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 
@@ -19,7 +19,10 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getTeacherCourses("");
+    const res = await getPaymentsInfo("librarian@gmail.com");
+    // const res =
+    //   await sql`SELECT SUM(sessions.price) FROM payments JOIN sessions ON payments.seid = sessions.seid WHERE status = 'paid' AND sessions.id IN (SELECT id FROM users WHERE email = 'ur-didact@gmail.com')`;
+    // const res = await getTeacherCourses("");
     // const res = await getProfileInfo("librarian@gmail.com");
     console.log(res);
     // const res = await getStudentPayments("");
@@ -34,8 +37,8 @@ export async function GET(request: Request) {
     }
   } catch (err: any) {
     console.error(err.message);
-    console.error("ERROR CAUSE:");
-    console.error(err.cause);
+    // console.error("ERROR CAUSE:");
+    // console.error(err.cause);
 
     return Response.json({ err_msg: "Something wrong happened. Try again later!", err_cause: err.cause });
   }
