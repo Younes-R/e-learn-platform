@@ -132,19 +132,12 @@ export async function initializeDatabase() {
     id UUID,
     FOREIGN KEY (id) REFERENCES users(id)
     )`,
-    sql`CREATE TABLE IF NOT EXISTS chapters(
-    title VARCHAR(30),
-    cid UUID,
-    PRIMARY KEY(title, cid),
-    FOREIGN KEY (cid) REFERENCES courses(cid)
-    )`,
     sql`CREATE TABLE IF NOT EXISTS documents(
     file_id VARCHAR,
     doc_title VARCHAR(30),
-    title VARCHAR(30),
     cid UUID,
-    PRIMARY KEY(doc_title, title, cid),
-    FOREIGN KEY (title, cid) REFERENCES chapters(title, cid)
+    PRIMARY KEY(cid, doc_title),
+    FOREIGN KEY (cid) REFERENCES courses(cid)
     )`,
     sql`CREATE TYPE IF NOT EXISTS session_type AS ENUM ('online', 'offline')`,
     sql`CREATE TABLE IF NOT EXISTS sessions(

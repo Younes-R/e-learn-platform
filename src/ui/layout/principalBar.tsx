@@ -7,59 +7,66 @@ import TeachersIcon from "../icons/teachersIcon";
 import PaymentsIcon from "../icons/paymentsIcon";
 import SupportIcon from "../icons/supportIcon";
 import SettingsIcon from "../icons/settingsIcon";
+import { verifyRefreshToken } from "@/lib/utils";
 
-export default function PrincipalBar() {
-  return (
-    <aside className={styles.aside}>
-      <h2>
-        <span>Logo</span>
-      </h2>
-      <nav className={styles.nav}>
-        <ul className={styles.ul}>
-          <li>
-            <Link href="/common/explore">
-              <ExploreIcon />
-              <span>Explore</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/student/courses">
-              <CoursesIcon />
-              <span>Courses</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/student/schedule">
-              <ScheduleIcon />
-              <span>Schedule</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/student/teachers">
-              <TeachersIcon />
-              <span>Teachers</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/student/payments">
-              <PaymentsIcon />
-              <span>Payments</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/common/support">
-              <SupportIcon />
-              <span>Support</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/common/settings">
-              <SettingsIcon />
-              <span>Settings</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-  );
+export default async function PrincipalBar() {
+  const { role } = await verifyRefreshToken();
+
+  if (!["moderator", "admin"].includes(role)) {
+    return (
+      <aside className={styles.aside}>
+        <h2>
+          <span>Logo</span>
+        </h2>
+        <nav className={styles.nav}>
+          <ul className={styles.ul}>
+            <li>
+              <Link href="/common/explore">
+                <ExploreIcon />
+                <span>Explore</span>
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${role}/courses`}>
+                <CoursesIcon />
+                <span>Courses</span>
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${role}/schedule`}>
+                <ScheduleIcon />
+                <span>Schedule</span>
+              </Link>
+            </li>
+            {role === "student" ? (
+              <li>
+                <Link href="/student/teachers">
+                  <TeachersIcon />
+                  <span>Teachers</span>
+                </Link>
+              </li>
+            ) : null}
+            <li>
+              <Link href={`/${role}/payments`}>
+                <PaymentsIcon />
+                <span>Payments</span>
+              </Link>
+            </li>
+            <li className={styles["support-list-item"]}>
+              <Link href="/common/support">
+                <SupportIcon />
+                <span>Support</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/common/settings">
+                <SettingsIcon />
+                <span>Settings</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    );
+  }
 }

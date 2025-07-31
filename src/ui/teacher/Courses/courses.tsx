@@ -7,27 +7,32 @@ import DeletePanel from "./deletePanel";
 import CreatePanel from "./createPanel";
 import EditPanel from "./editPanel";
 import CreateIcon from "@/ui/icons/createIcon";
-import { CourseDataSegment, CoursesDataSegments } from "@/database/definitions";
 
 export default function Courses(props: {
-  coursesDataSegments: Array<
-    CourseDataSegment & {
-      price?: number;
-      module?: string;
-      level?: string;
-      documents?: Array<{ title: string; uri: string }>; // we should fix types later
-    }
-  >;
+  coursesDataSegments: Array<{
+    cid: string;
+    title: string;
+    description: string;
+    enrolledStudentsNumber: number;
+    price: number;
+    module: string;
+    level: string;
+    documents: Array<{ title: string; uri: string }>; // we should fix types later
+  }> | null;
 }) {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [isForm, setIsForm] = useState<"create" | "edit" | "delete" | null>(null);
   return (
     <div className={styles.courses}>
-      <CoursesList
-        CoursesDataSegments={props.coursesDataSegments}
-        handleClick={setSelectedCourse}
-        selectedCourse={selectedCourse}
-      />
+      {props.coursesDataSegments && props.coursesDataSegments.length > 0 ? (
+        <CoursesList
+          CoursesDataSegments={props.coursesDataSegments}
+          handleClick={setSelectedCourse}
+          selectedCourse={selectedCourse}
+        />
+      ) : (
+        <p>You have no courses.</p>
+      )}
       <section className={styles["second-row"]}>
         <button
           onClick={() => setIsForm("create")}
@@ -36,7 +41,7 @@ export default function Courses(props: {
           <CreateIcon />
           <span>Add Course</span>
         </button>
-        {selectedCourse ? (
+        {props.coursesDataSegments && props.coursesDataSegments.length > 0 && selectedCourse ? (
           <div className={styles["second-row__course-info"]}>
             <h3>{props.coursesDataSegments.find((course) => course.cid === selectedCourse)?.title}</h3>
             <div className={styles["second-row__course-info__description"]}>
@@ -53,7 +58,7 @@ export default function Courses(props: {
           </div>
         ) : null}
       </section>
-      {isForm === "delete" ? (
+      {props.coursesDataSegments && props.coursesDataSegments.length > 0 && isForm === "delete" ? (
         <DeletePanel
           resourceType="Course"
           resourceName={props.coursesDataSegments.find((course) => course.cid === selectedCourse)?.title!}
@@ -61,7 +66,7 @@ export default function Courses(props: {
         />
       ) : null}
       {isForm === "create" ? <CreatePanel setIsForm={setIsForm} /> : null}
-      {isForm === "edit" ? (
+      {props.coursesDataSegments && props.coursesDataSegments.length > 0 && isForm === "edit" ? (
         <EditPanel
           setIsForm={setIsForm}
           selectedCourseData={props.coursesDataSegments.find((course) => course.cid === selectedCourse)!}

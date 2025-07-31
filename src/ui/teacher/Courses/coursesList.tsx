@@ -3,7 +3,12 @@ import styles from "./coursesList.module.css";
 import { CoursesDataSegments } from "@/database/definitions";
 
 export default function CoursesList(props: {
-  CoursesDataSegments: CoursesDataSegments;
+  CoursesDataSegments: Array<{
+    cid: string;
+    title: string;
+    description: string;
+    enrolledStudentsNumber: number;
+  }>;
   handleClick: Function;
   selectedCourse: string | null;
 }) {
