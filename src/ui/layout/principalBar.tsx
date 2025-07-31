@@ -6,6 +6,7 @@ import ScheduleIcon from "../icons/scheduleIcon";
 import TeachersIcon from "../icons/teachersIcon";
 import PaymentsIcon from "../icons/paymentsIcon";
 import SupportIcon from "../icons/supportIcon";
+
 import SettingsIcon from "../icons/settingsIcon";
 import { verifyRefreshToken } from "@/lib/utils";
 
@@ -52,6 +53,44 @@ export default async function PrincipalBar() {
                 <span>Payments</span>
               </Link>
             </li>
+            <li className={styles["support-list-item"]}>
+              <Link href="/common/support">
+                <SupportIcon />
+                <span>Support</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/common/settings">
+                <SettingsIcon />
+                <span>Settings</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    );
+  }
+
+  if (role === "moderator") {
+    return (
+      <aside className={styles.aside}>
+        <h2>
+          <span>Logo</span>
+        </h2>
+        <nav className={styles.nav}>
+          <ul className={styles.ul}>
+            <li>
+              <Link href="/common/explore">
+                <ExploreIcon />
+                <span>Explore</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/moderator">
+                <span>Reports</span>
+              </Link>
+            </li>
+
             <li className={styles["support-list-item"]}>
               <Link href="/common/support">
                 <SupportIcon />
