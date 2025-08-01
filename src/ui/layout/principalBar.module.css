@@ -49,6 +49,10 @@
   margin-top: auto;
 }
 
+.group-first-list-item {
+  margin-top: 1.2em;
+}
+
 .ul span {
   display: inline-block; /* or block, as needed */
   opacity: 1;
