@@ -51,12 +51,13 @@ export interface SessionData {
   module: string;
   year: string;
   price: number;
-  type: "online" | "offline";
+  type: string;
   addressLink: string;
   day: Date;
   startTime: string;
   endTime: string;
-  teacher: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface CoursePlus extends CourseDataSegment {

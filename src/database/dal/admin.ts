@@ -2,6 +2,37 @@ import { neon } from "@neondatabase/serverless";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function getSessions() {
+  try {
+    const res =
+      await sql`SELECT seid, module, year, sessions.type, address_link AS "addressLink", price, day, start_time AS "startTime", end_time AS "endTime", first_name AS "firstName", last_name AS "lastName" FROM sessions JOIN users ON sessions.id = users.id`;
+    if (res && res.length > 0) {
+      return res as Array<{
+        seid: string;
+        module: string;
+        year: string;
+        type: string;
+        addressLink: string;
+        price: number;
+        day: Date;
+        startTime: string;
+        endTime: string;
+        firstName: string;
+        lastName: string;
+      }>;
+    } else {
+      return null;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[getSessions]: Failed to get sessions.", { cause: err });
+  }
+}
+
 export async function getCourses() {
   try {
     const coursesDataSegments =
