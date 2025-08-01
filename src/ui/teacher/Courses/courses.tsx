@@ -31,7 +31,7 @@ export default function Courses(props: {
           selectedCourse={selectedCourse}
         />
       ) : (
-        <p>You have no courses.</p>
+        <p>No courses to display.</p>
       )}
       <section className={styles["second-row"]}>
         <button

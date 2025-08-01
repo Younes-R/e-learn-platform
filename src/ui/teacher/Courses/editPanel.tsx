@@ -109,7 +109,7 @@ export default function EditPanel(props: {
               </li>
             ))}
             {files.map((file) => (
-              <li key={file.name}>
+              <li key={file.name + file.size}>
                 <span>{file.name.length < 50 ? file.name : file.name.substring(0, 50) + `...`}</span>
                 <button className={styles["create-panel__files-list__delete-button"]}>Delete</button>
                 {/* this button should delete the newly uploaded file from our file array, just that */}

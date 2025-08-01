@@ -9,15 +9,6 @@ import { Moderator, Student, Teacher } from "@/database/definitions";
 
 // profile picture should be what exactly ? I suggest to download them on the server to send them later to the component
 
-// {
-//   firstName: string;
-//   lastName: string;
-//   phoneNumber: string;
-//   email: string;
-//   profilePicture: string;
-//   createdAtYear: number;
-// }
-
 export default function Users(props: {
   usersType: "students" | "teachers" | "moderators";
   users: Array<{
@@ -26,9 +17,9 @@ export default function Users(props: {
     birthDate: Date;
     phoneNumber: string;
     email: string;
-    profilePic: string;
+    profilePicture: string;
     bio: string;
-    createdAtYear: number;
+    createdAtYear?: number;
     address?: string;
     cv?: string;
     diploma?: string;
@@ -61,8 +52,8 @@ export default function Users(props: {
               }`}
             >
               <Avatar
-                userEmail={""}
-                profilePictureId={""}
+                userEmail={user.email}
+                profilePictureId={user.profilePicture}
               />
               {`${user.firstName} ${user.lastName}`}
             </li>
@@ -83,7 +74,7 @@ export default function Users(props: {
               props.users.find((user) => user.email === selectedUser)?.firstName[0]
             }. ${props.users.find((user) => user.email === selectedUser)?.lastName}`}</h3>
             <ul className={styles["user-info__list"]}>
-              <li>{`User since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li>
+              {/* <li>{`User since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li> */}
               <li>{`Phone Number: ${props.users.find((user) => user.email === selectedUser)?.phoneNumber}`}</li>
               <li>{`Email: ${props.users.find((user) => user.email === selectedUser)?.email}`}</li>
             </ul>

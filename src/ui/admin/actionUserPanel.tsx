@@ -11,9 +11,9 @@ export default function ActionUserPanel(props: {
     birthDate: Date;
     phoneNumber: string;
     email: string;
-    profilePic: string;
+    profilePicture: string;
     bio: string;
-    createdAtYear: number;
+    createdAtYear?: number;
     address?: string;
     cv?: string;
     diploma?: string;
