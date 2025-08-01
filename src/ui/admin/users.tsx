@@ -9,26 +9,6 @@ import { Moderator, Student, Teacher } from "@/database/definitions";
 
 // profile picture should be what exactly ? I suggest to download them on the server to send them later to the component
 
-// {
-//   firstName: string;
-//   lastName: string;
-//   phoneNumber: string;
-//   email: string;
-//   profilePicture: string;
-//   createdAtYear: number;
-// }
-
-// firstName: string;
-//     lastName: string;
-//     birthDate: Date;
-//     phoneNumber: string;
-//     email: string;
-//     profilePicture: string;
-//     bio: string;
-//     address: string;
-//     cv: string;
-//     diploma: string;
-
 export default function Users(props: {
   usersType: "students" | "teachers" | "moderators";
   users: Array<{

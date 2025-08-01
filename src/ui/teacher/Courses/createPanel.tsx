@@ -82,7 +82,9 @@ export default function CreatePanel(props: { setIsForm: Function }) {
           </label>
           <ul className={styles["create-panel__files-list"]}>
             {files.map((file) => (
-              <li key={file.name}>{file.name.length < 50 ? file.name : file.name.substring(0, 50) + `...`}</li>
+              <li key={file.name + file.size}>
+                {file.name.length < 50 ? file.name : file.name.substring(0, 50) + `...`}
+              </li>
             ))}
           </ul>
         </div>

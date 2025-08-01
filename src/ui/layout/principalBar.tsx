@@ -123,7 +123,7 @@ export default async function PrincipalBar() {
             <li>
               <Link href="/admin/">
                 <DashboardIcon />
-                <span>DashBoard</span>
+                <span>Dashboard</span>
               </Link>
             </li>
             <li className={styles["group-first-list-item"]}>
