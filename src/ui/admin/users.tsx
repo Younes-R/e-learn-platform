@@ -18,6 +18,17 @@ import { Moderator, Student, Teacher } from "@/database/definitions";
 //   createdAtYear: number;
 // }
 
+// firstName: string;
+//     lastName: string;
+//     birthDate: Date;
+//     phoneNumber: string;
+//     email: string;
+//     profilePicture: string;
+//     bio: string;
+//     address: string;
+//     cv: string;
+//     diploma: string;
+
 export default function Users(props: {
   usersType: "students" | "teachers" | "moderators";
   users: Array<{
@@ -26,9 +37,9 @@ export default function Users(props: {
     birthDate: Date;
     phoneNumber: string;
     email: string;
-    profilePic: string;
+    profilePicture: string;
     bio: string;
-    createdAtYear: number;
+    createdAtYear?: number;
     address?: string;
     cv?: string;
     diploma?: string;
@@ -61,8 +72,8 @@ export default function Users(props: {
               }`}
             >
               <Avatar
-                userEmail={""}
-                profilePictureId={""}
+                userEmail={user.email}
+                profilePictureId={user.profilePicture}
               />
               {`${user.firstName} ${user.lastName}`}
             </li>
@@ -83,7 +94,7 @@ export default function Users(props: {
               props.users.find((user) => user.email === selectedUser)?.firstName[0]
             }. ${props.users.find((user) => user.email === selectedUser)?.lastName}`}</h3>
             <ul className={styles["user-info__list"]}>
-              <li>{`User since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li>
+              {/* <li>{`User since ${props.users.find((user) => user.email === selectedUser)?.createdAtYear}`} </li> */}
               <li>{`Phone Number: ${props.users.find((user) => user.email === selectedUser)?.phoneNumber}`}</li>
               <li>{`Email: ${props.users.find((user) => user.email === selectedUser)?.email}`}</li>
             </ul>

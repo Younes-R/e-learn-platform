@@ -3,12 +3,17 @@
   width: 35px;
   height: 35px;
   border-radius: 200px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: whitesmoke;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .link img {
   border: 2px solid #999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   /* border: 1px solid red; */
   border-radius: 200px;
 }
