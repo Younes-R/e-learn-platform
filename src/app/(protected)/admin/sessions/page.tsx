@@ -5,7 +5,7 @@ import { getSessions } from "@/database/dal/admin";
 
 export default async function Page() {
   await verifyRefreshToken();
-  await verifyRoles(["teacher"]);
+  await verifyRoles(["admin"]);
   const sessions = await getSessions();
 
   return (

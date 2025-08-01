@@ -9,6 +9,10 @@ export default function Sessions(props: { sessionsData: Array<SessionData> | nul
   const [selectedSession, setSelectedSession] = useState<string | null>(null);
   const [isAction, setIsAction] = useState<"edit" | "delete" | null>(null);
 
+  const selectedSessionObject = props.sessionsData
+    ? props.sessionsData.find((session) => session.seid === selectedSession)
+    : null;
+
   const handleClick = (seid: string) => {
     if (!selectedSession) {
       setSelectedSession(seid);
@@ -49,39 +53,35 @@ export default function Sessions(props: { sessionsData: Array<SessionData> | nul
           <p>No sessions to display.</p>
         )}
       </section>
-      {props.sessionsData ? (
+      {props.sessionsData && selectedSessionObject ? (
         <section className={styles["second-section"]}>
           {selectedSession ? (
             <div className={styles["session-info"]}>
-              <h3 className={styles["session-info__header"]}>
-                {props.sessionsData.find((session) => session.seid === selectedSession)?.module}
-              </h3>
+              <h3 className={styles["session-info__header"]}>{selectedSessionObject?.module}</h3>
               <ul className={styles["session-info__time-info-list"]}>
-                <li>{props.sessionsData.find((session) => session.seid === selectedSession)?.day.toDateString()}</li>
-                <li>{`${props.sessionsData.find((session) => session.seid === selectedSession)?.startTime} - ${
-                  props.sessionsData.find((session) => session.seid === selectedSession)?.endTime
-                } `}</li>
+                <li>{selectedSessionObject?.day.toDateString()}</li>
+                <li>{`${selectedSessionObject?.startTime} - ${selectedSessionObject?.endTime} `}</li>
                 <li>
                   <span
                     className={
-                      props.sessionsData.find((session) => session.seid === selectedSession)?.type === "online"
+                      selectedSessionObject?.type === "online"
                         ? styles["session-info__time-info-list__online"]
                         : styles["session-info__time-info-list__address"]
                     }
                   >
-                    {props.sessionsData.find((session) => session.seid === selectedSession)?.type === "online"
-                      ? "Online"
-                      : props.sessionsData.find((session) => session.seid === selectedSession)?.addressLink}
+                    {selectedSessionObject?.type === "online" ? "Online" : selectedSessionObject?.addressLink}
                   </span>
                 </li>
               </ul>
               <ul className={styles["session-info__info-list"]}>
-                <li>By Dr. Zedek</li>
+                <li>{`By ${selectedSessionObject?.firstName[0].toUpperCase()}. ${
+                  selectedSessionObject?.lastName[0].toUpperCase() + selectedSessionObject?.lastName.substring(1)
+                }`}</li>
                 <li>
-                  <span>200DA</span>
+                  <span>{`${selectedSessionObject.price}DA`}</span>
                 </li>
               </ul>
-              <p>280 students enrolled in</p>
+              <p>{`...(implement this) students enrolled in`}</p>
               <div className={styles["session-info__info"]}></div>
               <div className={styles["session-info__actions"]}>
                 <button
@@ -104,7 +104,7 @@ export default function Sessions(props: { sessionsData: Array<SessionData> | nul
       {props.sessionsData && isAction === "delete" ? (
         <DeletePanel
           resourceType="Session"
-          resourceName={props.sessionsData.find((session) => session.seid === selectedSession)?.module!}
+          resourceName={selectedSessionObject?.module!}
           setIsForm={setIsAction}
         />
       ) : null}
