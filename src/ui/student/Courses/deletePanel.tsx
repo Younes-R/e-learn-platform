@@ -1,9 +1,12 @@
 import styles from "./deletePanel.module.css";
+import { deleteUser } from "@/actions/admin";
 
 export default function DeletePanel(props: {
   resourceType: "Student" | "Teacher" | "Moderator" | "Course" | "Session";
   resourceName: string;
   setIsForm: Function;
+  setSelectedUser: Function;
+  userEmail: string;
 }) {
   return (
     <section className={styles["action-panel"]}>
@@ -19,7 +22,16 @@ export default function DeletePanel(props: {
           >
             Cancel
           </button>
-          <button className={styles["action-panel__modal__actions__delete"]}>Delete</button>
+          <button
+            onClick={() => {
+              deleteUser(props.userEmail, props.resourceName.toLowerCase() + "s");
+              props.setIsForm(null);
+              props.setSelectedUser(null);
+            }}
+            className={styles["action-panel__modal__actions__delete"]}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </section>

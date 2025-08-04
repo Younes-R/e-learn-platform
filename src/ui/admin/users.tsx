@@ -95,7 +95,7 @@ export default function Users(props: {
           </div>
         ) : null}
       </section>
-      {isAction === "delete" ? (
+      {selectedUser && isAction === "delete" ? (
         <DeletePanel
           resourceType={
             (props.usersType.charAt(0).toUpperCase() + props.usersType.slice(1, props.usersType.length - 1)) as
@@ -109,6 +109,8 @@ export default function Users(props: {
             props.users.find((user) => user.email === selectedUser)?.lastName
           }`}
           setIsForm={setIsAction}
+          setSelectedUser={setSelectedUser}
+          userEmail={selectedUser}
         />
       ) : null}
       {isAction === "create" ? (

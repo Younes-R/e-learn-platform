@@ -1,10 +1,16 @@
 "use client";
 import styles from "./actionUserPanel.module.css";
 import { useActionState } from "react";
-import { createNewUser } from "@/actions/admin";
+import { createUser } from "@/actions/admin";
 
 function createStudent(previousState: any, formData: FormData) {
-  return createNewUser(previousState, formData, "student");
+  return createUser(previousState, formData, "student");
+}
+function createTeacher(previousState: any, formData: FormData) {
+  return createUser(previousState, formData, "teacher");
+}
+function createModerator(previousState: any, formData: FormData) {
+  return createUser(previousState, formData, "moderator");
 }
 
 export default function ActionUserPanel(props: {
@@ -25,7 +31,9 @@ export default function ActionUserPanel(props: {
     diploma?: string;
   };
 }) {
-  const [state, formAction, isPending] = useActionState(createStudent, undefined);
+  const createUser =
+    props.usersType === "students" ? createStudent : props.usersType === "teachers" ? createTeacher : createModerator;
+  const [state, formAction, isPending] = useActionState(createUser, undefined);
 
   return (
     <section className={styles["delete-panel"]}>

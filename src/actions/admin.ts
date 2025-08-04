@@ -2,13 +2,18 @@
 import * as z from "zod/v4";
 import * as bcrypt from "bcryptjs";
 // import * as jwt from "jsonwebtoken";
-import { createUser, getUserByEmail, isUserExistsWith } from "../database/dal/db";
+import {
+  createUser as dbCreateUser,
+  getUserByEmail,
+  isUserExistsWith,
+  deleteUser as dbDeleteUser,
+} from "../database/dal/db";
 import { uploadFile } from "@/database/b2";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-export async function createNewUser(
+export async function createUser(
   previousState: any,
   formData: FormData,
   argUserType: "student" | "teacher" | "moderator"
@@ -16,7 +21,7 @@ export async function createNewUser(
   console.log(formData);
   //   const userType = formData.get("userType");
   const profilePicture = formData.get("profilePicture");
-  const cv = formData.get("cv");
+  const cv = formData.get("curriculumVitae");
   const diploma = formData.get("diploma");
 
   console.log(`FILE TYPE: ${typeof profilePicture}`);
@@ -130,7 +135,7 @@ export async function createNewUser(
 
   try {
     const { password, ...userData } = user;
-    await createUser(argUserType, {
+    await dbCreateUser(argUserType, {
       ...userData,
       pwd: hashedPassword,
       refreshToken: "",
@@ -148,4 +153,15 @@ export async function createNewUser(
   console.log("Server Aciton run and finished!");
 
   revalidatePath(`/admin/${argUserType}s`);
+}
+
+export async function deleteUser(userEmail: string, resourceName: string) {
+  try {
+    const result = await dbDeleteUser(userEmail);
+    revalidatePath(`/admin/${resourceName}`);
+    return `User with email ${userEmail} deleted successfully.`;
+  } catch (err: any) {
+    console.error(err.msg);
+    return "We could not delete the user.";
+  }
 }

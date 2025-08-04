@@ -1,5 +1,6 @@
 import { getUsers } from "@/database/dal/admin";
 import { getProfileInfo } from "@/database/dal/common";
+import { deleteUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
 import { getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
@@ -21,7 +22,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getUsers("moderator");
+    const res = await deleteUser("hawaii@gmail.com");
+    // const res = await getUsers("moderator");
     // const res = await getReports();
     // const res = await getPaymentsInfo("librarian@gmail.com");
     // const res =

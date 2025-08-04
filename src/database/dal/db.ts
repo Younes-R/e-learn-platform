@@ -3,6 +3,32 @@ import { Moderator, Student, Teacher } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function deleteUser(email: string) {
+  try {
+    const res = await sql`DELETE FROM users WHERE email = ${email} RETURNING email`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      throw new Error("[DAL deleteUser]: No users with this email.", {
+        cause: {
+          type: "noUsersFound",
+          description: "no users found with this email to delete them.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noUsersFound") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL deleteUser]: failed to delete user.", { cause: err });
+  }
+}
+
 export async function getUserId(email: string) {
   try {
     const res = await sql`SELECT id FROM users WHERE email = ${email}`;
@@ -52,7 +78,8 @@ export async function createUser(userType: "student" | "teacher" | "moderator", 
     return await createTeacher(user);
   }
 
-  if (userType == "moderator" && !("address" in user)) {
+  if (userType == "moderator") {
+    //&& !("address" in user)
     return await createModerator(user);
   }
 
@@ -89,7 +116,7 @@ async function createModerator(user: Moderator) {
   try {
     const result =
       await sql`INSERT INTO users (first_name, last_name, email, type, birth_date, phone_number, profile_pic, pwd, refresh_token, bio, address, cv, diploma) VALUES ( 
-      ${user.firstName}, ${user.lastName}, ${user.email}, 'moderator', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, NULL, NULL, NULL, NULL
+      ${user.firstName}, ${user.lastName}, ${user.email}, 'moderator', ${user.birthDate}, ${user.phoneNumber}, ${user.profilePic}, ${user.pwd}, ${user.refreshToken}, ${user.bio}, NULL, NULL, NULL
       ) returning *`;
     return result;
   } catch (error) {
