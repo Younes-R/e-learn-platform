@@ -10,6 +10,7 @@ import DashboardIcon from "../icons/dashboardIcon";
 import ModeratorsIcon from "../icons/moderatorsIcon";
 import StudentsIcon from "../icons/studentsIcon";
 import SessionsIcon from "../icons/sessionsIcon";
+import ReportsIcon from "../icons/reportsIcon";
 
 import SettingsIcon from "../icons/settingsIcon";
 import { verifyRefreshToken } from "@/lib/utils";
@@ -91,6 +92,7 @@ export default async function PrincipalBar() {
             </li>
             <li>
               <Link href="/moderator">
+                <ReportsIcon />
                 <span>Reports</span>
               </Link>
             </li>

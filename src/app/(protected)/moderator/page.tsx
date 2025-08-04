@@ -5,7 +5,7 @@ import { getReports } from "@/database/dal/moderator";
 
 export default async function Page() {
   await verifyRefreshToken();
-  await verifyRoles(["teacher"]);
+  await verifyRoles(["moderator"]);
   const reports = await getReports();
 
   return (

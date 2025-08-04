@@ -21,6 +21,7 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 5. Implement a notification system
 6. Create support and settings pages
 7. create the landing page
+8. Implement search system
 
 ## Implementation:
 

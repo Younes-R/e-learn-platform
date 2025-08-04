@@ -5,7 +5,7 @@ import { getTeachers, getCourses, getSessions } from "@/database/dal/common";
 
 export default async function Page() {
   await verifyRefreshToken();
-  await verifyRoles(["student", "teacher"]);
+  await verifyRoles(["student", "teacher", "moderator"]);
   const teachersData = await getTeachers();
   const coursesData = await getCourses();
   const sessionsData = await getSessions();
