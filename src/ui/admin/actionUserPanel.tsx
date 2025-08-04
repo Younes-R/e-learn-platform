@@ -1,5 +1,11 @@
-import { Moderator, Student, Teacher } from "@/database/definitions";
+"use client";
 import styles from "./actionUserPanel.module.css";
+import { useActionState } from "react";
+import { createNewUser } from "@/actions/admin";
+
+function createStudent(previousState: any, formData: FormData) {
+  return createNewUser(previousState, formData, "student");
+}
 
 export default function ActionUserPanel(props: {
   actionType: "Create" | "Edit";
@@ -19,11 +25,14 @@ export default function ActionUserPanel(props: {
     diploma?: string;
   };
 }) {
+  const [state, formAction, isPending] = useActionState(createStudent, undefined);
+
   return (
     <section className={styles["delete-panel"]}>
       <form
         className={styles["delete-panel__form"]}
-        action=""
+        action={formAction}
+        encType="multipart/form-data"
       >
         <div className={styles["delete-panel__form__header"]}>
           <h3>
@@ -31,7 +40,7 @@ export default function ActionUserPanel(props: {
             {props.usersType.charAt(0).toUpperCase() + props.usersType.slice(1, props.usersType.length - 1)} Profile
           </h3>
           <div className={styles["delete-panel__form__header__actions"]}>
-            <button className={styles["delete-panel__form__header__actions__edit"]}>Edit</button>
+            <button className={styles["delete-panel__form__header__actions__edit"]}>Create</button>
             <button
               onClick={() => props.setIsAction(null)}
               className={styles["delete-panel__form__header__actions__cancel"]}
@@ -82,7 +91,6 @@ export default function ActionUserPanel(props: {
             max={new Date().toISOString().split("T")[0]}
           />
         </div>
-
         {props.usersType === "teachers" ? (
           <>
             <div>
@@ -112,7 +120,6 @@ export default function ActionUserPanel(props: {
             </div>
           </>
         ) : null}
-
         {/* </div>
         <div> */}
         <div className={styles["delete-panel__form__email-phone-div"]}>
@@ -136,7 +143,7 @@ export default function ActionUserPanel(props: {
           </label>
         </div>
         <div>
-          <label htmlFor="profile-picture">Change Profile Picture:</label>
+          <label htmlFor="profile-picture">Add Profile Picture:</label>
           <input
             type="file"
             name="profilePicture"
@@ -153,6 +160,8 @@ export default function ActionUserPanel(props: {
             defaultValue={props.actionType === "Edit" ? props.userData.bio : ""}
           ></textarea>
         </div>
+
+        {state ? <p style={{ color: "red" }}>{state}</p> : null}
       </form>
     </section>
   );

@@ -22,6 +22,7 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 6. Create support and settings pages
 7. create the landing page
 8. Implement search system
+9. Add error handling on the RSC pages
 
 ## Implementation:
 
