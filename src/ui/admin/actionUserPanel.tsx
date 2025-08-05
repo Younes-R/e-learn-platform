@@ -29,7 +29,7 @@ export default function ActionUserPanel(props: {
     address?: string;
     cv?: string;
     diploma?: string;
-  };
+  } | null;
 }) {
   const createUser =
     props.usersType === "students" ? createStudent : props.usersType === "teachers" ? createTeacher : createModerator;
@@ -64,7 +64,7 @@ export default function ActionUserPanel(props: {
               type="text"
               name="firstName"
               id="first-name"
-              defaultValue={props.actionType === "Edit" ? props.userData.firstName : ""}
+              defaultValue={props.actionType === "Edit" && props.userData ? props.userData.firstName : ""}
             />
           </label>
           <label htmlFor="last-name">
@@ -73,7 +73,7 @@ export default function ActionUserPanel(props: {
               type="text"
               name="lastName"
               id="last-name"
-              defaultValue={props.actionType === "Edit" ? props.userData.lastName : ""}
+              defaultValue={props.actionType === "Edit" && props.userData ? props.userData.lastName : ""}
             />
           </label>
         </div>
@@ -94,7 +94,9 @@ export default function ActionUserPanel(props: {
             name="birthDate"
             id="birth-date"
             defaultValue={
-              props.actionType === "Edit" ? new Date(props.userData.birthDate).toISOString().split("T")[0] : ""
+              props.actionType === "Edit" && props.userData
+                ? new Date(props.userData.birthDate).toISOString().split("T")[0]
+                : ""
             }
             max={new Date().toISOString().split("T")[0]}
           />
@@ -107,7 +109,7 @@ export default function ActionUserPanel(props: {
                 type="text"
                 name="location"
                 id="location"
-                defaultValue={props.actionType === "Edit" ? props.userData.address : ""}
+                defaultValue={props.actionType === "Edit" && props.userData ? props.userData.address : ""}
               />
             </div>
             <div>
@@ -137,7 +139,7 @@ export default function ActionUserPanel(props: {
               type="email"
               name="email"
               id="email"
-              defaultValue={props.actionType === "Edit" ? props.userData.email : ""}
+              defaultValue={props.actionType === "Edit" && props.userData ? props.userData.email : ""}
             />
           </label>
           <label htmlFor="phone-number">
@@ -146,7 +148,7 @@ export default function ActionUserPanel(props: {
               type="number"
               name="phoneNumber"
               id="phone-number"
-              defaultValue={props.actionType === "Edit" ? props.userData.phoneNumber : ""}
+              defaultValue={props.actionType === "Edit" && props.userData ? props.userData.phoneNumber : ""}
             />
           </label>
         </div>
@@ -165,7 +167,7 @@ export default function ActionUserPanel(props: {
             id="bio"
             cols={67}
             rows={10}
-            defaultValue={props.actionType === "Edit" ? props.userData.bio : ""}
+            defaultValue={props.actionType === "Edit" && props.userData ? props.userData.bio : ""}
           ></textarea>
         </div>
 

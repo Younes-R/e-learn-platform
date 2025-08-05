@@ -23,7 +23,7 @@ export default function Users(props: {
     address?: string;
     cv?: string;
     diploma?: string;
-  }>;
+  }> | null;
 }) {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [isAction, setIsAction] = useState<"create" | "edit" | "delete" | null>(null);
@@ -41,25 +41,29 @@ export default function Users(props: {
 
   return (
     <div className={styles["users"]}>
-      <section className={styles["first-section"]}>
-        <ul className={styles["first-section__user-list"]}>
-          {props.users.map((user) => (
-            <li
-              onClick={() => handleClick(user.email)}
-              key={user.email}
-              className={`${styles["first-section__user-list__item"]} ${
-                selectedUser === user.email ? styles["appear"] : ""
-              }`}
-            >
-              <Avatar
-                userEmail={user.email}
-                profilePictureId={user.profilePicture}
-              />
-              {`${user.firstName} ${user.lastName}`}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {props.users && props.users.length > 0 ? (
+        <section className={styles["first-section"]}>
+          <ul className={styles["first-section__user-list"]}>
+            {props.users.map((user) => (
+              <li
+                onClick={() => handleClick(user.email)}
+                key={user.email}
+                className={`${styles["first-section__user-list__item"]} ${
+                  selectedUser === user.email ? styles["appear"] : ""
+                }`}
+              >
+                <Avatar
+                  userEmail={user.email}
+                  profilePictureId={user.profilePicture}
+                />
+                {`${user.firstName} ${user.lastName}`}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : (
+        <p>No users to display.</p>
+      )}
 
       <section className={styles["second-section"]}>
         <button
@@ -68,7 +72,7 @@ export default function Users(props: {
         >
           Create a User
         </button>
-        {selectedUser ? (
+        {props.users && props.users.length > 0 && selectedUser ? (
           <div className={styles["user-info"]}>
             <h3 className={styles["user-info__header"]}>{`${
               props.users.find((user) => user.email === selectedUser)?.firstName[0]
@@ -95,7 +99,7 @@ export default function Users(props: {
           </div>
         ) : null}
       </section>
-      {selectedUser && isAction === "delete" ? (
+      {props.users && props.users.length > 0 && selectedUser && isAction === "delete" ? (
         <DeletePanel
           resourceType={
             (props.usersType.charAt(0).toUpperCase() + props.usersType.slice(1, props.usersType.length - 1)) as
@@ -118,10 +122,10 @@ export default function Users(props: {
           usersType={props.usersType}
           actionType="Create"
           setIsAction={setIsAction}
-          userData={props.users.find((user) => user.email === selectedUser)!}
+          userData={props.users?.find((user) => user.email === selectedUser)!}
         />
       ) : null}
-      {isAction === "edit" ? (
+      {props.users && props.users.length > 0 && isAction === "edit" ? (
         <ActionUserPanel
           usersType={props.usersType}
           actionType="Edit"

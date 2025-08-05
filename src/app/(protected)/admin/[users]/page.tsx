@@ -25,14 +25,11 @@ export default async function Page({ params }: { params: Promise<{ users: "stude
   return (
     <main className={styles.main}>
       <h2>{users.charAt(0).toUpperCase() + users.slice(1)}</h2>
-      {usersData ? (
-        <Users
-          usersType={users}
-          users={usersData}
-        />
-      ) : (
-        <p>No users to display.</p>
-      )}
+
+      <Users
+        usersType={users}
+        users={usersData}
+      />
     </main>
   );
 }

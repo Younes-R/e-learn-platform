@@ -106,6 +106,8 @@ export default function Sessions(props: { sessionsData: Array<SessionData> | nul
           resourceType="Session"
           resourceName={selectedSessionObject?.module!}
           setIsForm={setIsAction}
+          setSelectedUser={() => {}}
+          userEmail=""
         />
       ) : null}
     </div>
