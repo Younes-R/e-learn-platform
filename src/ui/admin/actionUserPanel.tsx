@@ -1,7 +1,7 @@
 "use client";
 import styles from "./actionUserPanel.module.css";
 import { useActionState } from "react";
-import { createUser } from "@/actions/admin";
+import { createUser, updateUser } from "@/actions/admin";
 
 function createStudent(previousState: any, formData: FormData) {
   return createUser(previousState, formData, "student");
@@ -13,10 +13,21 @@ function createModerator(previousState: any, formData: FormData) {
   return createUser(previousState, formData, "moderator");
 }
 
+function updateStudent(previousState: any, formData: FormData) {
+  return updateUser(previousState, formData, "student");
+}
+function updateTeacher(previousState: any, formData: FormData) {
+  return updateUser(previousState, formData, "teacher");
+}
+function updateModerator(previousState: any, formData: FormData) {
+  return updateUser(previousState, formData, "moderator");
+}
+
 export default function ActionUserPanel(props: {
   actionType: "Create" | "Edit";
   usersType: "students" | "teachers" | "moderators";
   setIsAction: Function;
+  // setSelectedResource: Function;
   userData: {
     firstName: string;
     lastName: string;
@@ -33,7 +44,13 @@ export default function ActionUserPanel(props: {
 }) {
   const createUser =
     props.usersType === "students" ? createStudent : props.usersType === "teachers" ? createTeacher : createModerator;
-  const [state, formAction, isPending] = useActionState(createUser, undefined);
+
+  const updateUser =
+    props.usersType === "students" ? updateStudent : props.usersType === "teachers" ? updateTeacher : updateModerator;
+
+  const actionUser = props.actionType === "Create" ? createUser : updateUser;
+
+  const [state, formAction, isPending] = useActionState(actionUser, undefined);
 
   return (
     <section className={styles["delete-panel"]}>
@@ -48,7 +65,7 @@ export default function ActionUserPanel(props: {
             {props.usersType.charAt(0).toUpperCase() + props.usersType.slice(1, props.usersType.length - 1)} Profile
           </h3>
           <div className={styles["delete-panel__form__header__actions"]}>
-            <button className={styles["delete-panel__form__header__actions__edit"]}>Create</button>
+            <button className={styles["delete-panel__form__header__actions__edit"]}>{props.actionType}</button>
             <button
               onClick={() => props.setIsAction(null)}
               className={styles["delete-panel__form__header__actions__cancel"]}
@@ -142,6 +159,11 @@ export default function ActionUserPanel(props: {
               defaultValue={props.actionType === "Edit" && props.userData ? props.userData.email : ""}
             />
           </label>
+          <input
+            type="hidden"
+            name="realEmail"
+            value={props.userData ? props.userData?.email : ""}
+          />
           <label htmlFor="phone-number">
             Phone Number:
             <input

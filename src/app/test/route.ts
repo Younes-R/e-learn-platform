@@ -1,12 +1,12 @@
 import { getUsers } from "@/database/dal/admin";
 import { getProfileInfo } from "@/database/dal/common";
-import { deleteUser } from "@/database/dal/db";
+import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
 import { getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
-
+import file from "../../../e-learn-platform.drawio-database-diagram.svg";
 const sql = neon(process.env.DATABASE_URL!);
 
 export async function GET(request: Request) {
@@ -22,7 +22,16 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await deleteUser("hawaii@gmail.com");
+    const res = await updateUser("moderator@gmail.com", "moderator", {
+      firstName: "British",
+      lastName: "Guy",
+      birthDate: new Date(2024, 4, 3),
+      email: "moderator@gmail.com",
+      phoneNumber: "1234567890",
+      profilePicture: "",
+      bio: "hi",
+    });
+    // const res = await deleteUser("hawaii@gmail.com");
     // const res = await getUsers("moderator");
     // const res = await getReports();
     // const res = await getPaymentsInfo("librarian@gmail.com");

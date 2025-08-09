@@ -1,7 +1,143 @@
 import { neon } from "@neondatabase/serverless";
 import { Moderator, Student, Teacher } from "../definitions";
+import { uploadFile } from "../b2";
 
 const sql = neon(process.env.DATABASE_URL!);
+
+interface updatedUser {
+  firstName: string;
+  lastName: string;
+  birthDate: Date;
+  email: string;
+  phoneNumber: string;
+  profilePicture: string | null;
+  bio: string;
+  address?: string;
+  curriculumVitae?: string | null;
+  diploma?: string | null;
+}
+
+export async function updateUser(
+  userEmail: string,
+  userType: "student" | "teacher" | "moderator",
+  updatedUser: updatedUser
+) {
+  // const profilePicArrayBuffer = await updatedUser.profilePicture.arrayBuffer();
+  // const profilePicBuffer = Buffer.from(profilePicArrayBuffer);
+  // let profilePicId: string;
+
+  // try {
+  //   profilePicId = await uploadFile(
+  //     profilePicBuffer,
+  //     updatedUser.profilePicture.name,
+  //     String(updatedUser.profilePicture.size),
+  //     updatedUser.profilePicture.type
+  //   );
+  //   console.log(`RESULT OF UPLOADING PROFILE PIC \n:`, profilePicId);
+  // } catch (err: any) {
+  //   console.error(`BackBlaze B2 Connection Error`);
+  //   throw new Error("[DAL updateUser]: Failed to upload the new profile picture.", { cause: err });
+  // }
+  // const cv = updatedUser.curriculumVitae;
+  // const diploma = updatedUser.diploma;
+
+  // let cvId: string = "";
+  // let diplomaId: string = "";
+
+  // if (userType === "teacher" && cv instanceof File && diploma instanceof File) {
+  //   const cvArrayBuffer = await cv.arrayBuffer();
+  //   const cvBuffer = Buffer.from(cvArrayBuffer);
+
+  //   try {
+  //     cvId = await uploadFile(cvBuffer, cv.name, String(cv.size), cv.type);
+  //     console.log(`RESULT OF UPLOADING CV: \n`, cvId);
+  //   } catch (err: any) {
+  //     console.error(`BackBlaze B2 Connection Error`);
+  //     throw new Error("[DAL updateUser]: Failed to upload the new curriculum vitae.", { cause: err });
+  //   }
+
+  //   const diplomaArrayBuffer = await diploma.arrayBuffer();
+  //   const diplomaBuffer = Buffer.from(diplomaArrayBuffer);
+
+  //   try {
+  //     diplomaId = await uploadFile(diplomaBuffer, diploma.name, String(diploma.size), diploma.type);
+  //     console.log(`RESULT OF UPLOADING DIPLOMA: \n`, diplomaId);
+  //   } catch (err: any) {
+  //     console.error(`BackBlaze B2 Connection Error`);
+  //     throw new Error("[DAL updateUser]: Failed to upload the new diploma.", { cause: err });
+  //   }
+  // }
+
+  try {
+    console.warn(
+      `[DAL updateUser Query Parsing Result]: ${
+        updatedUser.profilePicture ? `profile_pic = ${updatedUser.profilePicture},` : ""
+      }`
+    );
+    const testRes = updatedUser.profilePicture ? `profile_pic = ${updatedUser.profilePicture},` : "";
+    let res;
+    if (userType === "student" || userType === "moderator") {
+      if (updatedUser.profilePicture) {
+        res = await sql`UPDATE users SET
+        first_name = ${updatedUser.firstName},
+        last_name = ${updatedUser.lastName},
+        birth_date = ${updatedUser.birthDate},
+        email = ${updatedUser.email},
+        phone_number = ${updatedUser.phoneNumber},
+        profile_pic = ${updatedUser.profilePicture},
+        bio = ${updatedUser.bio}
+        WHERE email = ${userEmail} RETURNING email`;
+      } else {
+        res = await sql`UPDATE users SET
+        first_name = ${updatedUser.firstName},
+        last_name = ${updatedUser.lastName},
+        birth_date = ${updatedUser.birthDate},
+        email = ${updatedUser.email},
+        phone_number = ${updatedUser.phoneNumber},
+        
+        bio = ${updatedUser.bio}
+        WHERE email = ${userEmail} RETURNING email`;
+      }
+    } else {
+      console.warn(`IS UPDATEDUSER.LOCATION EXIST?: ${updatedUser.address ? true : false}`);
+      console.warn(`IS UPDATEDUSER.PROFILEPICTURE EXIST?: ${updatedUser.profilePicture ? true : false}`);
+      const query = `UPDATE users SET
+        first_name = '${updatedUser.firstName}',
+        last_name = '${updatedUser.lastName}',
+
+        email = '${updatedUser.email}',
+        phone_number = '${updatedUser.phoneNumber}',
+        bio = '${updatedUser.bio}'
+        ${updatedUser.profilePicture ? `, profile_pic = '${updatedUser.profilePicture}'` : ""}
+        ${updatedUser.address !== "" ? `, address = '${updatedUser.address}'` : ""}
+        ${updatedUser.curriculumVitae ? `, cv = '${updatedUser.curriculumVitae}'` : ""}
+        ${updatedUser.diploma ? `, diploma = '${updatedUser.diploma}'` : ""}
+        WHERE email = '${userEmail}' RETURNING email`;
+      console.warn(`[DAL updateUser 2nd Query Parsing Result]: ${query}`);
+      res = await sql.query(query);
+    }
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      throw new Error("[DAL updateUser]: No users with this email.", {
+        cause: {
+          type: "noUsersFound",
+          description: "no users found with this email to update them.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noUsersFound") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL updateUser]: failed to update user.", { cause: err });
+  }
+}
 
 export async function deleteUser(email: string) {
   try {

@@ -72,7 +72,7 @@ export default function Users(props: {
         >
           Create a User
         </button>
-        {props.users && props.users.length > 0 && selectedUser ? (
+        {props.users && props.users.length > 0 && props.users.find((user) => user.email === selectedUser) ? (
           <div className={styles["user-info"]}>
             <h3 className={styles["user-info__header"]}>{`${
               props.users.find((user) => user.email === selectedUser)?.firstName[0]
@@ -122,6 +122,7 @@ export default function Users(props: {
           usersType={props.usersType}
           actionType="Create"
           setIsAction={setIsAction}
+          // setSelectedResource={() => {}}
           userData={props.users?.find((user) => user.email === selectedUser)!}
         />
       ) : null}
@@ -130,6 +131,7 @@ export default function Users(props: {
           usersType={props.usersType}
           actionType="Edit"
           setIsAction={setIsAction}
+          // setSelectedResource={setSelectedUser}
           userData={props.users.find((user) => user.email === selectedUser)!}
         />
       ) : null}
