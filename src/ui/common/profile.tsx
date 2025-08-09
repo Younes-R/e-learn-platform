@@ -121,7 +121,7 @@ export default function Profile(props: {
       </div>
       {isAction === "report" ? (
         <ReportPanel
-          profileEmail="sdads"
+          profileEmail={props.profileEmail}
           setIsAction={setIsAction}
         />
       ) : null}

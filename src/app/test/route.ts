@@ -1,5 +1,5 @@
 import { getUsers } from "@/database/dal/admin";
-import { getProfileInfo } from "@/database/dal/common";
+import { getProfileInfo, reportUser } from "@/database/dal/common";
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
@@ -22,15 +22,16 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await updateUser("moderator@gmail.com", "moderator", {
-      firstName: "British",
-      lastName: "Guy",
-      birthDate: new Date(2024, 4, 3),
-      email: "moderator@gmail.com",
-      phoneNumber: "1234567890",
-      profilePicture: "",
-      bio: "hi",
-    });
+    const res = await reportUser("didact@gmail.com", "librarian@gmail.com", 4, new Date());
+    // const res = await updateUser("moderator@gmail.com", "moderator", {
+    //   firstName: "British",
+    //   lastName: "Guy",
+    //   birthDate: new Date(2024, 4, 3),
+    //   email: "moderator@gmail.com",
+    //   phoneNumber: "1234567890",
+    //   profilePicture: "",
+    //   bio: "hi",
+    // });
     // const res = await deleteUser("hawaii@gmail.com");
     // const res = await getUsers("moderator");
     // const res = await getReports();

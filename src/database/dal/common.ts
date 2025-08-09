@@ -3,6 +3,33 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function reportUser(reporterEmail: string, reportedEmail: string, reason: number, date: Date) {
+  try {
+    const res = await sql`INSERT INTO reports(reporter_id, reported_id, date, reason)
+    VALUES((SELECT id FROM users WHERE email = ${reporterEmail}), (SELECT id FROM users WHERE email = ${reportedEmail}), ${date}, ${reason}) RETURNING reason`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      throw new Error("[DAL reportUser]: Failed to create a new report record.", {
+        cause: {
+          type: "emptyArrayReturned",
+          description: "The database did not create a new row in reports table.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "emptyArrayReturned") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL reportUser]: Failed to report user.", { cause: err });
+  }
+}
+
 export async function getProfileInfo(userEmail: string) {
   try {
     const userDataRes =

@@ -1,11 +1,18 @@
+"use client";
 import styles from "./reportPanel.module.css";
+import { reportUser as saReportUser } from "@/actions/common";
+import { useActionState } from "react";
 
 export default function ReportPanel(props: { profileEmail: string; setIsAction: Function }) {
+  async function reportUser(previousState: any, formData: FormData) {
+    return await saReportUser(props.profileEmail, new Date(), Number(formData.get("reason")));
+  }
+  const [state, formAction, isPending] = useActionState(reportUser, undefined);
   return (
     <section className={styles["report-panel"]}>
       <form
         className={styles["form"]}
-        action=""
+        action={formAction}
       >
         <div className={styles["form__header"]}>
           <h3>Report Account</h3>
@@ -26,7 +33,7 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="spam"
-              value="spam"
+              value="1"
             />
             Spam
           </label>
@@ -35,7 +42,7 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="scam"
-              value="scam"
+              value="2"
             />
             Scam
           </label>
@@ -44,7 +51,7 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="false-information"
-              value="false information"
+              value="3"
             />
             False information
           </label>
@@ -53,7 +60,7 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="inappropriate-behavior"
-              value="inappropriate behavior"
+              value="4"
             />
             Inappropriate behavior
           </label>
@@ -62,7 +69,7 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="i-just-dont-like-it"
-              value="I just don't like it"
+              value="5"
             />
             I just don't like it
           </label>
@@ -71,11 +78,12 @@ export default function ReportPanel(props: { profileEmail: string; setIsAction: 
               type="radio"
               name="reason"
               id="something-else"
-              value="something else"
+              value="6"
             />
             Something else
           </label>
         </div>
+        {state ? <p style={{ color: "red" }}>{state}</p> : null}
       </form>
     </section>
   );

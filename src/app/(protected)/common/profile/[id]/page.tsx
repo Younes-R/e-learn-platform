@@ -9,6 +9,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   await verifyRoles(["student", "teacher", "moderator", "admin"]);
   const { id } = await params;
   console.log(`IS USER EMAIL === PROFILE EMAIL ?:`, email === id);
+  console.log(`NEXT PARAMS'S ID?:`, id.replace("%40", "@"));
 
   // console.log(`ID:`, id);
   const profileData = await getProfileInfo(id.replace("%40", "@"));
