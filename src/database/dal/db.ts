@@ -340,7 +340,7 @@ export async function initializeDatabase() {
     sql`CREATE TABLE IF NOT EXISTS reports(
     reporter_id UUID,
     reported_id UUID,
-    date DATE,
+    date TIMESTAMPTZ,
     PRIMARY KEY (reporter_id, reported_id, date),
     reason INT,
     action action_type,
