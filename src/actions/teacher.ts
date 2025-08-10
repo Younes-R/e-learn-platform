@@ -1,0 +1,72 @@
+"use server";
+import * as z from "zod/v4";
+import { verifyRefreshToken, verifyRoles } from "@/lib/utils";
+import { uploadFile } from "@/database/b2";
+import { createCourse as dbCreateCourse } from "@/database/dal/teacher";
+
+export async function createCourse(previousState: any, formData: FormData) {
+  const { email } = await verifyRefreshToken();
+  await verifyRoles(["teacher"]);
+
+  const Course = z.object({
+    title: z.string().nonempty("You must provide a title.").trim(),
+    price: z.coerce.number("You must provide a price >= to 0.").nonnegative("You must provide a price >= to 0."),
+    module: z.string().nonempty("You must provide a module.").trim(),
+    level: z.string().nonempty("You must provide a level.").trim(),
+    description: z.string().nonempty("You must provide a description.").trim(),
+    files: z
+      .array(
+        z.file().refine((file) => file.size > 0 && !file.name.includes(" "), "You must include at least one document.")
+      )
+      .nonempty(),
+  });
+
+  const result = Course.safeParse({
+    title: formData.get("title"),
+    price: formData.get("price") !== "" ? formData.get("price") : "NaN",
+    module: formData.get("module"),
+    level: formData.get("level"),
+    description: formData.get("description"),
+    files: formData.getAll("files"),
+  });
+
+  if (!result.success) {
+    console.error(result.error.issues);
+    result.error.issues.map((issue, idx) => {
+      console.error(`[${idx}]: ${String(issue.path[0])}
+        Code: ${issue.code}
+        Input: ${issue.input}
+        Message: ${issue.message}
+        `);
+    });
+    return result.error.issues;
+  }
+
+  const course = result.data;
+
+  const documents = await Promise.all(
+    course.files.map(async (file) => {
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+      const fileId = await uploadFile(fileBuffer, file.name, String(file.size), file.type);
+      return { fileId: fileId, title: file.name };
+    })
+  );
+
+  try {
+    const result = await dbCreateCourse(email, course, documents);
+  } catch (err: any) {
+    console.error(err.message);
+    console.error("[SA createCourse]: Failed to create course.");
+    return "Failed to create a course. Try again.";
+  }
+
+  console.log("No errors!");
+  // console.log(`[SA createCourse]: FORM DATA: \n`, formData);
+  // const filesArr = formData.getAll("files") as Array<File>;
+  // console.log(`Files Type:`, typeof filesArr);
+  // console.log(`Files instance of File?:`, filesArr instanceof File);
+  //   console.log(`Files instance of FileList?: `, filesArr instanceof FileList);
+  // console.log(`Files[0] instance of File:`, filesArr[0] instanceof File);
+  //   console.log(`Files[0] Type: `, typeof filesArr[0]);
+  //   console.log(`Files Content: `, filesArr);
+}

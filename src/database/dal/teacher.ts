@@ -1,7 +1,59 @@
 import { neon } from "@neondatabase/serverless";
 import { getUserId } from "./db";
+import { Course } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
+
+export async function createCourse(
+  teacherEmail: string,
+  course: Course,
+  documents: Array<{ fileId: string; title: string }>
+) {
+  let courseId: string;
+  try {
+    const res = await sql`INSERT INTO courses(title, description, price, module, c_year, id)
+      VALUES(${course.title}, ${course.description}, ${course.price}, ${course.module}, ${course.level},
+      (SELECT id FROM users WHERE email = ${teacherEmail})) RETURNING cid`;
+    courseId = res[0].cid;
+    if (documents && documents.length > 0) {
+      const query = documents.reduce((accumulator, document, idx) => {
+        return (
+          accumulator +
+          (documents.length - 1 !== idx
+            ? `('${document.fileId}', '${document.title}', '${courseId}'), `
+            : `('${document.fileId}', '${document.title}', '${courseId}') RETURNING cid`)
+        );
+      }, `INSERT INTO documents(file_id, doc_title, cid) VALUES `);
+      console.log(`[DAL createCourse]: Query: ${query}`);
+      const documentsIds = await sql.query(query);
+      if (documentsIds && documentsIds.length > 0) {
+        return true;
+      } else {
+        throw new Error(
+          "[DAL createCourse]: Failed to insert documents data (file_id, doc_title) into the documents table.",
+          {
+            cause: {
+              type: "noCidsReturned",
+              description: "No cids were returned after the database call.",
+            },
+          }
+        );
+      }
+    } else {
+      return true;
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noCidsReturned") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL createCourse]: Failed to create course.", { cause: err });
+  }
+}
 
 export async function getPaymentsInfo(teacherEmail: string) {
   try {

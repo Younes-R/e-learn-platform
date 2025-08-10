@@ -1,14 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useActionState } from "react";
 import styles from "./createPanel.module.css";
+import { createCourse } from "@/actions/teacher";
 
 export default function CreatePanel(props: { setIsForm: Function }) {
   const [files, setFiles] = useState<Array<File>>([]);
+  const [state, formAction, isPending] = useActionState(createCourse, undefined);
+
   return (
     <section className={styles["create-panel"]}>
       <form
         className={styles["create-panel__form"]}
-        action=""
+        action={formAction}
+        encType="multipart/form-data"
       >
         <div className={styles["create-panel__form__heading"]}>
           <h3>Create a New Course</h3>
@@ -88,6 +92,15 @@ export default function CreatePanel(props: { setIsForm: Function }) {
             ))}
           </ul>
         </div>
+        {state && Array.isArray(state) ? (
+          <ul style={{ color: "red", listStyle: "none" }}>
+            {state.map((issue) => (
+              <li key={`${issue.input}-${issue.message}`}>{`${String(issue.path[0])}: ${issue.message}`}</li>
+            ))}
+          </ul>
+        ) : state ? (
+          <p style={{ color: "red" }}>{state}</p>
+        ) : null}
       </form>
     </section>
   );

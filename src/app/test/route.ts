@@ -3,7 +3,7 @@ import { getProfileInfo, reportUser } from "@/database/dal/common";
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
-import { getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
+import { createCourse, getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 import file from "../../../e-learn-platform.drawio-database-diagram.svg";
@@ -22,7 +22,23 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await reportUser("didact@gmail.com", "librarian@gmail.com", 4, new Date());
+    const res = await createCourse(
+      "didact@gmail.com",
+      {
+        title: "Algebra 03",
+        price: 2500,
+        module: "Mathematics",
+        level: "2CP",
+        description: "This is a module where ...",
+      },
+      []
+      // [
+      //   { fileId: "23", title: "ch3" },
+      //   { fileId: "2", title: "ch2" },
+      //   { fileId: "1", title: "ch1" },
+      // ]
+    );
+    // const res = await reportUser("didact@gmail.com", "librarian@gmail.com", 4, new Date());
     // const res = await updateUser("moderator@gmail.com", "moderator", {
     //   firstName: "British",
     //   lastName: "Guy",

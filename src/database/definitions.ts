@@ -46,6 +46,14 @@ export interface Report {
   reason: string;
 }
 
+export interface Course {
+  title: string;
+  price: number;
+  module: string;
+  level: string;
+  description: string;
+}
+
 export interface SessionData {
   seid: string;
   module: string;
