@@ -300,7 +300,7 @@ export async function initializeDatabase() {
     doc_title VARCHAR(30),
     cid UUID,
     PRIMARY KEY(cid, doc_title),
-    FOREIGN KEY (cid) REFERENCES courses(cid)
+    FOREIGN KEY (cid) REFERENCES courses(cid) ON DELETE CASCADE
     )`,
     sql`CREATE TYPE IF NOT EXISTS session_type AS ENUM ('online', 'offline')`,
     sql`CREATE TABLE IF NOT EXISTS sessions(
