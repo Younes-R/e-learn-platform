@@ -1,8 +1,11 @@
 import styles from "./deletePanel.module.css";
+import { deleteCourse } from "@/actions/teacher";
 
 export default function DeletePanel(props: {
   resourceType: "Student" | "Teacher" | "Moderator" | "Course" | "Session";
   resourceName: string;
+  resourceId: string;
+  setResource: Function;
   setIsForm: Function;
 }) {
   return (
@@ -19,7 +22,16 @@ export default function DeletePanel(props: {
           >
             Cancel
           </button>
-          <button className={styles["action-panel__modal__actions__delete"]}>Delete</button>
+          <button
+            onClick={async () => {
+              await deleteCourse(props.resourceId);
+              props.setResource(null);
+              props.setIsForm(null);
+            }}
+            className={styles["action-panel__modal__actions__delete"]}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </section>

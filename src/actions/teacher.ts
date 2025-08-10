@@ -2,7 +2,21 @@
 import * as z from "zod/v4";
 import { verifyRefreshToken, verifyRoles } from "@/lib/utils";
 import { uploadFile } from "@/database/b2";
-import { createCourse as dbCreateCourse } from "@/database/dal/teacher";
+import { createCourse as dbCreateCourse, deleteCourse as dbDeleteCourse } from "@/database/dal/teacher";
+import { revalidatePath } from "next/cache";
+
+export async function deleteCourse(courseId: string) {
+  const { email } = await verifyRefreshToken();
+  await verifyRoles(["teacher"]);
+  try {
+    const result = await dbDeleteCourse(email, courseId);
+    revalidatePath("/teacher/courses");
+  } catch (err: any) {
+    console.error(err.message);
+    console.error("[SA deleteCourse]: Failed to delete course.");
+    return "Failed to delete course. Try again!";
+  }
+}
 
 export async function createCourse(previousState: any, formData: FormData) {
   const { email } = await verifyRefreshToken();
@@ -54,6 +68,7 @@ export async function createCourse(previousState: any, formData: FormData) {
 
   try {
     const result = await dbCreateCourse(email, course, documents);
+    revalidatePath("/teacher/courses");
   } catch (err: any) {
     console.error(err.message);
     console.error("[SA createCourse]: Failed to create course.");

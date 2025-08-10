@@ -4,6 +4,25 @@ import { Course } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function deleteCourse(teacherEmail: string, courseId: string) {
+  try {
+    const res =
+      await sql`DELETE FROM courses WHERE cid = ${courseId} AND id IN (SELECT id FROM users WHERE email = ${teacherEmail}) RETURNING title`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL deleteCourse]: Failed to delete course.", { cause: err });
+  }
+}
+
 export async function createCourse(
   teacherEmail: string,
   course: Course,

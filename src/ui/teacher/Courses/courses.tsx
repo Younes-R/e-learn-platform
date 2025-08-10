@@ -58,11 +58,13 @@ export default function Courses(props: {
           </div>
         ) : null}
       </section>
-      {props.coursesDataSegments && props.coursesDataSegments.length > 0 && isForm === "delete" ? (
+      {selectedCourse && props.coursesDataSegments && props.coursesDataSegments.length > 0 && isForm === "delete" ? (
         <DeletePanel
           resourceType="Course"
           resourceName={props.coursesDataSegments.find((course) => course.cid === selectedCourse)?.title!}
+          resourceId={selectedCourse}
           setIsForm={setIsForm}
+          setResource={setSelectedCourse}
         />
       ) : null}
       {isForm === "create" ? <CreatePanel setIsForm={setIsForm} /> : null}
