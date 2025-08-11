@@ -3,7 +3,7 @@ import { getProfileInfo, reportUser } from "@/database/dal/common";
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
-import { createCourse, deleteCourse, getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
+import { createCourse, createSession, deleteCourse, getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 import file from "../../../e-learn-platform.drawio-database-diagram.svg";
@@ -22,7 +22,18 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await deleteCourse("asfdf", "eab1cbb0-7549-4111-b5a5-9cfd9ca93080");
+    const res = await createSession("didact@gmail.com", {
+      module: "ALGB3",
+      level: "2CP",
+      price: 2300,
+      type: "online",
+      addressLink: "",
+      places: 20,
+      day: "2023-3-3",
+      startTime: "10:33",
+      endTime: "10:33",
+    });
+    // const res = await deleteCourse("asfdf", "eab1cbb0-7549-4111-b5a5-9cfd9ca93080");
     // const res = await createCourse(
     //   "didact@gmail.com",
     //   {

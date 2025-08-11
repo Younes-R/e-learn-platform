@@ -2,8 +2,60 @@
 import * as z from "zod/v4";
 import { verifyRefreshToken, verifyRoles } from "@/lib/utils";
 import { uploadFile } from "@/database/b2";
-import { createCourse as dbCreateCourse, deleteCourse as dbDeleteCourse } from "@/database/dal/teacher";
+import {
+  createCourse as dbCreateCourse,
+  deleteCourse as dbDeleteCourse,
+  createSession as dbCreateSession,
+} from "@/database/dal/teacher";
 import { revalidatePath } from "next/cache";
+
+export async function createSession(previousState: any, formData: FormData) {
+  const { email } = await verifyRefreshToken();
+  await verifyRoles(["teacher"]);
+  console.log(formData);
+  const Session = z.object({
+    startTime: z.iso.time(),
+    endTime: z.iso.time(),
+    day: z.iso.date(),
+    module: z.string().nonempty(),
+    level: z.string().nonempty(),
+    price: z.coerce.number().nonnegative(),
+    type: z.enum(["offline", "online"]),
+    addressLink: z.string().nonempty(),
+    places: z.coerce.number().positive(),
+  });
+
+  const result = Session.safeParse({
+    startTime: formData.get("startTime"),
+    endTime: formData.get("endTime"),
+    day: formData.get("day"),
+    module: formData.get("module"),
+    level: formData.get("level"),
+    price: formData.get("price") !== "" ? formData.get("price") : "NaN",
+    type: formData.get("type"),
+    addressLink: formData.get("addressLink"),
+    places: formData.get("places"),
+  });
+
+  if (!result.success) {
+    console.error("[SA createSession]:");
+    result.error.issues.map((issue, idx) => {
+      console.error(`   Issue ${idx} (${issue.path}): ${issue.message}.`);
+    });
+    return `Error`;
+  }
+  console.log("No errors.");
+  const session = result.data;
+
+  try {
+    const res = await dbCreateSession(email, session);
+    revalidatePath("/teacher/schedule");
+  } catch (err: any) {
+    console.error(err.message);
+    console.error("[SA createSession]: Failed to create a session.");
+    return "Failed to create a session. Try again!";
+  }
+}
 
 export async function deleteCourse(courseId: string) {
   const { email } = await verifyRefreshToken();

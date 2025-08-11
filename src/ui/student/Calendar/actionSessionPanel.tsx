@@ -1,11 +1,17 @@
+"use client";
+
 import styles from "./actionSessionPanel.module.css";
+import { useActionState } from "react";
+import { createSession } from "@/actions/teacher";
 
 export default function ActionSessionPanel(props: { setIsAction: Function }) {
+  const [state, formAction, isPending] = useActionState(createSession, undefined);
+
   return (
     <section className={styles["action-panel"]}>
       <form
         className={styles["action-panel__form"]}
-        action=""
+        action={formAction}
       >
         <div className={styles["action-panel__form__header"]}>
           <h3>Create a New Session</h3>
@@ -37,6 +43,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             />
           </label>
         </div>
+
         <div className={styles["action-panel__form__second-input-div"]}>
           <label htmlFor="day">Day:</label>
           <input
@@ -45,6 +52,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             id="day"
           />
         </div>
+
         <div className={styles["action-panel__form__third-input-div"]}>
           <label htmlFor="module">
             Module:
@@ -63,6 +71,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             />
           </label>
         </div>
+
         <div className={styles["action-panel__form__fourth-input-div"]}>
           <label htmlFor="price">
             Price:
@@ -83,6 +92,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             </select>
           </label>
         </div>
+
         <div className={styles["action-panel__form__fifth-input-div"]}>
           <label htmlFor="address-link">Address/Link:</label>
           <input
@@ -91,6 +101,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             id="address-link"
           />
         </div>
+
         <div className={styles["action-panel__form__sixth-input-div"]}>
           <label htmlFor="places">N° of Places:</label>
           <input
@@ -99,6 +110,7 @@ export default function ActionSessionPanel(props: { setIsAction: Function }) {
             id="places"
           />
         </div>
+        {state ? <p style={{ color: "red" }}>{state}</p> : null}
       </form>
     </section>
   );

@@ -54,6 +54,18 @@ export interface Course {
   description: string;
 }
 
+export interface Session {
+  startTime: string;
+  endTime: string;
+  day: string;
+  module: string;
+  level: string;
+  price: number;
+  type: "online" | "offline";
+  addressLink: string;
+  places: number;
+}
+
 export interface SessionData {
   seid: string;
   module: string;

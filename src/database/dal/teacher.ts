@@ -1,8 +1,29 @@
 import { neon } from "@neondatabase/serverless";
 import { getUserId } from "./db";
-import { Course } from "../definitions";
+import { Course, Session } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
+
+export async function createSession(teacherEmail: string, session: Session) {
+  try {
+    const res =
+      await sql`INSERT INTO sessions(module, year, price, type, address_link, day, start_time, end_time, places, id)
+      VALUES(${session.module}, ${session.level}, ${session.price}, ${session.type}, ${session.addressLink}, ${session.day}, ${session.startTime}, ${session.endTime}, ${session.places},
+      (SELECT id FROM users WHERE email = ${teacherEmail})) RETURNING places`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL createSession]: Failed to create session.", { cause: err });
+  }
+}
 
 export async function deleteCourse(teacherEmail: string, courseId: string) {
   try {
