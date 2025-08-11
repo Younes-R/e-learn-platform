@@ -4,6 +4,25 @@ import { Course, Session } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function deleteSession(teacherEmail: string, sessionId: string) {
+  try {
+    const res =
+      await sql`DELETE FROM sessions WHERE seid = ${sessionId} and id IN (SELECT id FROM users WHERE email = ${teacherEmail}) RETURNING places`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL deleteSession]: Failed to delete session.", { cause: err });
+  }
+}
+
 export async function createSession(teacherEmail: string, session: Session) {
   try {
     const res =

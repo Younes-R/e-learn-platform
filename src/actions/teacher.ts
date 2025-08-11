@@ -6,8 +6,22 @@ import {
   createCourse as dbCreateCourse,
   deleteCourse as dbDeleteCourse,
   createSession as dbCreateSession,
+  deleteSession as dbDeleteSession,
 } from "@/database/dal/teacher";
 import { revalidatePath } from "next/cache";
+
+export async function deleteSession(sessionId: string) {
+  const { email } = await verifyRefreshToken();
+  await verifyRoles(["teacher"]);
+
+  try {
+    const res = await dbDeleteSession(email, sessionId);
+  } catch (err: any) {
+    console.error(err.message);
+    console.error("[SA deleteSession]: Failed to delete session.");
+    return "Failed to delete session. Try again!";
+  }
+}
 
 export async function createSession(previousState: any, formData: FormData) {
   const { email } = await verifyRefreshToken();
