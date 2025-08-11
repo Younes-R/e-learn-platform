@@ -8,21 +8,37 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 
 ## Todo:
 
-1. Implment data mutations:
+1. [ ] Implment data mutations:
 
-   - a student can buy courses (needs some additional UI)
-   - a student can buy sessions and enroll in them, or undo it
-   - a teacher can create, edit and delete his courses
-   - an admin can create, edit and delete user accounts
+   - [ ] a student can buy courses (needs some additional UI)
+   - [ ] a student can buy sessions and enroll in them, or undo it
+   - a teacher can:
+     - [x] create his courses
+     - [ ] edit his courses
+     - [x] delete his courses
+   - a teacher can:
+     - [x] create his sessions
+     - [ ] edit his sessions
+     - [ ] delete his sessions
+   - an admin can:
+     - [x] create user accounts
+     - [x] edit user accounts
+     - [x] delete user accounts
+   - [x] users can report each other
 
-2. Create the schedule endpoint:
-3. fix the bug on the media endpoint:
-4. Implment a report system
-5. Implement a notification system
-6. Create support and settings pages
-7. create the landing page
-8. Implement search system
-9. Add error handling on the RSC pages
+2. [ ] Implement the schedule endpoint:
+
+   - [ ] Implement the endpoint
+   - [ ] create a function to consume it
+   - [ ] Implement the UI to consume it
+
+3. [ ] fix the bug on the media endpoint:
+4. [ ] Implment a report system
+5. [ ] Implement a notification system
+6. [x] Create support and settings pages
+7. [ ] create the landing page
+8. [ ] Implement search system
+9. [ ] Add error handling on the RSC pages
 
 ## Implementation:
 
@@ -75,6 +91,31 @@ We settled on those rules:
 
 ![database tables diagram](e-learn-platform.drawio-database-diagram.svg)
 
-## Needed fix on route /api/media/[id]:
+## Bugs:
+
+### Needed fix on route /api/media/[id]:
 
 We need to check if the student has bought the course before letting him download its docs, or else if a student got the file-id of a non-bought course doc , he would be able to download it normally.
+
+### On feat. createSession (DAL or SA):
+
+We need to check that:
+
+- start_time < end_time
+- session periods does not overlap
+
+The current implementation only checks if the sessions of the same teacher does not start and end at the same time, so two sessions from 4:00 to 5:00 are refused, but two sessions one from 4:00 -> 5:00 and the other from 4:01 to 5:00 is accepted
+
+### On DAL updateUser, createCourse:
+
+This two functions can be attacked with SQL injection, since we are building our queries by ourselves instead of using Neon Driver sql function (beacause we have to) that offered protection against this attack type.
+
+The data validation/sanitization layer (Zod) on the SA cannot protect against this attack too.
+
+We suggest adding the needed protection on either the SA or the DAL (I prefer on the DAL, since it is from its responsibility to preserve the "data safety")
+
+## UI Bugs on scrollable components:
+
+This appears in the common explore page, admin pages displaying users, courses or sessions...etc.
+
+We need to make the components either carousels, or make them scrollable with a smooth movement and a fixed width and/or height.
