@@ -311,8 +311,9 @@ export async function initializeDatabase() {
     type session_type,
     address_link VARCHAR,
     day DATE,
-    start_time VARCHAR(10),
-    end_time VARCHAR(10),
+    start_time TIME,
+    end_time TIME,
+    places: INT,
     id UUID,
     FOREIGN KEY (id) REFERENCES users(id)
     )`,
