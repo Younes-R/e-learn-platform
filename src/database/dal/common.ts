@@ -143,7 +143,7 @@ export async function getCourses() {
 export async function getSessions() {
   try {
     const res =
-      await sql`SELECT seid, module, day, start_time AS startTime, end_time AS endTime, sessions.type, first_name AS firstName, last_name AS lastName, price FROM sessions JOIN users ON sessions.id = users.id`;
+      await sql`SELECT seid, module, day, start_time AS "startTime", end_time AS "endTime", sessions.type, first_name AS "firstName", last_name AS "lastName", price FROM sessions JOIN users ON sessions.id = users.id`;
     if (res && res.length > 0) {
       return res as Array<{
         seid: string;
