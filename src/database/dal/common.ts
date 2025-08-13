@@ -3,6 +3,57 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function getCourse(courseId: string) {
+  let course = null;
+  try {
+    const courseRes =
+      await sql`SELECT cid, title, description, first_name AS "firstName", last_name AS "lastName", email FROM courses
+      JOIN users ON courses.id = users.id WHERE cid = ${courseId}`;
+    if (courseRes && courseRes.length > 0) {
+      course = courseRes[0] as {
+        cid: string;
+        title: string;
+        description: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+      };
+    } else {
+      return {
+        course: null,
+        documents: null,
+        studentsEnrolledIn: null,
+      };
+    }
+    const documents =
+      (await sql`SELECT doc_title AS "title", file_id AS "fileId" FROM documents WHERE cid = ${courseId}`) as Array<{
+        title: string;
+        fileId: string;
+      }>;
+    const studentsEnrolledIn =
+      (await sql`SELECT first_name AS "firstName", last_name AS "lastName", email, profile_pic AS "profilePicture" FROM payments
+      JOIN users ON payments.id = users.id WHERE cid = ${courseId} and status = 'paid'`) as Array<{
+        firstName: string;
+        lastName: string;
+        email: string;
+        profilePicture: string;
+      }>;
+
+    return {
+      course,
+      documents,
+      studentsEnrolledIn,
+    };
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL getCourse]: Failed to get course.", { cause: err });
+  }
+}
+
 export async function reportUser(reporterEmail: string, reportedEmail: string, reason: number, date: Date) {
   try {
     const res = await sql`INSERT INTO reports(reporter_id, reported_id, date, reason)

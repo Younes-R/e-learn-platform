@@ -5,7 +5,7 @@ export default function DeletePanel(props: {
   resourceType: "Student" | "Teacher" | "Moderator" | "Course" | "Session";
   resourceName: string;
   resourceId: string;
-  setResource: Function;
+  setResource?: Function;
   setIsForm: Function;
 }) {
   return (
@@ -25,7 +25,7 @@ export default function DeletePanel(props: {
           <button
             onClick={async () => {
               await deleteCourse(props.resourceId);
-              props.setResource(null);
+              if (props.setResource) props.setResource(null);
               props.setIsForm(null);
             }}
             className={styles["action-panel__modal__actions__delete"]}

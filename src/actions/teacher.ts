@@ -9,6 +9,7 @@ import {
   deleteSession as dbDeleteSession,
 } from "@/database/dal/teacher";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function deleteSession(sessionId: string) {
   const { email } = await verifyRefreshToken();

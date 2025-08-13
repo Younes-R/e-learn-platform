@@ -30,7 +30,7 @@ export default function CoursesList(props: {
           key={course.cid}
         >
           <div className={styles["coursesListItem__header"]}>
-            <Link href={`courses/${course.cid}`}>
+            <Link href={`/common/courses/${course.cid}`}>
               <h3>{course.title}</h3>
             </Link>
             {props.selectedCourse === course.cid ? (
