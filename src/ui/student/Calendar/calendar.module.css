@@ -25,6 +25,13 @@
   grid-area: "second-section";
 }
 
+.calendar__day-info__list {
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 .calendar__second-section button {
   font-family: inherit;
   font-weight: bold;
@@ -39,7 +46,10 @@
   border: 2px solid #999;
   border-radius: 25px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  padding: 1em 2em;
+  padding: 1.4em 2em 1.4em 2.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .calendar__current-day {

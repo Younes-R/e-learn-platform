@@ -4,7 +4,7 @@ import RightArrow from "@/ui/icons/rightArrow";
 import LeftArrow from "@/ui/icons/leftArrow";
 import Day from "./day";
 import { useState } from "react";
-import { DayData } from "@/database/definitions";
+import { DayData, dbSession } from "@/database/definitions";
 import { useQuery } from "@tanstack/react-query";
 import ActionSessionPanel from "./actionSessionPanel";
 import DeletePanel from "../Courses/deletePanel";
@@ -31,6 +31,8 @@ export default function Calendar(props: { userRole: string }) {
     day: date.getDate(),
     month: date.getMonth(),
   });
+  const [selectedDaySessions, setSelectedDaySessions] = useState<dbSession[] | null>(null);
+
   const monthsDaysCount = [
     31,
     (date.getFullYear() - 2016) % 4 == 0 ? 29 : 28,
@@ -53,37 +55,99 @@ export default function Calendar(props: { userRole: string }) {
   const blanks1 = Array.from({ length: firstDay.getDay() });
   const blanks2 = Array.from({ length: 7 - lastDay.getDay() - 1 });
 
-  const handleDaySelection = ({ day, month, year }: { day: number; month: number; year: number }) => {
+  const handleDaySelection = ({
+    day,
+    month,
+    year,
+    dayData,
+  }: {
+    day: number;
+    month: number;
+    year: number;
+    dayData: dbSession[];
+  }) => {
     if (selectedDate?.day === day && selectedDate?.month === month) {
       setSelectedDate(null);
+      setSelectedDaySessions(null);
     } else {
       setSelectedDate({ day, month });
+      setSelectedDaySessions(dayData);
     }
     if (month !== date.getMonth()) {
       if ((month < date.getMonth() && year === date.getFullYear()) || year < date.getFullYear()) {
         setDate(new Date(date.getFullYear(), date.getMonth() - 1));
+        setSelectedDaySessions(dayData);
       } else {
         setDate(new Date(date.getFullYear(), date.getMonth() + 1));
+        setSelectedDaySessions(dayData);
       }
     }
   };
-  const fetchSessions = (
-    year: number,
-    month: number
-  ): Promise<Array<Array<{ seid: string; module: string; day: Date; startTime: string; endTime: string }>>> => {
-    return fetch(`/api/sessions?year=${year}&month=${month}`).then((res) => res.json());
+  const fetchSessions = async (year: number, month: number) => {
+    const res = await fetch(`/api/sessions/${year}-${month}`);
+    const data = await res.json();
+    console.log("CLIENT data:", data);
+    const sessions = data.sessions as Record<string, dbSession[]>;
+    if (sessions) {
+      Object.values(sessions).forEach((list: dbSession[]) => {
+        list.forEach((s) => {
+          s.day = new Date(s.day) as unknown as any; // or assign to a new property, e.g. s.dayDate = new Date(s.day)
+        });
+      });
+    }
+
+    return sessions;
   };
 
   const { data: currSessions } = useQuery({
-    queryKey: [date.getFullYear(), date.getMonth()],
-    queryFn: () => fetchSessions(date.getFullYear(), date.getMonth()),
+    queryKey: [date.getFullYear(), date.getMonth() + 1],
+    queryFn: async () => await fetchSessions(date.getFullYear(), date.getMonth() + 1),
   });
+
+  console.log(`CLIENT currSessions:`, currSessions);
+  console.log(`CLIENT currSessions:`, currSessions);
+
+  let prevSessions: Record<string, dbSession[]> | undefined;
+
+  const prevMonthSessions = new Date(Date.UTC(date.getFullYear(), date.getMonth() - 1));
+  const { data: previousSessions } = useQuery({
+    queryKey: [prevMonthSessions.getFullYear(), prevMonthSessions.getMonth() + 1],
+    queryFn: async () => await fetchSessions(prevMonthSessions.getFullYear(), prevMonthSessions.getMonth() + 1),
+  });
+
+  prevSessions = previousSessions;
+
+  let nexSessions: Record<string, dbSession[]> | undefined;
+
+  const nexMonthSessions = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1));
+  const { data: nextSessions } = useQuery({
+    queryKey: [nexMonthSessions.getFullYear(), nexMonthSessions.getMonth() + 1],
+    queryFn: async () => await fetchSessions(nexMonthSessions.getFullYear(), nexMonthSessions.getMonth() + 1),
+  });
+
+  nexSessions = nextSessions;
 
   return (
     <>
       <section className={styles["calendar"]}>
         <div className={styles["calendar__first-section"]}>
           <div className={styles["calendar__current-day"]}>
+            {/* {currSessions && Object.keys(currSessions).length > 0
+              ? `SIZE: ${
+                  Object.keys(currSessions).length > 0
+                    ? Object.keys(currSessions).length + `${Object.keys(currSessions)}`
+                    : "fas"
+                }`
+              : ""}{" "}
+            <br /> */}
+            {/* {`CURR SESSIONS Sessions: ${currSessions}`} <br /> */}
+            {/* {currSessions?.sessions ? (
+              <ul>
+                {currSessions.sessions.map((session) => (
+                  <li key={session.seid}>{session}</li>
+                ))}
+              </ul>
+            ) : null} */}
             {/* {`date: ${date}`} <br /> */}
             {/* {`date.getMonth(): ${date.getMonth()}`} <br /> */}
             {/* {`monthsDaysCount[date.getMonth() - 1]: ${
@@ -93,7 +157,29 @@ export default function Calendar(props: { userRole: string }) {
             {/* {`monthsDaysCount[- 1]: ${monthsDaysCount[-1]}`} */}
             {/* {`BLANKS1: ${blanks1[3]}`} */}
             {/* <br /> */}
-            {/* {`BLANKS1 LENGTH: ${blanks1.length}`} */}
+            {/* {`BLANKS1 LENGTH: ${blanks1.length}`} <br /> */}
+            {/* {`BLANKS2 LENGTH: ${blanks2.length}`} <br /> */}
+            {/* {`BLANKS2 LENGTH: ${currSessions["s"]}`} <br /> */}
+            {/* {currSessions && currSessions["2025-8-11"] ? (
+              <ul>
+                {currSessions["2025-8-11"].map((session, idx) => (
+                  <li>
+                    {` [${idx}]:
+                  seid: ${session.seid} ;
+                  module: ${session.module};
+                  level: ${session.level};
+                  price: ${session.price} ;
+                  type: ${session.type} ;
+                  addressLink: ${session.addressLink};
+                  day: ${session.day} ;
+                  startTime: ${session.startTime};
+                  endTime: ${session.endTime};
+                  places: ${session.places} ;
+                  `}
+                  </li>
+                ))}
+              </ul>
+            ) : null} */}
             {/* <br /> */}
             {/* {`FIRST DAY: ${firstDay}`} */}
             {/* <br /> */}
@@ -184,6 +270,18 @@ export default function Calendar(props: { userRole: string }) {
                   }-${
                     monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] - (blanks1.length - idx - 1)
                   }`}
+                  dayData={
+                    prevSessions && Object.keys(prevSessions).length > 0
+                      ? prevSessions[
+                          `${date.getMonth() - 1 == -1 ? date.getFullYear() - 1 : date.getFullYear()}-${
+                            date.getMonth() - 1 == -1 ? 12 : date.getMonth()
+                          }-${
+                            monthsDaysCount[date.getMonth() - 1 == -1 ? 0 : date.getMonth() - 1] -
+                            (blanks1.length - idx - 1)
+                          }`
+                        ]
+                      : undefined
+                  }
                 />
               ))}
               {Array.from({ length: monthsDaysCount[date.getMonth()] }).map((_, idx) => (
@@ -199,6 +297,11 @@ export default function Calendar(props: { userRole: string }) {
                   selectedDate={selectedDate}
                   onClick={handleDaySelection}
                   key={`${date.getFullYear()}-${date.getMonth()}-${idx + 1}`}
+                  dayData={
+                    currSessions && Object.keys(currSessions).length > 0
+                      ? currSessions[`${date.getFullYear()}-${date.getMonth() + 1}-${idx + 1}`]
+                      : undefined
+                  }
                 />
               ))}
               {blanks2.map((_, idx) => (
@@ -216,6 +319,15 @@ export default function Calendar(props: { userRole: string }) {
                   key={`${date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}-${
                     date.getMonth() + 1 == 12 ? 0 : date.getMonth() + 1
                   }-${idx + 1}`}
+                  dayData={
+                    nexSessions && Object.keys(nexSessions).length > 0
+                      ? nexSessions[
+                          `${date.getMonth() + 1 == 12 ? date.getFullYear() + 1 : date.getFullYear()}-${
+                            date.getMonth() + 1 == 12 ? 1 : date.getMonth() + 2
+                          }-${idx + 1}`
+                        ]
+                      : undefined
+                  }
                 />
               ))}
             </div>
@@ -223,7 +335,28 @@ export default function Calendar(props: { userRole: string }) {
         </div>
         <div className={styles["calendar__second-section"]}>
           {props.userRole === "teacher" ? <button onClick={() => setIsAction("create")}>Add Session</button> : null}
-          {selectedDate ? <div className={styles["calendar__day-info"]}>{selectedDate.day}</div> : null}
+          {selectedDate ? (
+            <div className={styles["calendar__day-info"]}>
+              {selectedDaySessions && Object.keys(selectedDaySessions).length > 0 ? (
+                <>
+                  <p>
+                    {selectedDaySessions.length === 1
+                      ? "You have one session:"
+                      : `You have ${selectedDaySessions.length} sessions:`}
+                  </p>
+                  <ul className={styles["calendar__day-info__list"]}>
+                    {selectedDaySessions.map((session) => (
+                      <li key={session.seid}>
+                        <b>{session.module}:</b> from {session.startTime} to {session.endTime}.
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p>No sessions at this day.</p>
+              )}
+            </div>
+          ) : null}
         </div>
       </section>
       {isAction === "create" ? <ActionSessionPanel setIsAction={setIsAction} /> : null}

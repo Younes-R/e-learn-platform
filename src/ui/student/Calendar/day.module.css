@@ -2,11 +2,14 @@
   /* border: 1px solid red; */
   border-bottom: 1px solid #999;
   border-left: 1px solid #999;
-  padding: 1.4em;
+  padding: 1em;
+  /* height: 50px; */
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em;
+  position: relative;
 }
 
 .today {
@@ -50,6 +53,24 @@
   border-bottom-right-radius: 20px;
   border-bottom: none;
 } */
+
+.sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); */
+  z-index: -1;
+}
+
+.session {
+  background-color: #26a5ea;
+  width: 42px;
+  height: 4px;
+  border-radius: 20px;
+}
 
 .day:nth-child(37),
 .day:nth-child(38),

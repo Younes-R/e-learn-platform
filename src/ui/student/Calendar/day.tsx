@@ -1,4 +1,4 @@
-import { DayData } from "@/database/definitions";
+import { DayData, dbSession } from "@/database/definitions";
 import styles from "./day.module.css";
 
 export default function Day(props: {
@@ -12,13 +12,13 @@ export default function Day(props: {
   todayYearIndex?: number;
   selectedDate?: { day: number; month: number } | null;
   onClick?: Function;
-  dayData?: DayData;
+  dayData?: dbSession[] | undefined;
 }) {
   return (
     <div
       onClick={() => {
         if (props.onClick) {
-          props.onClick({ day: props.num, month: props.monthIndex, year: props.yearIndex });
+          props.onClick({ day: props.num, month: props.monthIndex, year: props.yearIndex, dayData: props.dayData });
         }
       }}
       className={`
@@ -58,10 +58,26 @@ export default function Day(props: {
         `}
     >
       {props.num}
-      {/* <br /> */}
+      {/* {`${Array.isArray(props.dayData)} `} <br /> */}
+      {/* {`${props?.dayData ? "w" : "l"}`} */}
+      {props.dayData && props.dayData.length > 0 ? (
+        <ul className={styles["sessions-list"]}>
+          {props.dayData.map((session) => (
+            <div className={styles["session"]}></div>
+          ))}
+        </ul>
+      ) : null}
+      {/* <ul className={styles["sessions-list"]}>
+        <li className={styles["session"]}></li>
+        <li className={styles["session"]}></li>
+        <li className={styles["session"]}></li>
+      </ul> */}
+      {/* <div></div>
+      <div className={styles["session"]}></div> */}
+      <br />
       {/* <p style={{ color: "orange" }}>{props.gridPosition}</p> */}
       {/* <p style={{ color: "red" }}>{props.gridLength}</p> */}
-      {/* /{props.monthIndex}/{props.yearIndex} */}
+      {/* {props.monthIndex}/{props.yearIndex} */}
     </div>
   );
 }
