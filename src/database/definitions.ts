@@ -66,6 +66,19 @@ export interface Session {
   places: number;
 }
 
+export interface dbSession {
+  seid: string;
+  module: string;
+  level: string;
+  price: number;
+  type: "offline" | "online";
+  addressLink: string;
+  day: Date;
+  startTime: string;
+  endTime: string;
+  places: number;
+}
+
 export interface SessionData {
   seid: string;
   module: string;

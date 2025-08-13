@@ -1,7 +1,25 @@
 import { neon } from "@neondatabase/serverless";
 import { getUserId } from "./db";
+import { dbSession } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
+
+export async function getSessionsByMonth(studentEmail: string, month: { start: string; end: string }) {
+  try {
+    const sessions =
+      await sql`SELECT sessions.seid, module, year AS level, price, type, address_link as "addressLink", day, start_time AS "startTime", end_time AS "endTime", places
+      FROM sessions JOIN payments ON sessions.seid = payments.seid
+      WHERE payments.id IN (SELECT id FROM users WHERE email = ${studentEmail}) AND status = 'paid' AND day BETWEEN ${month.start} AND ${month.end}`;
+    return sessions as Array<dbSession>;
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL getSessionsByMonth]: Failed to get sessions.", { cause: err });
+  }
+}
 
 export async function getStudentPayments(studentEmail: string) {
   try {
