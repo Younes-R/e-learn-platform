@@ -116,7 +116,7 @@ export async function register(previousState: any, formData: FormData) {
       role: user.userType,
     },
     process.env.REFRESH_TOKEN_SECRET!,
-    { expiresIn: "10m" }
+    { expiresIn: "40m" }
   );
 
   const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -193,7 +193,7 @@ export async function login(previousState: any, formData: FormData) {
       role: userInDb.type,
     },
     process.env.REFRESH_TOKEN_SECRET!,
-    { expiresIn: "10m" }
+    { expiresIn: "40m" }
   );
 
   const cookieStore = await cookies();
