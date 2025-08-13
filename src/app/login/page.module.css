@@ -1,0 +1,26 @@
+.main {
+  /* border: 2px solid red; */
+  padding-top: 12em;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.login {
+  padding: 1.4em 1.2em 0em 1.2em;
+  border: 2px solid #999;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.login h1 {
+  padding-left: 0.5em;
+}
