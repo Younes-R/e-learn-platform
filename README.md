@@ -30,17 +30,24 @@ This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn P
 
    - [x] Implement the endpoint
    - [x] create a function to consume it
-   - [ ] Implement the UI to consume it
+   - [x] Implement the UI to consume it
+   - [ ] Add Links to sessions
 
-3. [ ] fix the bug on the media endpoint:
+3. [ ] Fix the bug on the media endpoint:
 4. [ ] Implment a report system
 5. [ ] Implement a notification system
 6. [x] Create support and settings pages
-7. [ ] create the landing page
+7. [ ] Create the landing page
 8. [ ] Implement search system
 9. [ ] Add error handling on the RSC pages
-10. [ ] seperate courses (or courses/[id]) and sessions (or sessions/[id]) from teacher/student pages and merge them to common pages
-11. [ ] fix the ui of register and login pages
+10. [ ] Seperate courses (or courses/[id]) and sessions (or sessions/[id]) from teacher/student pages and merge them to common pages
+11. [ ] Fix the ui of register and login pages
+12. [x] Add payments success and failure pages
+13. [x] Add log out functionality
+14. [ ] Update the method used to identify files:
+
+    - [ ] update the ui
+    - [ ] update the database
 
 ## Implementation:
 
