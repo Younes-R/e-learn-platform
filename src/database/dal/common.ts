@@ -3,6 +3,40 @@ import { getUserId } from "./db";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function getSession(sessionId: string) {
+  try {
+    const sessionRes =
+      await sql`SELECT s.seid,s.module, s.day, s.places - COALESCE(p."studentsCount", 0) AS "remainingPlaces",
+      s.start_time AS "startTime", s.end_time AS "endTime", s.type, s.address_link AS "addressLink",
+      first_name AS "firstName", last_name AS "lastName" FROM sessions s JOIN users ON s.id = users.id
+      LEFT JOIN (SELECT seid, COUNT (id) as "studentsCount" FROM payments WHERE seid = ${sessionId} and status = 'paid' GROUP BY seid) p ON s.seid = p.seid WHERE s.seid = ${sessionId}`;
+
+    if (sessionRes && sessionRes.length > 0) {
+      return sessionRes[0] as {
+        seid: string;
+        module: string;
+        day: Date;
+        remainingPlaces: number;
+        startTime: string;
+        endTime: string;
+        type: string;
+        addressLink: string;
+        firstName: string;
+        lastName: string;
+      };
+    } else {
+      return null;
+    }
+  } catch (err: any) {
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL getSession]: Failed to get session.", { cause: err });
+  }
+}
+
 export async function getCourse(courseId: string) {
   let course = null;
   try {

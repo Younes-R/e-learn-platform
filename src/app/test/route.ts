@@ -1,5 +1,5 @@
 import { getUsers } from "@/database/dal/admin";
-import { getCourse, getProfileInfo, reportUser } from "@/database/dal/common";
+import { getCourse, getProfileInfo, getSession, reportUser } from "@/database/dal/common";
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
@@ -22,7 +22,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getCourse("a20f3de9-2281-4e8e-86c6-219900ce565b");
+    const res = await getSession("b7e1d4e2-350b-4102-899b-282844db0aae");
+    // const res = await getCourse("a20f3de9-2281-4e8e-86c6-219900ce565b");
     // const res = await createSession("didact@gmail.com", {
     //   module: "ALGB3",
     //   level: "2CP",
