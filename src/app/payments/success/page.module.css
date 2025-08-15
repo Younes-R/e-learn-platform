@@ -1,0 +1,35 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  border: 2px solid #999;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 1.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.section__action {
+  font-weight: bold;
+  padding: 0.8em;
+  border: 2px solid #999;
+  border-radius: 25px;
+  text-wrap: nowrap;
+}
