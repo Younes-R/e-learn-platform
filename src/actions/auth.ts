@@ -7,6 +7,12 @@ import { uploadFile } from "@/database/b2";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
+export async function logOut() {
+  const cookieStore = await cookies();
+  cookieStore.delete("refreshToken");
+  redirect("/login");
+}
+
 export async function register(previousState: any, formData: FormData) {
   console.log(formData);
   const userType = formData.get("userType");

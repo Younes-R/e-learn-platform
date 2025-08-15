@@ -35,3 +35,7 @@ a:active {
 ul {
   list-style: none;
 }
+
+button {
+  cursor: pointer;
+}

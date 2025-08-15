@@ -1,0 +1,38 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  /* width: 100%; */
+  /* border: 1px solid red; */
+}
+
+.section button {
+  font-family: inherit;
+  border: none;
+  font-size: inherit;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.4em;
+  flex-grow: 1;
+  /* border: 1px solid red; */
+  border-radius: 20px;
+  padding: 1.4em 1.6em;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.listItem {
+  border: 2px solid #999;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background-color: whitesmoke;
+  /* transition: 200ms; */
+  display: flex;
+}
