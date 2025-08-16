@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Promise<{ seid: string 
   let isSessionBought = false;
   if (session) {
     try {
-      isSessionBought = await isSessionBoughtByStudent(email, seid);
+      ({ result: isSessionBought } = await isSessionBoughtByStudent(email, seid));
     } catch (err: any) {
       console.error(err.message);
       console.warn("[RSC Page Common Sessions/[seid]]: Session non-existance case avoiding mesure failed!");

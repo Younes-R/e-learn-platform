@@ -2,6 +2,12 @@
 
 This app is still under development.
 
+## Important
+
+Courses and Sessions Price should be greater than or equal to 50, a constraint imposed by Chargily Pay.
+
+Therefore, we need to update our constraints too!
+
 ## Description:
 
 This is a Next.js 15 App Router App, with Neon as database. It is a an E-learn Platform.

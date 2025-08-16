@@ -1,4 +1,7 @@
+"use client";
 import styles from "./session.module.css";
+import { useState } from "react";
+import PaymentPanel from "./paymentPanel";
 
 export default function Session(props: {
   session: {
@@ -17,6 +20,8 @@ export default function Session(props: {
   isSessionBought: boolean;
   role: string;
 }) {
+  const [panel, setPanel] = useState<"buy" | null>(null);
+
   return (
     <div className={styles["sessions"]}>
       <section className={styles["session"]}>
@@ -75,9 +80,21 @@ export default function Session(props: {
           {props.isSessionBought ? (
             <button className={styles["second-section__undo"]}>Undo Joining</button>
           ) : (
-            <button className={styles["second-section__join"]}>Join Session</button>
+            <button
+              onClick={() => setPanel("buy")}
+              className={styles["second-section__join"]}
+            >
+              Join Session
+            </button>
           )}
         </section>
+      ) : null}
+      {panel === "buy" ? (
+        <PaymentPanel
+          setPanel={setPanel}
+          resourceName="Session"
+          resourceId={props.session.seid}
+        />
       ) : null}
     </div>
   );

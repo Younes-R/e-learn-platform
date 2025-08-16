@@ -3,15 +3,19 @@ import { getCourse, getProfileInfo, getSession, reportUser } from "@/database/da
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
 import {
+  createPaymentRecord,
   getStudentCourses,
   getStudentPayments,
   getStudentTeachers,
   isSessionBoughtByStudent,
+  updatePaymentRecord,
 } from "@/database/dal/student";
 import { createCourse, createSession, deleteCourse, getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
 import file from "../../../e-learn-platform.drawio-database-diagram.svg";
+import { Checkout } from "@/database/definitions";
+
 const sql = neon(process.env.DATABASE_URL!);
 
 export async function GET(request: Request) {
@@ -27,7 +31,44 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await isSessionBoughtByStudent("librarian@gmail.com", "22ab8226-2f8e-423e-8460-362b24e463cb");
+    const res = await updatePaymentRecord("01k2ta0jwns83w8vkpwea9cddr", "not paid");
+
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${process.env.CHARGILY_PAY_SECRET_KEY2}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     amount: "0",
+    //     currency: "dzd",
+    //     success_url: `dsd${process.env.APP_URL}/payments/success`,
+    //     failure_url: `${process.env.APP_URL}/payments/failure`,
+    //     webhook_endpoint: `${process.env.APP_URL}/api/payments/webhook`,
+    //   }),
+    // };
+
+    // let checkout: Checkout;
+
+    // const res = await fetch("https://pay.chargily.net/test/api/v2/checkouts", options);
+
+    // if (!res.ok) throw new Error("[fetch Chargily Pay]: Failed.", { cause: await res.json() });
+    // checkout = await res.json();
+    // console.log(`checkout object:`);
+    // console.log(`livemode`, checkout.livemode);
+    // console.log(`entity`, checkout.entity);
+    // console.log(`amount`, checkout.amount);
+    // console.log(`checkout_url`, checkout.checkout_url);
+
+    // let res = (await createPaymentRecord(
+    //   "",
+    //   "session",
+    //   "22ab8226-2f8e-423e-8460-362b24e463cb",
+    //   "",
+    //   new Date()
+    // )) as unknown;
+    // res = true;
+    // const res = await isSessionBoughtByStudent("librarian@gmail.com", "22ab8226-2f8e-423e-8460-362b24e463cb");
     // const res = await getSession("b7e1d4e2-350b-4102-899b-282844db0aae");
     // const res = await getCourse("a20f3de9-2281-4e8e-86c6-219900ce565b");
     // const res = await createSession("didact@gmail.com", {
@@ -89,8 +130,10 @@ export async function GET(request: Request) {
     }
   } catch (err: any) {
     console.error(err.message);
-    // console.error("ERROR CAUSE:");
+    console.error("ERROR CAUSE:");
     // console.error(err.cause);
+    console.error(err.cause.message);
+    console.error(err.cause.errors);
 
     return Response.json({ err_msg: "Something wrong happened. Try again later!", err_cause: err.cause });
   }

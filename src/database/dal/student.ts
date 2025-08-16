@@ -4,16 +4,124 @@ import { dbSession } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
-export async function isSessionBoughtByStudent(studentEmail: string, sessionId: string) {
+// const price = await isSessionBoughtByStudent(studentEmail, productId);
+// if (price || price === 0) {
+//   throw new Error(`[DAL createPaymentRecord]: Student already bought this ${productType}.`, {
+//     cause: {
+//       type: "productAlreadyBought",
+//       description: "This product is already bought by this user. Users cannot buy the same product twice.",
+//     },
+//   });
+
+export async function updatePaymentRecord(checkoutId: string, status: "paid" | "not paid") {
   try {
-    const res = (await sql`SELECT s.seid, p.status FROM sessions s LEFT JOIN payments p
-      ON s.seid = p.seid AND p.id IN (SELECT id FROM users WHERE email = ${studentEmail})
-      WHERE s.seid = ${sessionId}`) as Array<{ seid: string; status: string | null }>;
+    const res = await sql`UPDATE payments SET status = ${status} WHERE checkout_id = ${checkoutId} RETURNING status`;
+    if (res && res.length > 0) {
+      return true;
+    } else {
+      throw new Error("[DAL updatePaymentRecord]: No payment record was updated.", {
+        cause: {
+          type: "noRowReturned",
+          description:
+            "No row was returned from the database because none had a matching checkout_url value to the value given.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noRowReturned") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL updatePaymentRecord]: Failed to update payment record.", { cause: err });
+  }
+}
+
+export async function createPaymentRecord(
+  studentEmail: string,
+  productType: "course" | "session",
+  productId: string,
+  checkoutId: string,
+  date: Date
+) {
+  try {
+    let res;
+    switch (productType) {
+      case "session":
+        res = await sql`INSERT INTO payments(date, checkout_id, id, seid)
+          VALUES(${date}, ${checkoutId}, (SELECT id FROM users WHERE email = ${studentEmail}), ${productId})`;
+        break;
+      case "course":
+        res = await sql`INSERT INTO payments(date, checkout_id, id, cid)
+          VALUES(${date}, ${checkoutId}, (SELECT id FROM users WHERE email = ${studentEmail}), ${productId})`;
+        break;
+      default:
+        throw new Error("[DAL createPaymentRecord]: Function was passed a wrong value as productType arg.", {
+          cause: {
+            type: "badArgumentType",
+            description: 'productType can only has "course" or "session" as a value.',
+          },
+        });
+        break;
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "badArgumentType") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL createPaymentRecord]: Failed to create payment record.", { cause: err });
+  }
+}
+
+export async function isCourseBoughtByStudent(studentEmail: string, courseId: string) {
+  try {
+    const res = (await sql`SELECT c.cid, c.price, p.status FROM courses c LEFT JOIN payments p
+      ON c.cid = p.cid AND p.id IN (SELECT id FROM users WHERE email = ${studentEmail})
+      WHERE c.cid = ${courseId}`) as Array<{ seid: string; price: number; status: string | null }>;
     if (res && res.length > 0) {
       if (res[0].status === "paid") {
-        return true;
+        return { result: true };
       } else {
-        return false;
+        return { result: false, price: res[0].price };
+      }
+    } else {
+      throw new Error("[DAL isCourseBoughtByStudent]: No course with the cid given.", {
+        cause: {
+          type: "noCourseFound",
+          description: "No course is found with the cid given.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noCourseFound") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL isCourseBoughtByStudent]: Failed to run.", { cause: err });
+  }
+}
+
+export async function isSessionBoughtByStudent(studentEmail: string, sessionId: string) {
+  try {
+    const res = (await sql`SELECT s.seid, s.price, p.status FROM sessions s LEFT JOIN payments p
+      ON s.seid = p.seid AND p.id IN (SELECT id FROM users WHERE email = ${studentEmail})
+      WHERE s.seid = ${sessionId}`) as Array<{ seid: string; price: number; status: string | null }>;
+    if (res && res.length > 0) {
+      if (res.find((session) => session.status === "paid")) {
+        return { result: true };
+      } else {
+        return { result: false, price: res[0].price };
       }
     } else {
       throw new Error("[DAL isSessionBoughtByStudent]: No session with the seid given.", {
