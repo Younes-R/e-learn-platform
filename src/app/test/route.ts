@@ -2,7 +2,12 @@ import { getUsers } from "@/database/dal/admin";
 import { getCourse, getProfileInfo, getSession, reportUser } from "@/database/dal/common";
 import { deleteUser, updateUser } from "@/database/dal/db";
 import { getReports } from "@/database/dal/moderator";
-import { getStudentCourses, getStudentPayments, getStudentTeachers } from "@/database/dal/student";
+import {
+  getStudentCourses,
+  getStudentPayments,
+  getStudentTeachers,
+  isSessionBoughtByStudent,
+} from "@/database/dal/student";
 import { createCourse, createSession, deleteCourse, getPaymentsInfo, getTeacherCourses } from "@/database/dal/teacher";
 // import { GetUserId } from "@/database/dal/db";
 import { neon } from "@neondatabase/serverless";
@@ -22,7 +27,8 @@ export async function GET(request: Request) {
   //   }
 
   try {
-    const res = await getSession("b7e1d4e2-350b-4102-899b-282844db0aae");
+    const res = await isSessionBoughtByStudent("librarian@gmail.com", "22ab8226-2f8e-423e-8460-362b24e463cb");
+    // const res = await getSession("b7e1d4e2-350b-4102-899b-282844db0aae");
     // const res = await getCourse("a20f3de9-2281-4e8e-86c6-219900ce565b");
     // const res = await createSession("didact@gmail.com", {
     //   module: "ALGB3",

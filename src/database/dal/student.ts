@@ -4,6 +4,38 @@ import { dbSession } from "../definitions";
 
 const sql = neon(process.env.DATABASE_URL!);
 
+export async function isSessionBoughtByStudent(studentEmail: string, sessionId: string) {
+  try {
+    const res = (await sql`SELECT s.seid, p.status FROM sessions s LEFT JOIN payments p
+      ON s.seid = p.seid AND p.id IN (SELECT id FROM users WHERE email = ${studentEmail})
+      WHERE s.seid = ${sessionId}`) as Array<{ seid: string; status: string | null }>;
+    if (res && res.length > 0) {
+      if (res[0].status === "paid") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      throw new Error("[DAL isSessionBoughtByStudent]: No session with the seid given.", {
+        cause: {
+          type: "noSessionFound",
+          description: "No session is found with the seid given.",
+        },
+      });
+    }
+  } catch (err: any) {
+    if (err?.cause?.type === "noSessionFound") {
+      throw err;
+    }
+    console.error(`[Database error]: 
+      msg: ${err.message}
+      routine: ${err.routine}
+      hint: ${err.hint}
+    `);
+    throw new Error("[DAL isSessionBoughtByStudent]: Failed to run.", { cause: err });
+  }
+}
+
 export async function getSessionsByMonth(studentEmail: string, month: { start: string; end: string }) {
   try {
     const sessions =

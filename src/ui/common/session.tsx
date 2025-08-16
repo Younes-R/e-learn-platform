@@ -5,6 +5,7 @@ export default function Session(props: {
     seid: string;
     module: string;
     day: Date;
+    price: number;
     remainingPlaces: number;
     startTime: string;
     endTime: string;
@@ -13,6 +14,8 @@ export default function Session(props: {
     firstName: string;
     lastName: string;
   };
+  isSessionBought: boolean;
+  role: string;
 }) {
   return (
     <div className={styles["sessions"]}>
@@ -32,6 +35,7 @@ export default function Session(props: {
                 ? `${props.session.remainingPlaces} places remaining`
                 : ""}
             </li>
+            <li className={styles["price"]}>{props.session.price} DA</li>
           </ul>
           <ul className={styles["session__body__info-list"]}>
             <li>
@@ -66,10 +70,15 @@ export default function Session(props: {
           )}
         </div>
       </section>
-      <section className={styles["second-section"]}>
-        <button className={styles["second-section__join"]}>Join Session</button>
-        <button className={styles["second-section__undo"]}>Undo Joining</button>
-      </section>
+      {props.role === "student" ? (
+        <section className={styles["second-section"]}>
+          {props.isSessionBought ? (
+            <button className={styles["second-section__undo"]}>Undo Joining</button>
+          ) : (
+            <button className={styles["second-section__join"]}>Join Session</button>
+          )}
+        </section>
+      ) : null}
     </div>
   );
 }

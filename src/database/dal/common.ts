@@ -6,7 +6,7 @@ const sql = neon(process.env.DATABASE_URL!);
 export async function getSession(sessionId: string) {
   try {
     const sessionRes =
-      await sql`SELECT s.seid,s.module, s.day, s.places - COALESCE(p."studentsCount", 0) AS "remainingPlaces",
+      await sql`SELECT s.seid,s.module, s.day, s.price, s.places - COALESCE(p."studentsCount", 0) AS "remainingPlaces",
       s.start_time AS "startTime", s.end_time AS "endTime", s.type, s.address_link AS "addressLink",
       first_name AS "firstName", last_name AS "lastName" FROM sessions s JOIN users ON s.id = users.id
       LEFT JOIN (SELECT seid, COUNT (id) as "studentsCount" FROM payments WHERE seid = ${sessionId} and status = 'paid' GROUP BY seid) p ON s.seid = p.seid WHERE s.seid = ${sessionId}`;
@@ -16,6 +16,7 @@ export async function getSession(sessionId: string) {
         seid: string;
         module: string;
         day: Date;
+        price: number;
         remainingPlaces: number;
         startTime: string;
         endTime: string;
