@@ -36,7 +36,7 @@ export default function SessionCard(props: {
         </li>
       </ul>
       <button>
-        <Link href={`explore/sessions/${props.sessionData.seid}`}>View Session</Link>
+        <Link href={`/common/sessions/${props.sessionData.seid}`}>View Session</Link>
       </button>
     </li>
   );

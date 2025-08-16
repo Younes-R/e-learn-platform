@@ -30,7 +30,7 @@ export default function CourseCard(props: {
         </li>
       </ul>
       <button>
-        <Link href={`/courses/${props.courseData.cid}`}>View Course</Link>
+        <Link href={`/common/courses/${props.courseData.cid}`}>View Course</Link>
       </button>
     </li>
   );
