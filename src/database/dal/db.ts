@@ -321,7 +321,7 @@ export async function initializeDatabase() {
     sql`CREATE TABLE IF NOT EXISTS payments(
     pid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     date DATE,
-    status payment_type,
+    status payment_type DEFAULT 'pending',
     checkout_id VARCHAR,
     id UUID,
     cid UUID,
